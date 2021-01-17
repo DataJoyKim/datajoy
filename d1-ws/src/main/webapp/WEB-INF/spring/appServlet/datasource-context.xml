@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+       					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
+       					http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       					http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd"
+       					>
+	<!-- DBCP -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.mariadb.jdbc.Driver" />
+        <property name="url" value="jdbc:mariadb://localhost:3306/dws" />
+        <property name="username" value="D1ADMIN"/>
+        <property name="password" value="rlaskrdud1!"/>
+    </bean>
+
+	<!-- transaction -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- JPA 예외를 스프링 예외로 변환 -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+	<!-- Entity Manager -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/> <!-- data source --> 
+        <property name="packagesToScan" value="com.d1.ws.domain"/> <!-- @Entity 탐색 위치 --> 
+        <property name="jpaVendorAdapter">            
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
+                <prop key="hibernate.show_sql">true</prop> <!-- 콘솔에 hibernate 실행하는 SQL문 출력 -->
+                <prop key="hibernate.format_sql">true</prop>  <!-- SQL 출력 시 보기 쉽게 정렬 -->
+                <prop key="hibernate.use_sql_comments">true</prop> <!-- 쿼리 출력 시 주석(comments)도 함께 출력 -->
+                <prop key="hibernate.id.new_generator_mappings">true</prop><!-- JPA 표준에 맞춘 새로운 키 생성 전략 사용 -->
+                <prop key="hibernate.hbm2ddl.auto">validate</prop><!-- 해당설정 확인필요 -->
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> <!-- 이름 매핑 전략 설정 - 자바의 카멜 표기법을 테이블의 언더스코어 표기법으로 매핑 ex) lastModifiedDate -> last_modified_date -->
+            </props>
+        </property>
+    </bean>
+    
+    <!-- repository 탐색 -->
+    <jpa:repositories base-package="com.d1.ws.repository" />
+</beans>

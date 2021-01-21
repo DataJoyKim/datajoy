@@ -2,6 +2,7 @@ package com.d1.ws.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
@@ -24,8 +25,13 @@ public class UserControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void getUsersTest() throws Exception {
-		mockMvc.perform(get("/api/users/1"))
+		this.mockMvc.perform(get("/api/users")
+					.param("page", "0")
+					.param("size", "5")
+					.param("sort", "userId,DESC") //구현 필요
+				)
 				.andDo(print())
-				.andExpect(status().isOk());
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("page").exists());
 	}
 }

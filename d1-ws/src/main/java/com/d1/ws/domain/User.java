@@ -20,14 +20,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Builder @AllArgsConstructor @NoArgsConstructor
-@Getter @Setter @EqualsAndHashCode(of = "userId")
+@Getter @Setter @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name="user")
 public class User {
-    @Id
-    @GeneratedValue
-    @Column(name = "user_id")
-    private String userId;
+    @Id @GeneratedValue
+    @Column(name = "id")
+    private long id;
+    
+    @Column(name="email", unique = true, nullable = false)
+    private String email;
     
     @Column(name="group_cd", nullable = false)
     private String groupCd;
@@ -41,17 +43,17 @@ public class User {
     @Column(name="resident_no", nullable = false)
     private String residentNo;
     
-    @Column(name="email")
-    private String email;
-    
     @Column(name="company")
     private String company;
     
     @Column(name="location")
     private String location;
     
-    @Column(name="introduction", columnDefinition = "TEXT")
-    private String introduction;
+    @Column(name="bio", columnDefinition="BLOB")  
+    private String bio;
+    
+    @Column(name="profile_image", columnDefinition="BLOB") 
+    private String profileImage;
     
     @Column(name="phone_no")
     private String phoneNo;
@@ -65,14 +67,14 @@ public class User {
     private LocalDateTime endDate;
     
     @Column(name="reg_user_id")
-    private String regUserId;
+    private long regUserId;
     
     @Column(name="reg_date", columnDefinition = "DATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
     
     @Column(name="mod_user_id")
-    private String modUserId;
+    private long modUserId;
     
     @Column(name="mod_date", columnDefinition = "DATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

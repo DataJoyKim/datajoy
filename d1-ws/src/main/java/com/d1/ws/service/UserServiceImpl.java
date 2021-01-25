@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> findUsersByUserId(String userId) {
-        List<User> list = userRepository.findAllByUserId(userId);
+    public List<User> findUsersById(long id) {
+        List<User> list = userRepository.findAllById(id);
         
         return list;
     }

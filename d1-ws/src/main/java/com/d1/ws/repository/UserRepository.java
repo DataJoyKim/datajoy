@@ -10,6 +10,6 @@ import com.d1.ws.domain.User;
 @Repository("UserRepository")
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-	List<User> findAllByUserId(String userId);
+	List<User> findAllById(long id);
 
 }

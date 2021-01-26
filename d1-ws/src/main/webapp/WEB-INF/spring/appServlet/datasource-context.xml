@@ -34,12 +34,12 @@
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
-                <prop key="hibernate.show_sql">true</prop> <!-- 콘솔에 hibernate 실행하는 SQL문 출력 -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop><!--  데이터베이스 방언설정 -->
+                <prop key="hibernate.show_sql">true</prop> <!-- console에 hibernate 실행하는 SQL문 출력 -->
                 <prop key="hibernate.format_sql">true</prop>  <!-- SQL 출력 시 보기 쉽게 정렬 -->
                 <prop key="hibernate.use_sql_comments">true</prop> <!-- 쿼리 출력 시 주석(comments)도 함께 출력 -->
                 <prop key="hibernate.id.new_generator_mappings">true</prop><!-- JPA 표준에 맞춘 새로운 키 생성 전략 사용 -->
-                <prop key="hibernate.hbm2ddl.auto">validate</prop><!-- 해당설정 확인필요 -->
+                <prop key="hibernate.hbm2ddl.auto">validate</prop><!-- ddl 자동생성. 개발 시 create, 운영 시 validate. create 설정 시 스키마가 객체에 맞게 생성됨.  -->
                 <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> <!-- 이름 매핑 전략 설정 - 자바의 카멜 표기법을 테이블의 언더스코어 표기법으로 매핑 ex) lastModifiedDate -> last_modified_date -->
             </props>
         </property>

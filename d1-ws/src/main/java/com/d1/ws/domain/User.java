@@ -67,14 +67,14 @@ public class User {
     private LocalDateTime endDate;
     
     @Column(name="reg_user_id")
-    private long regUserId;
+    private Long regUserId;
     
     @Column(name="reg_date", columnDefinition = "DATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;
     
     @Column(name="mod_user_id")
-    private long modUserId;
+    private Long modUserId;
     
     @Column(name="mod_date", columnDefinition = "DATETIME")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")

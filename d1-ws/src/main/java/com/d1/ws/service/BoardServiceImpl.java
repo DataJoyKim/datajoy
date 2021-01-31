@@ -14,7 +14,7 @@ public class BoardServiceImpl implements BoardService{
 	private BoardRepository boardRepository;
 	
 	@Override
-	public List<Board> findByBoardId(long id) {
+	public List<Board> findByBoardId(Long id) {
 		List<Board> boards = boardRepository.findById(id);
 		
 		return boards;

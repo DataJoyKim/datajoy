@@ -10,6 +10,6 @@ import com.d1.ws.domain.Board;
 @Repository("BoardRepository")
 public interface BoardRepository extends JpaRepository<Board, Long>{
 
-	List<Board> findById(long id);
+	List<Board> findById(Long id);
 	
 }

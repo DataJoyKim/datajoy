@@ -150,7 +150,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.0.11.Final</version>
+            <version>5.2.8.Final</version>
         </dependency>
         
 		<!-- lombok -->

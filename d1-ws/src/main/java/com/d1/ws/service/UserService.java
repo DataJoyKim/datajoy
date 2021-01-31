@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import com.d1.ws.domain.User;
 
 public interface UserService {
-	List<User> findUsersById(long id);
+	List<User> findUsersById(Long id);
 
 	Page<User> findAllUsers(PageRequest pageable);
 }

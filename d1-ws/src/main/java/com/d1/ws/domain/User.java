@@ -3,14 +3,12 @@ package com.d1.ws.domain;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
-
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateTimeConverter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,11 +22,11 @@ import lombok.Setter;
 @Entity
 @Table(name="user")
 public class User {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
     
-    @Column(name="email", unique = true, nullable = false)
+    @Column(name="email", nullable = false)
     private String email;
     
     @Column(name="group_cd", nullable = false)
@@ -49,34 +47,32 @@ public class User {
     @Column(name="location")
     private String location;
     
-    @Column(name="bio", columnDefinition="BLOB")  
+    @Lob
+    @Column(name="bio")  
     private String bio;
     
-    @Column(name="profile_image", columnDefinition="BLOB") 
-    private String profileImage;
+    @Lob
+    @Column(name="profile_image") 
+    private byte[] profileImage;
     
     @Column(name="phone_no")
     private String phoneNo;
     
-    @Column(name="sta_date", nullable = false, columnDefinition = "DATETIME")
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Column(name="sta_date", nullable = false)
     private LocalDateTime staDate;
     
-    @Column(name="end_date", nullable = false, columnDefinition = "DATETIME")
-    @Convert(converter = LocalDateTimeConverter.class)
+    @Column(name="end_date", nullable = false)
     private LocalDateTime endDate;
     
     @Column(name="reg_user_id")
     private Long regUserId;
     
-    @Column(name="reg_date", columnDefinition = "DATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name="reg_date")
     private LocalDateTime regDate;
     
     @Column(name="mod_user_id")
     private Long modUserId;
     
-    @Column(name="mod_date", columnDefinition = "DATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name="mod_date")
     private LocalDateTime modDate;
 }

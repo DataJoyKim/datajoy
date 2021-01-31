@@ -6,13 +6,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,25 +26,24 @@ import lombok.Setter;
 @Table(name="project")
 public class Project {
 	
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "project_no")
-	private long id;
+	private Long id;
 	
 	@Column(name = "project_nm")
 	private String projectNm;
 	
-	@Column(name = "description", columnDefinition="TEXT")
+	@Lob
+	@Column(name = "description")
 	private String description;
 
-	@Column(name = "reg_date", columnDefinition="DATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss", iso = ISO.DATE_TIME)
+	@Column(name = "reg_date")
     private LocalDateTime regDate;
 	
 	@Column(name = "mod_user_id")
 	private Long modUserId;
 	
-	@Column(name = "mod_date", columnDefinition="DATETIME")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss", iso = ISO.DATE_TIME)
+	@Column(name = "mod_date")
     private LocalDateTime modDate;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

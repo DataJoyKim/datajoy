@@ -33,9 +33,6 @@ public class Board {
 	@Column(name = "board_no")
 	private Long id;
 	
-	@Column(name = "parent_board_no")
-	private Long parentBoardNo;
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private BoardStatus status;

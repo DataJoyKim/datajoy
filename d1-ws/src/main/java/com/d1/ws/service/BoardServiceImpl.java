@@ -14,10 +14,15 @@ public class BoardServiceImpl implements BoardService{
 	private BoardRepository boardRepository;
 	
 	@Override
-	public List<Board> findByBoardId(Long id) {
-		List<Board> boards = boardRepository.findById(id);
+	public Board findByBoardId(Long id) {
+		Board boards = boardRepository.findById(id);
 		
 		return boards;
+	}
+
+	@Override
+	public List<Board> findAll() {
+		return boardRepository.findAll();
 	}
 
 }

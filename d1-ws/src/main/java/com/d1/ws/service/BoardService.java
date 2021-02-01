@@ -6,6 +6,7 @@ import com.d1.ws.domain.Board;
 
 public interface BoardService {
 
-	List<Board> findByBoardId(Long id);
+	List<Board> findAll();
 
+	Board findByBoardId(Long id);
 }

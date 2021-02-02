@@ -23,11 +23,18 @@ public class BoardControllerTest extends BaseControllerTest{
     }
     
 	@Test
-	public void getBoards() throws Exception {
-		this.mockMvc.perform(get("/api/boards/1")
+	public void getBoardTest() throws Exception {
+		this.mockMvc.perform(get("/api/projects/1/boards/1")
 			)
 			.andDo(print())
 			.andExpect(status().isOk());
 	}
 
+	@Test
+	public void getProjectBoardsTest() throws Exception {
+		this.mockMvc.perform(get("/api/projects/1/boards")
+			)
+			.andDo(print())
+			.andExpect(status().isOk());
+	}
 }

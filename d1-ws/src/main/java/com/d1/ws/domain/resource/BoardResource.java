@@ -5,11 +5,9 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
 import com.d1.ws.controller.BoardController;
 import com.d1.ws.domain.Board;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 public class BoardResource extends ResourceSupport {
 	
-	@JsonUnwrapped
 	private Board board;
 	
 	public BoardResource(Board board) {

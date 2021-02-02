@@ -8,4 +8,6 @@ import com.d1.ws.domain.Project;
 @Repository("ProjectRepository")
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
+	Project findById(Long projectId);
+
 }

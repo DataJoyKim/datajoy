@@ -5,11 +5,9 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 
 import com.d1.ws.controller.UserController;
 import com.d1.ws.domain.User;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 public class UserResource extends ResourceSupport {
 	
-	@JsonUnwrapped
 	private User user;
 	
 	public UserResource(User user) {

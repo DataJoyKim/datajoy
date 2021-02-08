@@ -1,10 +1,10 @@
 package com.d1.ws.domain;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d1.ws.code.BoardStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,21 +46,25 @@ public class Board {
 	@Column(name = "content")
 	private String content;
 	
-	@Column(name = "reg_date")
-    private LocalDateTime regDate;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reg_user_id")
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_no")
 	private Project project;
 	
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "parent_board_no")
 	private Board parent;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-	private List<Board> child = new ArrayList<>();	
+	private Set<Board> childList = new HashSet<>();	
+
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 }

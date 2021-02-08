@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.ws.domain.Board;
 import com.d1.ws.domain.Project;
-import com.d1.ws.domain.resource.BoardResource;
+import com.d1.ws.dto.BoardDTO;
 import com.d1.ws.service.BoardService;
 import com.d1.ws.service.ProjectService;
 
@@ -28,22 +28,28 @@ public class BoardController {
 	private ProjectService projectService;
 
 	@GetMapping("/{boardId}")
-	public ResponseEntity<BoardResource> getBoard(@PathVariable Long projectId, @PathVariable Long boardId, @RequestParam Map<String, String> params) {
+	public ResponseEntity<?> getBoard(@PathVariable Long projectId, @PathVariable Long boardId, @RequestParam Map<String, String> params) {
+		Project project = projectService.getProject(projectId);
+		if(project == null) {
+			//throw exception
+		}
 		
 		Board board = boardService.getBoard(boardId);
 		
-		BoardResource boardResource = new BoardResource(board);
-		boardResource.add(ControllerLinkBuilder.linkTo(BoardController.class).withRel("boards"));
-		return ResponseEntity.ok(boardResource);
+		//BoardResource boardResource = new BoardResource(board);
+		//boardResource.add(ControllerLinkBuilder.linkTo(BoardController.class).withRel("boards"));
+		return new ResponseEntity<>(board, HttpStatus.OK);
 	}
 	
-
-	@GetMapping
-	public ResponseEntity<List<Board>> getBoardsProject(@PathVariable Long projectId, @RequestParam Map<String, String> params) {
+	@GetMapping("/tree")
+	public ResponseEntity<?> getBoardsTree(@PathVariable Long projectId, @RequestParam Map<String, String> params) {
 		Project project = projectService.getProject(projectId);
+		if(project == null) {
+			//throw exception
+		}
 		
-		List<Board> board = boardService.getProjectBoards(project, params);
+		List<BoardDTO> boards = boardService.getBoardsTree(project, params);
 		
-		return ResponseEntity.ok(board);
+		return new ResponseEntity<>(boards, HttpStatus.OK);
 	}
 }

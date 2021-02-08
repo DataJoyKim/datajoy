@@ -1,7 +1,9 @@
 package com.d1.ws.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,6 +29,10 @@ public class Comment {
 	@Column(name = "comment_no")
 	private Long id;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "parent_comment_no")
+	private Comment parent;
+	
 	@Lob
 	@Column(name = "comment")
 	private String comment;
@@ -34,4 +40,7 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "board_no")
 	private Board board;
+
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 }

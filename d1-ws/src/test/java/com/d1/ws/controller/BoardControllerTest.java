@@ -32,7 +32,7 @@ public class BoardControllerTest extends BaseControllerTest{
 
 	@Test
 	public void getProjectBoardsTest() throws Exception {
-		this.mockMvc.perform(get("/api/projects/1/boards")
+		this.mockMvc.perform(get("/api/projects/1/boards/tree")
 			)
 			.andDo(print())
 			.andExpect(status().isOk());

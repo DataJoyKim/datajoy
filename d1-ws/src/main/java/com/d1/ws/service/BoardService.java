@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.d1.ws.domain.Board;
 import com.d1.ws.domain.Project;
+import com.d1.ws.dto.BoardDTO;
 
 public interface BoardService {
 
@@ -16,10 +17,10 @@ public interface BoardService {
 	Board getBoard(Long boardId);
 
 	/**
-	 * 프로젝트에 해당하는 게시글 모두 가져오기
+	 * 프로젝트에 해당하는 게시글 트리를 가져오기
 	 * @param projectId - 프로젝트 번호
 	 * @param params - 파라미터
 	 * @return 게시글 리스트
 	 */
-	List<Board> getProjectBoards(Project project, Map<String, String> params);
+	List<BoardDTO> getBoardsTree(Project project, Map<String, String> params);
 }

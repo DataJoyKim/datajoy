@@ -3,6 +3,7 @@ package com.d1.ws.domain;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,16 +64,7 @@ public class User {
     
     @Column(name="end_date", nullable = false)
     private LocalDateTime endDate;
-    
-    @Column(name="reg_user_id")
-    private Long regUserId;
-    
-    @Column(name="reg_date")
-    private LocalDateTime regDate;
-    
-    @Column(name="mod_user_id")
-    private Long modUserId;
-    
-    @Column(name="mod_date")
-    private LocalDateTime modDate;
+
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 }

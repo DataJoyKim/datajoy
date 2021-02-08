@@ -1,8 +1,7 @@
 package com.d1.ws.domain;
 
-import java.time.LocalDateTime;
-
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,16 +38,11 @@ public class Project {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "reg_date")
-    private LocalDateTime regDate;
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 	
-	@Column(name = "mod_user_id")
-	private Long modUserId;
-	
-	@Column(name = "mod_date")
-    private LocalDateTime modDate;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reg_user_id")
 	private User user;
 }

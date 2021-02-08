@@ -12,8 +12,8 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
-
+	<annotation-driven/>
+    
     <!-- @Autowired등 설정 잡을때 -->
     <context:annotation-config/>
     

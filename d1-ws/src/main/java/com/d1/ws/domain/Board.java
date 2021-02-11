@@ -20,7 +20,6 @@ import javax.persistence.Table;
 
 import com.d1.ws.code.BoardStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.EqualsAndHashCode;
@@ -46,12 +45,10 @@ public class Board {
 	@Column(name = "content")
 	private String content;
 	
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reg_user_id")
 	private User user;
 	
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_no")
 	private Project project;

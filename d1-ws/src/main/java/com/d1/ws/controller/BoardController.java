@@ -2,6 +2,7 @@ package com.d1.ws.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.d1.ws.domain.Board;
 import com.d1.ws.domain.Project;
 import com.d1.ws.dto.BoardDTO;
+import com.d1.ws.dto.BoardTreeDTO;
 import com.d1.ws.service.BoardService;
 import com.d1.ws.service.ProjectService;
 
@@ -34,7 +35,7 @@ public class BoardController {
 			//throw exception
 		}
 		
-		Board board = boardService.getBoard(boardId);
+		BoardDTO board = new BoardDTO(boardService.getBoard(boardId));
 		
 		//BoardResource boardResource = new BoardResource(board);
 		//boardResource.add(ControllerLinkBuilder.linkTo(BoardController.class).withRel("boards"));
@@ -48,7 +49,10 @@ public class BoardController {
 			//throw exception
 		}
 		
-		List<BoardDTO> boards = boardService.getBoardsTree(project, params);
+		List<BoardTreeDTO> boards = boardService.getBoardsTree(project, params)
+													.stream()
+													.map(o -> new BoardTreeDTO(o))
+													.collect(Collectors.toList());
 		
 		return new ResponseEntity<>(boards, HttpStatus.OK);
 	}

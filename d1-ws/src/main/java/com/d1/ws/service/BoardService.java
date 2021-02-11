@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.d1.ws.domain.Board;
 import com.d1.ws.domain.Project;
-import com.d1.ws.dto.BoardDTO;
 
 public interface BoardService {
 
@@ -22,5 +21,5 @@ public interface BoardService {
 	 * @param params - 파라미터
 	 * @return 게시글 리스트
 	 */
-	List<BoardDTO> getBoardsTree(Project project, Map<String, String> params);
+	List<Board> getBoardsTree(Project project, Map<String, String> params);
 }

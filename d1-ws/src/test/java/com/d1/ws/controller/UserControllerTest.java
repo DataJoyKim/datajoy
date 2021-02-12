@@ -24,7 +24,7 @@ public class UserControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void getUsersTest() throws Exception {
-		this.mockMvc.perform(get("/api/users")
+		this.mockMvc.perform(get("/api/v1/users")
 					.param("page", "0")
 					.param("size", "5")
 					.param("sort", "userId,DESC") //구현 필요

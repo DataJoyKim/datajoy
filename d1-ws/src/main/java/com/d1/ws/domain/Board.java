@@ -1,7 +1,7 @@
 package com.d1.ws.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -19,8 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d1.ws.code.BoardStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -53,14 +51,12 @@ public class Board {
 	@JoinColumn(name = "project_no")
 	private Project project;
 	
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_board_no")
 	private Board parent;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
-	private Set<Board> childList = new HashSet<>();	
+	@OneToMany(mappedBy = "parent")
+	private List<Board> childList = new ArrayList<>();	
 
 	@Embedded
 	private EntityCreateUpdateData entityCreateUpdateData;

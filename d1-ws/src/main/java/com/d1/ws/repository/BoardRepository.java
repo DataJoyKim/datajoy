@@ -13,17 +13,23 @@ import com.d1.ws.domain.Project;
 @Repository("BoardRepository")
 public interface BoardRepository extends JpaRepository<Board, Long>{
 
-	Board findById(Long id);
+	@Query(	"select b "
+			+ " from Board b"
+			+ " left join fetch b.project"
+			+ " left join fetch b.user"
+			+ " where b.id = :id")
+	Board findById(@Param("id") Long id);
 
 	List<Board> findByProject(Project project);
 
-	@Query(	"select distinct b "
+	@Query(	"select b "
 			+ " from Board b"
 			+ " left join fetch b.project"
 			+ " left join fetch b.user"
 			+ " left join fetch b.parent"
-			+ " left join fetch b.childList"
 			+ " where b.project = :project"
 			+ " and b.parent IS NULL")
 	List<Board> findBoardTreeByProject(@Param("project") Project project);
+
+	Board findByProjectAndId(Project project, Long id);
 }

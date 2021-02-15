@@ -15,7 +15,7 @@ public class BoardServiceImpl implements BoardService{
 	@Transactional(readOnly = true)
 	@Override
 	public Board findById(Long id) {
-		Board boards = boardRepository.findById(id);
+		Board boards = boardRepository.findById(id).get();
 		
 		return boards;
 	}

@@ -1,7 +1,5 @@
 package com.d1.ws.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,10 +14,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    public List<User> findUsersById(Long id) {
-        List<User> list = userRepository.findById(id);
-        
-        return list;
+    public User findUsersById(Long id) {
+        return userRepository.findById(id).get();
     }
 
 	@Override

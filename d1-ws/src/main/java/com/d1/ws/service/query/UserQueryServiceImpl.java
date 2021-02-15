@@ -1,8 +1,5 @@
 package com.d1.ws.service.query;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,10 +15,8 @@ public class UserQueryServiceImpl implements UserQueryService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UserDTO> findUsersById(Long id) {
-    	return userRepository.findById(id).stream()
-    									.map(o -> UserDTO.convert(o))
-    									.collect(Collectors.toList());
+    public UserDTO findUsersById(Long id) {
+    	return UserDTO.convert(userRepository.findById(id).get()); 
     }
 
 	@Override

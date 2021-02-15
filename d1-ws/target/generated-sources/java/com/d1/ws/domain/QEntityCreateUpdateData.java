@@ -1,18 +1,18 @@
 package com.d1.ws.domain;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.*;
 
-import com.mysema.query.types.path.*;
+import com.querydsl.core.types.dsl.*;
 
-import com.mysema.query.types.PathMetadata;
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import com.mysema.query.types.Path;
+import com.querydsl.core.types.Path;
 
 
 /**
  * QEntityCreateUpdateData is a Querydsl query type for EntityCreateUpdateData
  */
-@Generated("com.mysema.query.codegen.EmbeddableSerializer")
+@Generated("com.querydsl.codegen.EmbeddableSerializer")
 public class QEntityCreateUpdateData extends BeanPath<EntityCreateUpdateData> {
 
     private static final long serialVersionUID = 1408119998L;
@@ -31,7 +31,7 @@ public class QEntityCreateUpdateData extends BeanPath<EntityCreateUpdateData> {
         super(path.getType(), path.getMetadata());
     }
 
-    public QEntityCreateUpdateData(PathMetadata<?> metadata) {
+    public QEntityCreateUpdateData(PathMetadata metadata) {
         super(EntityCreateUpdateData.class, metadata);
     }
 

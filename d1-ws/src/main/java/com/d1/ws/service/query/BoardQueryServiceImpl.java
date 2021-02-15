@@ -29,7 +29,7 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	
 	@Override
 	public BoardDTO findBoard(Long id) {
-		BoardDTO board = BoardDTO.convert(boardRepository.findById(id));
+		BoardDTO board = BoardDTO.convert(boardRepository.findByIdQuerydsl(id));
 		
 		return board;
 	}

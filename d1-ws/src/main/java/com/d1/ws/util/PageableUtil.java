@@ -14,12 +14,12 @@ public class PageableUtil {
 		
 		if(sort == null) {
 			if(page != null && size != null) {
-				pageRequest = new PageRequest(Integer.valueOf(page), Integer.valueOf(size));
+				pageRequest = PageRequest.of(Integer.valueOf(page), Integer.valueOf(size));
 			}
 		}
 		else {
 			if(page != null && size != null) {
-				pageRequest = new PageRequest(Integer.valueOf(page), Integer.valueOf(size));
+				pageRequest = PageRequest.of(Integer.valueOf(page), Integer.valueOf(size));
 			}
 		}
 		return pageRequest;

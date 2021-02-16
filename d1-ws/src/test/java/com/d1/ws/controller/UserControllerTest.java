@@ -30,6 +30,6 @@ public class UserControllerTest extends BaseControllerTest {
 					.param("sort", "userId,DESC") //구현 필요
 				)
 				.andDo(print())
-				.andExpect(status().isOk());
+				.andExpect(status().isOk()); 
 	}
 }

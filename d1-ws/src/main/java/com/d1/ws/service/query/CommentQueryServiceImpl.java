@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.ws.domain.Board;
-import com.d1.ws.domain.Comment;
 import com.d1.ws.repository.CommentRepository;
 import com.d1.ws.service.dto.CommentDTO;
 
@@ -20,8 +19,7 @@ public class CommentQueryServiceImpl implements CommentQueryService {
 	
 	@Override
 	public Page<CommentDTO> findAll(Board board, PageRequest pageable) {
-		Page<Comment> comments = commentRepository.findAll(pageable);
-		return comments.map(o -> CommentDTO.convert(o));
+		return CommentDTO.convert(commentRepository.findAll(pageable));
 	}
 	
 }

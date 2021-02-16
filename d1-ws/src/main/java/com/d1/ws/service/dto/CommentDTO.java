@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 
 import com.d1.ws.domain.Comment;
 import com.d1.ws.domain.EntityCreateUpdateData;
@@ -34,5 +35,9 @@ public class CommentDTO {
 										.collect(Collectors.toList()));
 		
 		return commentDTO;
+	}
+
+	public static Page<CommentDTO> convert(Page<Comment> comments) {
+		return comments.map(o -> CommentDTO.convert(o));
 	}
 }

@@ -2,7 +2,6 @@ package com.d1.ws.service.query;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +20,12 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	
 	@Override
 	public List<BoardTreeDTO> findBoardsTree(Project project, Map<String, String> params) {
-		return boardRepository.findBoardTreeByProject(project)
-								.stream()
-								.map(o -> BoardTreeDTO.convert(o))
-								.collect(Collectors.toList());
+		return BoardDTO.convert(boardRepository.findBoardTreeByProject(project));
 	}
 	
 	@Override
 	public BoardDTO findBoard(Long id) {
-		BoardDTO board = BoardDTO.convert(boardRepository.findByIdQuerydsl(id));
-		
-		return board;
+		return BoardDTO.convert(boardRepository.findByIdQuerydsl(id));
 	}
 
 }

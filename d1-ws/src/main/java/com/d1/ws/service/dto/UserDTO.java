@@ -3,6 +3,7 @@ package com.d1.ws.service.dto;
 import java.time.LocalDateTime;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 
 import com.d1.ws.domain.EntityCreateUpdateData;
 import com.d1.ws.domain.User;
@@ -39,5 +40,9 @@ public class UserDTO {
 		UserDTO userDto = mapper.map(user, UserDTO.class);
 
 		return userDto;
+	}
+
+	public static Page<UserDTO> convert(Page<User> users) {
+		return users.map(o -> UserDTO.convert(o));
 	}
 }

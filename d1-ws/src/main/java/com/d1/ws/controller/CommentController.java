@@ -2,7 +2,6 @@ package com.d1.ws.controller;
 
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.http.HttpStatus;
@@ -20,13 +19,16 @@ import com.d1.ws.service.dto.CommentDTO;
 import com.d1.ws.service.query.CommentQueryService;
 import com.d1.ws.util.PageableUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping(produces = "application/hal+json")
+@RequiredArgsConstructor
 public class CommentController {
-	@Autowired
-	private CommentQueryService commentQueryService;
-	@Autowired
-	private BoardService boardService;
+	
+	private final CommentQueryService commentQueryService;
+
+	private final BoardService boardService;
 	
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> findAllComments(@PathVariable Long boardId, @RequestParam Map<String,String> params, PagedResourcesAssembler<CommentDTO> assembler){

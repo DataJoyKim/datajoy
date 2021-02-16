@@ -1,5 +1,8 @@
 package com.d1.ws.service.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 
 import com.d1.ws.code.BoardStatus;
@@ -30,5 +33,11 @@ public class BoardDTO {
 		boardDto.setProject(ProjectDTO.convert(board.getProject()));
 		
 		return boardDto;
+	}
+
+	public static List<BoardTreeDTO> convert(List<Board> boards) {
+		return boards.stream()
+				.map(o -> BoardTreeDTO.convert(o))
+				.collect(Collectors.toList());
 	}
 }

@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.d1.ws.domain.User;
 import com.d1.ws.repository.UserRepository;
 import com.d1.ws.service.dto.UserDTO;
 
@@ -21,7 +20,6 @@ public class UserQueryServiceImpl implements UserQueryService {
 
 	@Override
 	public Page<UserDTO> findAllUsers(PageRequest pageable) {
-		Page<User> users = userRepository.findAll(pageable);
-		return users.map(o -> UserDTO.convert(o));
+		return UserDTO.convert(userRepository.findAll(pageable));
 	}
 }

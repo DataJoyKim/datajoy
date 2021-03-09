@@ -56,11 +56,12 @@ public class BoardController {
 	@GetMapping("/api/v1/projects/{projectId}/boards/tree")
 	public ResponseEntity<?> getBoardsTree(@PathVariable Long projectId, @RequestParam Map<String, String> params, Errors errors) {
 		Project project = projectService.findProject(projectId);
-		
+		/*
 		boardValidator.validate(project, errors);
 		if(errors.hasErrors()) {
 			return ResponseEntity.badRequest().build();
 		}
+		*/
 		
 		List<BoardTreeDTO> boards = boardQueryService.getBoardsTree(project, params);
 		BoardResource resource = new BoardResource(boards);

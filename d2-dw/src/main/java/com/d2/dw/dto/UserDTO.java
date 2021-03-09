@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 
+import com.d2.dw.domain.EntityCreateUpdateData;
 import com.d2.dw.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -38,6 +39,8 @@ public class UserDTO {
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime endDate;
+	
+	private EntityCreateUpdateData entityCreateUpdateData;
 
 	public static UserDTO convert(User user) {
 		if(user == null) return null;

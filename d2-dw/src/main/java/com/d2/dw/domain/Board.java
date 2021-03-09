@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -40,7 +41,7 @@ public class Board {
 	
 	@Lob
 	@Column(name = "content")
-	private String conent;
+	private String content;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reg_user_id")
@@ -56,4 +57,7 @@ public class Board {
 	
 	@OneToMany(mappedBy = "parent")
 	private List<Board> childList = new ArrayList<>();
+
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 }

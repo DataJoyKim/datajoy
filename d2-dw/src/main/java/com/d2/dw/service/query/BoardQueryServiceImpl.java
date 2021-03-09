@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
@@ -12,6 +13,7 @@ import com.d2.dw.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional(readOnly = true)
 @Service("BoardQueryService")
 @RequiredArgsConstructor
 public class BoardQueryServiceImpl implements BoardQueryService{

@@ -30,9 +30,12 @@ public class BoardDTO {
 		if(board == null) return null;
 		
 		ModelMapper mapper = new ModelMapper();
+		
+		//Object Skip convert setting
 		mapper.createTypeMap(Board.class, BoardDTO.class)
 				.addMappings(mapping -> mapping.skip(BoardDTO::setUser))
 				.addMappings(mapping -> mapping.skip(BoardDTO::setProject));
+		
 		BoardDTO boardDto = mapper.map(board, BoardDTO.class);
 		
 		boardDto.setUser(UserDTO.convert(board.getUser()));

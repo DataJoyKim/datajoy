@@ -2,6 +2,7 @@ package com.d2.dw.dto;
 
 import org.modelmapper.ModelMapper;
 
+import com.d2.dw.domain.EntityCreateUpdateData;
 import com.d2.dw.domain.Project;
 
 import lombok.Getter;
@@ -15,6 +16,8 @@ public class ProjectDTO {
 	private String projectNm;
 	
 	private String description;
+	
+	private EntityCreateUpdateData entityCreateUpdateData;
 	
 	private UserDTO user;
 	

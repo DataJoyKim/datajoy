@@ -3,6 +3,7 @@ package com.d2.dw.domain;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -61,4 +62,6 @@ public class User {
 	@Column(name = "end_date")
 	private LocalDateTime endDate;
 	
+	@Embedded
+	private EntityCreateUpdateData entityCreateUpdateData;
 }

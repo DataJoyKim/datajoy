@@ -8,18 +8,25 @@ import org.modelmapper.ModelMapper;
 
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
+import com.d2.dw.domain.EntityCreateUpdateData;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 public class BoardTreeDTO {
+	
 	private Long id;
+	
 	private BoardStatus status;
+	
 	private String title;
+	
 	private String content;
 	
 	private List<BoardTreeDTO> childList = new ArrayList<>();	
+
+	private EntityCreateUpdateData entityCreateUpdateData;
 	
 	public static BoardTreeDTO convert(Board board) {
 		if(board == null) return null;

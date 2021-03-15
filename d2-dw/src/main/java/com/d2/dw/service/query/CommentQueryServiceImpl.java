@@ -1,10 +1,9 @@
 package com.d2.dw.service.query;
 
-import java.awt.print.Pageable;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.dto.CommentDTO;
@@ -12,6 +11,7 @@ import com.d2.dw.repository.CommentRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Transactional(readOnly = true)
 @Service("CommentQueryService")
 @RequiredArgsConstructor
 public class CommentQueryServiceImpl implements CommentQueryService {
@@ -20,10 +20,7 @@ public class CommentQueryServiceImpl implements CommentQueryService {
 	
 	@Override
 	public Page<CommentDTO> getCommentsByBoard(Board board, Pageable pageable) {
-		
-		PageRequest r = PageRequest.of(0, 10);
-		
-		return CommentDTO.convert(commentRepository.findByBoard(board, r));
+		return CommentDTO.convert(commentRepository.findByBoard(board, pageable));
 	}
 
 }

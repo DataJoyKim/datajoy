@@ -5,26 +5,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.MOCK)
-@AutoConfigureMockMvc
-class BoardControllerTest {
-	
-	@Autowired
-	MockMvc mockMvc;
+import com.d2.dw.common.BaseTest;
+
+class BoardControllerTest extends BaseTest { 
 	
 	@Test
-	public void getBoards() throws Exception {
-		this.mockMvc.perform(get("/api/v1/projects/1/boards/1")
+	@DisplayName("특정 게시글 가져오기 테스트")
+	public void getBoardTest() throws Exception {
+		mockMvc.perform(get("/api/v1/projects/1/boards/1")
 					)
 					.andDo(print())
 					.andExpect(status().isOk())
@@ -32,8 +23,9 @@ class BoardControllerTest {
 	}
 
 	@Test
-	public void getBoardTree() throws Exception {
-		this.mockMvc.perform(get("/api/v1/projects/1/boards/tree")
+	@DisplayName("게시글 트리 가져오기 테스트")
+	public void getBoardTreeTest() throws Exception {
+		mockMvc.perform(get("/api/v1/projects/1/boards/tree")
 					)
 					.andDo(print())
 					.andExpect(status().isOk())

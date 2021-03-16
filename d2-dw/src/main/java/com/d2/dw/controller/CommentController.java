@@ -36,6 +36,7 @@ public class CommentController {
 		}
 		
 		Page<CommentDTO> comments = commentQueryService.getCommentsByBoard(board, pageable);
+		
 		return new ResponseEntity<>(assembler.toModel(comments, e -> new CommentResource(e)), HttpStatus.OK);
 	}
 }

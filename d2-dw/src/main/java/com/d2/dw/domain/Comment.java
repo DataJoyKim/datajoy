@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.BatchSize;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +44,7 @@ public class Comment {
 	private Comment parent;
 	
 	@OneToMany(mappedBy = "parent")
+	@BatchSize(size = 100)
 	private List<Comment> childList = new ArrayList<>();
 
 	@Embedded

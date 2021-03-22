@@ -18,10 +18,8 @@ import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardTreeDTO;
 import com.d2.dw.resource.BoardResource;
-import com.d2.dw.service.BoardService;
 import com.d2.dw.service.ProjectService;
 import com.d2.dw.service.query.BoardQueryService;
-import com.d2.dw.validator.BoardValidator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,13 +29,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController {
 	
-	private final BoardService boardService;
+	//private final BoardService boardService;
 	
 	private final BoardQueryService boardQueryService;
 	
 	private final ProjectService projectService;
 	
-	private final BoardValidator boardValidator;
+	//private final BoardValidator boardValidator;
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> getBoard(@PathVariable Long projectId, @PathVariable Long boardId, @RequestParam Map<String, String> params) {

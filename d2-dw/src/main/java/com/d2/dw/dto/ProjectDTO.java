@@ -1,5 +1,8 @@
 package com.d2.dw.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 
 import com.d2.dw.domain.EntityCreateUpdateData;
@@ -32,5 +35,11 @@ public class ProjectDTO {
 		//projectDto.setUser(UserDTO.convert(project.get));
 		
 		return projectDto;
+	}
+
+	public static List<ProjectDTO> convert(List<Project> projects) {
+		return projects.stream()
+						.map(o -> ProjectDTO.convert(o))
+						.collect(Collectors.toList());
 	}
 }

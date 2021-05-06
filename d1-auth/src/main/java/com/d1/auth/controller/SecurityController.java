@@ -10,6 +10,7 @@ public class SecurityController {
 	
 	@GetMapping(value = "/auth/v1/")
 	public String getToken(Principal principal) {
+		System.out.println("인증된사용자 : ");
 		System.out.println(principal);
 		return "hello Spring security";
 	}

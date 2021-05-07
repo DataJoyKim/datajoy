@@ -37,7 +37,6 @@ public class SecurityController {
 		account.setGroupCd("01");
 		account.setRole("USER");
 		account.setUserNm("김낙영2");
-		account.setId((long) 2);
 		accountService.createNew(account);
 		
 		return "account create successful";

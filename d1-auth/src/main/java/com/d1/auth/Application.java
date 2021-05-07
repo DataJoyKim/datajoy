@@ -11,7 +11,7 @@ public class Application {
 	
 	/**
 	 * 스프링 시큐리티 패스워드 인코딩
-	 * @return
+	 * @return 인코딩전략 bean 등록
 	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {

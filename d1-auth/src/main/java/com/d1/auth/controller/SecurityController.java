@@ -29,14 +29,14 @@ public class SecurityController {
 		return "hello Spring security";
 	}
 	
-	@GetMapping(value = "/auth/v1/{username}/{password}")
-	public String getCreate(@PathVariable String username,@PathVariable String password) {
+	@GetMapping(value = "/auth/v1/{username}/{password}/{name}/{role}")
+	public String getCreate(@PathVariable String username, @PathVariable String password, @PathVariable String name, @PathVariable String role) {
 		Account account = new Account();
 		account.setEmail(username);
 		account.setPassword(password);
 		account.setGroupCd("01");
-		account.setRole("USER");
-		account.setUserNm("김낙영2");
+		account.setRole(role);
+		account.setUserNm(name);
 		accountService.createNew(account);
 		
 		return "account create successful";

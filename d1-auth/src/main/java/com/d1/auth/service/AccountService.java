@@ -38,4 +38,9 @@ public class AccountService implements UserDetailsService {
 		account.encodePassword(passwordEncoder);
 		return accountRepositroy.save(account);
 	}
+	
+	public Account findByEmail(String username) {
+		Account account = accountRepositroy.findByEmail(username);
+		return account;
+	}
 }

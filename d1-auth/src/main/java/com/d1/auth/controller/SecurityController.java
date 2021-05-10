@@ -29,6 +29,11 @@ public class SecurityController {
 		return "hello Spring security";
 	}
 	
+	@GetMapping(value = "/auth/v1/user/{username}")
+	public Account getUser(@PathVariable String username) {
+		return accountService.findByEmail(username);
+	}
+	
 	@GetMapping(value = "/auth/v1/{username}/{password}/{name}/{role}")
 	public String getCreate(@PathVariable String username, @PathVariable String password, @PathVariable String name, @PathVariable String role) {
 		Account account = new Account();

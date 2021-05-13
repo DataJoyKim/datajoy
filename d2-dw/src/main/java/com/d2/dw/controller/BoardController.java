@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,6 +66,20 @@ public class BoardController {
 		List<BoardTreeDTO> boards = boardQueryService.getBoardsTree(project, params);
 		BoardResource resource = new BoardResource(boards);
 		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+	
+	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
+	public ResponseEntity<?> saveBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			//throw exception
+		}
+		
+		BoardDTO board = boardQueryService.getBoard(boardId);
+		
+		BoardResource resource = new BoardResource(board);
+		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 }

@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.mvcMatchers("/auth/v1/test").hasRole("ADMIN")
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.anyRequest().authenticated();
+		http.formLogin(); // form login 인증방식 사용
+		http.httpBasic(); // http basic 인증방식 사용
 	}
 	
 	@Override

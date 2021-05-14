@@ -30,4 +30,10 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 		return BoardDTO.convert(boardRepository.findBoardTreeByProject(project));
 	}
 
+	@Override
+	public BoardDTO saveBoard(Long boardId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

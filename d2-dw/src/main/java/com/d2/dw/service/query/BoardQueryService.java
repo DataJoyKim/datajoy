@@ -13,4 +13,6 @@ public interface BoardQueryService {
 
 	List<BoardTreeDTO> getBoardsTree(Project project, Map<String, String> params);
 
+	BoardDTO saveBoard(Long boardId);
+
 }

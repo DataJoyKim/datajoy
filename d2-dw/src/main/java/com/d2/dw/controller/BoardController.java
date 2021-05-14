@@ -76,7 +76,7 @@ public class BoardController {
 			//throw exception
 		}
 		
-		BoardDTO board = boardQueryService.getBoard(boardId);
+		BoardDTO board = boardQueryService.saveBoard(boardId);
 		
 		BoardResource resource = new BoardResource(board);
 		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));

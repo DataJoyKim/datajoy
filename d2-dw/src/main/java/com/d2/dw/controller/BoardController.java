@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardTreeDTO;
@@ -75,11 +76,10 @@ public class BoardController {
 		if(project == null) {
 			//throw exception
 		}
+		BoardDTO boardDto = boardQueryService.getBoard(boardId);
 		
-		BoardDTO board = boardQueryService.saveBoard(boardId);
+		Board board = boardQueryService.saveBoard(null);
 		
-		BoardResource resource = new BoardResource(board);
-		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 }

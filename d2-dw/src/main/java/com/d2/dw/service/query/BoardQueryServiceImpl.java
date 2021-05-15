@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardTreeDTO;
@@ -31,9 +32,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public BoardDTO saveBoard(Long boardId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Board saveBoard(Board board) {
+		return boardRepository.save(board);
 	}
 
 }

@@ -80,6 +80,6 @@ public class BoardController {
 		
 		Board board = boardQueryService.saveBoard(null);
 		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		return null;
 	}
 }

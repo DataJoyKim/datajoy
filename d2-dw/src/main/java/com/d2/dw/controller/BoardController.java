@@ -8,6 +8,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,6 +73,19 @@ public class BoardController {
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> saveBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			//throw exception
+		}
+		BoardDTO boardDto = boardQueryService.getBoard(boardId);
+		
+		Board board = boardQueryService.saveBoard(null);
+		
+		return null;
+	}
+	
+	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
+	public ResponseEntity<?> deleteBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception

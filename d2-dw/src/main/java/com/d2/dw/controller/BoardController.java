@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -86,6 +87,19 @@ public class BoardController {
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> deleteBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			//throw exception
+		}
+		BoardDTO boardDto = boardQueryService.getBoard(boardId);
+		
+		Board board = boardQueryService.saveBoard(null);
+		
+		return null;
+	}
+	
+	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
+	public ResponseEntity<?> putBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception

@@ -36,4 +36,9 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 		return boardRepository.save(board);
 	}
 
+	@Override
+	public void deleteBoard(Board board) {
+		boardRepository.delete(board);;
+	}
+
 }

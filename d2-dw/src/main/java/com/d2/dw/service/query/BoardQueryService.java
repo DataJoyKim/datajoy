@@ -16,4 +16,6 @@ public interface BoardQueryService {
 
 	Board saveBoard(Board board);
 
+	void deleteBoard(Board board);
+
 }

@@ -106,7 +106,7 @@ public class BoardController {
 		}
 		BoardDTO boardDto = boardQueryService.getBoard(boardId);
 		
-		Board board = boardQueryService.saveBoard(null);
+		boardQueryService.deleteBoard(null);
 		
 		return null;
 	}

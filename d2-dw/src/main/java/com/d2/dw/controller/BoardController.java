@@ -81,8 +81,8 @@ public class BoardController {
 		BoardDTO boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
-		
-		return null;
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
@@ -94,8 +94,8 @@ public class BoardController {
 		BoardDTO boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
-		
-		return null;
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
@@ -107,7 +107,7 @@ public class BoardController {
 		BoardDTO boardDto = boardQueryService.getBoard(boardId);
 		
 		boardQueryService.deleteBoard(null);
-		
-		return null;
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

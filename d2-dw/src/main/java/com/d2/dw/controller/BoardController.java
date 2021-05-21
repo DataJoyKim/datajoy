@@ -73,7 +73,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> saveBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+	public ResponseEntity<?> saveBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody BoardDTO params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception
@@ -86,7 +86,7 @@ public class BoardController {
 	}
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> deleteBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+	public ResponseEntity<?> deleteBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody BoardDTO params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception
@@ -99,7 +99,7 @@ public class BoardController {
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> putBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody Map<String, String> params) {
+	public ResponseEntity<?> putBoardsTree(@PathVariable Long projectId, @PathVariable Long boardId, @RequestBody BoardDTO params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception

@@ -33,6 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.anyRequest().authenticated();
 	    
+	    http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                UsernamePasswordAuthenticationFilter.class);
+	    
 		//http.formLogin(); // form login 인증방식 사용
 		//http.httpBasic(); // http basic 인증방식 사용
 	}

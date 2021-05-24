@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.d1.auth.jwt.JwtAuthenticationFilter;
+import com.d1.auth.jwt.JwtTokenProvider;
 import com.d1.auth.service.AccountService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private final AccountService accountService;
+	
+	private final JwtTokenProvider jwtTokenProvider;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -33,8 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.anyRequest().authenticated();
 	    
-	    http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
-                UsernamePasswordAuthenticationFilter.class);
+	    http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 	    
 		//http.formLogin(); // form login 인증방식 사용
 		//http.httpBasic(); // http basic 인증방식 사용

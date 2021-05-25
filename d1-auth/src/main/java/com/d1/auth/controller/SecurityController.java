@@ -1,9 +1,10 @@
 package com.d1.auth.controller;
 
-import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.auth.domain.Account;
@@ -16,16 +17,26 @@ import lombok.RequiredArgsConstructor;
 public class SecurityController {
 	
 	private final AccountService accountService;
-	
-	@GetMapping(value = "/auth/v1/")
-	public String getToken(Principal principal) {
-		System.out.println("인증된사용자 : ");
-		System.out.println(principal);
+
+	@GetMapping(value = "/auth/v1/login")
+	public String login(@RequestParam Map<String, String> params) {
+		//인증
+		
+		//JWT Token 발급
+		
 		return "hello Spring security";
 	}
 
-	@GetMapping(value = "/auth/v1/test")
-	public String getTest() {
+	@GetMapping(value = "/auth/v1/sso")
+	public String sso(@RequestParam Map<String, String> params) {
+		// target token 가져오기
+		
+		// target 인증 api 호출 
+		
+		// 성공 시 인증
+		
+		// JWT Token 발급
+		
 		return "hello Spring security";
 	}
 	

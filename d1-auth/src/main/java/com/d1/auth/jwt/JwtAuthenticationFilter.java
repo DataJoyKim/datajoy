@@ -15,7 +15,7 @@ import org.springframework.web.filter.GenericFilterBean;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends GenericFilterBean{
+public class JwtAuthenticationFilter extends GenericFilterBean {
 	
 	private final JwtTokenProvider jwtTokenProvider;
 	

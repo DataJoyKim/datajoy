@@ -27,17 +27,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.httpBasic().disable() // REST API만을 고려, 기본 설정 해제
-	        .csrf().disable() // csrf 미사용
-	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // 세션사용하지 않음
 		
+		/* request path 제한 */
 	    http.authorizeRequests()
 			.mvcMatchers("/auth/v1/").permitAll()
 			.mvcMatchers("/auth/v1/test").hasRole("ADMIN")
 			.mvcMatchers("/admin").hasRole("ADMIN")
 			.anyRequest().authenticated();
 	    
-	    http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+	    /* jwt 설정 */
+		http.httpBasic().disable() // REST API만을 고려, 기본 설정 해제
+	        .csrf().disable() // csrf 미사용
+	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션사용하지 않음
+			.and()
+			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt filter add
 	    
 		//http.formLogin(); // form login 인증방식 사용
 		//http.httpBasic(); // http basic 인증방식 사용

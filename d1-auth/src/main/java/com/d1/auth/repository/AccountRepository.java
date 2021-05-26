@@ -10,4 +10,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
 	Account findByEmail(String username);
 
+	Account findByEmailAndPassword(String username, String password);
 }

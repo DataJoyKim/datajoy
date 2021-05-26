@@ -2,13 +2,18 @@ package com.d1.auth.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.auth.domain.Account;
-import com.d1.auth.service.AccountService;
+import com.d1.auth.dto.SecurityDto.LoginRequest;
+import com.d1.auth.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,15 +21,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityController {
 	
-	private final AccountService accountService;
+	private final JwtTokenProvider jwtTokenProvider;
 
-	@GetMapping(value = "/auth/v1/login")
-	public String login(@RequestParam Map<String, String> params) {
-		//인증
+	@PostMapping(value = "/auth/v1/login")
+	public ResponseEntity<?> login(@RequestBody LoginRequest params, HttpServletResponse response) {
+		// 인증
+		Account account = jwtTokenProvider.authentication(params.getUsername(), params.getPassword());
+		if(account == null) {
+			//AUTHENTICATION_FAILED
+			return ResponseEntity.badRequest().build();
+		}
 		
-		//JWT Token 발급
+		// Token 생성
+		String token = jwtTokenProvider.createToken(account);
+		if(token == null) {
+			// CREATE_TOKEN_FAILED
+			return ResponseEntity.noContent().build();
+		}
 		
-		return "hello Spring security";
+		// Token header 세팅
+		jwtTokenProvider.setTokenIn(response, token);
+        
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping(value = "/auth/v1/sso")
@@ -38,23 +56,5 @@ public class SecurityController {
 		// JWT Token 발급
 		
 		return "hello Spring security";
-	}
-	
-	@GetMapping(value = "/auth/v1/user/{username}")
-	public Account getUser(@PathVariable String username) {
-		return accountService.findByEmail(username);
-	}
-	
-	@GetMapping(value = "/auth/v1/{username}/{password}/{name}/{role}")
-	public String getCreate(@PathVariable String username, @PathVariable String password, @PathVariable String name, @PathVariable String role) {
-		Account account = new Account();
-		account.setEmail(username);
-		account.setPassword(password);
-		account.setGroupCd("01");
-		account.setRole(role);
-		account.setUserNm(name);
-		accountService.createNew(account);
-		
-		return "account create successful";
 	}
 }

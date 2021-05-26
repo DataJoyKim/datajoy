@@ -43,4 +43,9 @@ public class AccountService implements UserDetailsService {
 		Account account = accountRepositroy.findByEmail(username);
 		return account;
 	}
+
+	
+	public Account authentication(String username, String password) {
+		return accountRepositroy.findByEmailAndPassword(username, password);
+	}
 }

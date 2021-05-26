@@ -2,16 +2,17 @@ package com.d1.auth.jwt;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.d1.auth.domain.Account;
 import com.d1.auth.service.AccountService;
 
 import io.jsonwebtoken.Claims;
@@ -41,13 +42,12 @@ public class JwtTokenProvider {
 	
 	/**
 	 * 토큰 생성
-	 * @param username - unique한 user key값. subject로 사용.
-	 * @param roles - 권한.
-	 * @return
+	 * @param account - 계정정보
+	 * @return token
 	 */
-	public String createToken(String username, List<String> roles) {
-	    Claims claims = Jwts.claims().setSubject(username);
-	    claims.put("roles", roles);
+	public String createToken(Account account) {
+	    Claims claims = Jwts.claims().setSubject(account.getEmail());
+	    claims.put("role", account.getRole());
 	    Date now = new Date();
 	    return Jwts.builder()
 		            .setClaims(claims) // 정보 저장
@@ -57,7 +57,11 @@ public class JwtTokenProvider {
 		            .compact();
 	}
 	
-	// JWT 토큰에서 인증 정보 조회
+	/**
+	 * 인증정보 가져오기
+	 * @param token
+	 * @return 인증정보
+	 */
 	public Authentication getAuthentication(String token) {
 		String username = getSubject(token);
 	    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -73,9 +77,22 @@ public class JwtTokenProvider {
 	    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 	
-	// Request의 Header에서 token 값을 가져옴. "X-AUTH-TOKEN" : "TOKEN값'
+	/**
+	 * Request의 Header에서 Token 값을 가져옴
+	 * @param request
+	 * @return token
+	 */
 	public String resolveToken(HttpServletRequest request) {
-	    return request.getHeader("X-AUTH-TOKEN");
+	    return request.getHeader("Authorization");
+	}
+	
+	/**
+	 * response header에 Token 셋팅
+	 * @param response
+	 * @param token
+	 */
+	public void setTokenIn(HttpServletResponse response, String token) {
+        response.setHeader("Authorization", token);
 	}
 	
 	/**
@@ -92,5 +109,15 @@ public class JwtTokenProvider {
 	    catch (Exception e) {
 	        return false;
 	    }
+	}
+
+	/**
+	 * 인증
+	 * @param username
+	 * @param password
+	 * @return 인증정보
+	 */
+	public Account authentication(String username, String password) {
+		return userDetailsService.authentication(username, password);
 	}
 }

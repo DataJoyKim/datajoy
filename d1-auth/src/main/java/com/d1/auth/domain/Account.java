@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Account {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", columnDefinition = "INTEGER")
 	private Long id;
 	
 	@Column(name = "group_cd")

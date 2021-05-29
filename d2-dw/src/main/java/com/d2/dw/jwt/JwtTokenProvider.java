@@ -67,6 +67,9 @@ public class JwtTokenProvider {
 	 * @return 인증정보
 	 */
 	public Authentication getAuthentication(String token) {
+
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        
 		String username = getSubject(token);
 	    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 	    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());

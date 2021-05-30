@@ -69,10 +69,10 @@ public class JwtTokenProvider {
 	public Authentication getAuthentication(String token) {
 
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        
+        System.out.println(claims);
 		String username = getSubject(token);
 	    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-	    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+	    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	}
 	
 	/**

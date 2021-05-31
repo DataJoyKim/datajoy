@@ -81,6 +81,7 @@ public class JwtTokenProvider {
 	 * @return subject
 	 */
 	public String getSubject(String token) {
+		
 	    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 	

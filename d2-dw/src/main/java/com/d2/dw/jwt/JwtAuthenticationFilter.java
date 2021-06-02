@@ -32,7 +32,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         else {
-        	throw new UnauthorizedException();
         }	
         
         chain.doFilter(request, response);

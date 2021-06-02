@@ -1,6 +1,5 @@
 package com.d1.auth.service;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.d1.auth.domain.Account;
+import com.d1.auth.domain.UserAccount;
 import com.d1.auth.repository.AccountRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,11 +27,7 @@ public class AccountService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		return User.builder()
-				.username(account.getEmail())
-				.password(account.getPassword())
-				.roles(account.getRole())
-				.build();
+		return new UserAccount(account);
 	}
 	
 	public Account createNew(Account account) {

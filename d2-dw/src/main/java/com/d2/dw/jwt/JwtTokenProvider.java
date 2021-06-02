@@ -1,6 +1,5 @@
 package com.d2.dw.jwt;
 
-import java.security.SignatureException;
 import java.util.Base64;
 import java.util.Date;
 
@@ -13,13 +12,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.d1.auth.domain.Account;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 
@@ -46,10 +44,13 @@ public class JwtTokenProvider {
 	public Authentication getAuthentication(String token) {
 
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-        System.out.println(claims);
 		String username = getSubject(token);
+		
+		Account account = new Account();
+		account.setEmail(username);
+		UserDetails userDetails = new UserAccount(account);
 	    
-	    return null;
+	    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	}
 	
 	/**
@@ -112,15 +113,5 @@ public class JwtTokenProvider {
 	    catch (IllegalArgumentException e) {  
 	    	return false;
 	    }
-	}
-
-	/**
-	 * 인증
-	 * @param username
-	 * @param password
-	 * @return 인증정보
-	 */
-	public Account authentication(String username, String password) {
-		return userDetailsService.authentication(username, password);
 	}
 }

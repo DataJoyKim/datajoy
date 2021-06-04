@@ -12,8 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.d1.auth.domain.Account;
-import com.d1.auth.service.AccountService;
+import com.d1.auth.jwt.domain.Account;
+import com.d1.auth.jwt.service.AccountService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -65,7 +65,7 @@ public class JwtTokenProvider {
 	public Authentication getAuthentication(String token) {
 		String username = getSubject(token);
 	    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-	    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+	    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	}
 	
 	/**

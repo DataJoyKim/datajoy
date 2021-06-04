@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.d1.auth.jwt.JwtAuthenticationFilter;
 import com.d1.auth.jwt.JwtTokenProvider;
-import com.d1.auth.service.AccountService;
+import com.d1.auth.jwt.service.AccountService;
 
 import lombok.RequiredArgsConstructor;
 

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.d1.auth.domain.Account;
 import com.d1.auth.dto.SecurityDto.LoginRequest;
 import com.d1.auth.jwt.JwtTokenProvider;
+import com.d1.auth.jwt.domain.Account;
 
 import lombok.RequiredArgsConstructor;
 

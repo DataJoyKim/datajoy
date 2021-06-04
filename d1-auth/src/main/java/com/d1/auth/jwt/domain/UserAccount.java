@@ -1,4 +1,4 @@
-package com.d1.auth.domain;
+package com.d1.auth.jwt.domain;
 
 import java.util.Arrays;
 

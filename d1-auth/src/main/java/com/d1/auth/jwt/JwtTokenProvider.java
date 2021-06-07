@@ -92,7 +92,7 @@ public class JwtTokenProvider {
 	 * @param token
 	 */
 	public void setTokenIn(HttpServletResponse response, String token) {
-        response.setHeader("Authorization", token);
+        response.setHeader("Authorization", token); 
 	}
 	
 	/**

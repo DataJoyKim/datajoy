@@ -1,5 +1,6 @@
 package com.d2.dw.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class BoardController {
 	//private final BoardValidator boardValidator;
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> getBoard(@PathVariable Long projectId, @PathVariable Long boardId, @RequestParam Map<String, String> params) {
+	public ResponseEntity<?> getBoard(Principal principal, @PathVariable Long projectId, @PathVariable Long boardId, @RequestParam Map<String, String> params) {
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			//throw exception

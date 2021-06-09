@@ -1,4 +1,4 @@
-package com.d1.auth.jwt.domain;
+package com.d1.auth.jwt;
 
 import java.time.LocalDateTime;
 

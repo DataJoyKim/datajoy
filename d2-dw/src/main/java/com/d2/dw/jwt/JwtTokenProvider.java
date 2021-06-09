@@ -42,7 +42,6 @@ public class JwtTokenProvider {
 	 * @return 인증정보
 	 */
 	public Authentication getAuthentication(String token) {
-
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
 		String username = getSubject(token);
 		
@@ -59,7 +58,6 @@ public class JwtTokenProvider {
 	 * @return subject
 	 */
 	public String getSubject(String token) {
-		
 	    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
 	}
 	

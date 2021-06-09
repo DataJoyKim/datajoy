@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class UserAccount extends User {
+	private static final long serialVersionUID = -6515370828600235883L;
 	
 	private Account account;
 	

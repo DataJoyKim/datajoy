@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.auth.dto.SecurityDto.LoginRequest;
-import com.d1.auth.jwt.JwtTokenProvider;
-import com.d1.auth.jwt.domain.Account;
+import com.d1.auth.jwt.Account;
+import com.d1.auth.jwt.JwtTokenGenerator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,26 +21,26 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityController {
 	
-	private final JwtTokenProvider jwtTokenProvider;
+	private final JwtTokenGenerator jwtTokenGenerator;
 
 	@PostMapping(value = "/auth/v1/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest params, HttpServletResponse response) {
 		// 인증
-		Account account = jwtTokenProvider.authentication(params.getUsername(), params.getPassword());
+		Account account = jwtTokenGenerator.authentication(params.getUsername(), params.getPassword());
 		if(account == null) {
 			//AUTHENTICATION_FAILED
 			return ResponseEntity.badRequest().build();
 		}
 		
 		// Token 생성
-		String token = jwtTokenProvider.createToken(account);
+		String token = jwtTokenGenerator.createToken(account);
 		if(token == null) {
 			// CREATE_TOKEN_FAILED
 			return ResponseEntity.noContent().build();
 		}
 		
 		// Token header 세팅
-		jwtTokenProvider.setTokenIn(response, token);
+		jwtTokenGenerator.setTokenIn(response, token);
         
 		return ResponseEntity.ok().build();
 	}

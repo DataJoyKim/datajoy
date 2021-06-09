@@ -1,4 +1,4 @@
-package com.d1.auth.jwt.service;
+package com.d1.auth.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -6,9 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.d1.auth.jwt.domain.Account;
 import com.d1.auth.jwt.domain.UserAccount;
-import com.d1.auth.jwt.repository.AccountRepository;
 
 import lombok.RequiredArgsConstructor;
 

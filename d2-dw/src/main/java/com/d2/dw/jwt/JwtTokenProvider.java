@@ -47,6 +47,8 @@ public class JwtTokenProvider {
 		
 		Account account = new Account();
 		account.setEmail(username);
+		account.setPassword("rlaskrdud1!");
+		account.setRole((String) claims.getBody().get("role"));
 		UserDetails userDetails = new UserAccount(account);
 	    
 	    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

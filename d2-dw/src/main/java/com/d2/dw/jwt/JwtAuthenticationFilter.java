@@ -31,6 +31,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         else {
+        	System.out.println("***** token valid failed ********");
         }	
         
         chain.doFilter(request, response);

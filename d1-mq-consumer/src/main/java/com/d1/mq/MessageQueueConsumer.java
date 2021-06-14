@@ -10,5 +10,6 @@ public class MessageQueueConsumer {
     @RabbitListener(queues = "${myconfig.queuename}")
     public void processMessage(Message message) {
         System.out.println(message);
+        System.out.println("test : "+message);
     }
 }

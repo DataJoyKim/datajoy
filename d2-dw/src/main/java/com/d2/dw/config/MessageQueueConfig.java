@@ -8,21 +8,16 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class MessageQueueConfig {
 	
-	@Value("${myconfig.queuename}")
-    private String queueName;
-
-	@Value("${myconfig.exchangename}")
-    private String exchangeName;
-	
-	@Value("${myconfig.routingkey}")
-	private String routingKey;
+	private final MessageQueuePolicy messageQueuePolicy;
     
     /**
      * rabbitMQ Queue 설정.
@@ -30,7 +25,7 @@ public class MessageQueueConfig {
      */
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(messageQueuePolicy.getQueueName(), false);
     }
 
     /**
@@ -39,7 +34,7 @@ public class MessageQueueConfig {
      */
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(exchangeName);
+        return new TopicExchange(messageQueuePolicy.getExchangeName());
     }
 
     /**
@@ -50,7 +45,7 @@ public class MessageQueueConfig {
      */
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+        return BindingBuilder.bind(queue).to(exchange).with(messageQueuePolicy.getRoutingKey());
     }
 
     /**

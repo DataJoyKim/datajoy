@@ -21,6 +21,7 @@ public class MessageQueueController {
 		String message = "message queue test";
 		System.out.println(message);
 		rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
+		System.out.println("mq call after...");
 	}
 	
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class MessageQueueConsumer {
 	
     @RabbitListener(queues = "${myconfig.queuename}")
-    public void processMessage(Message message) {
+    public void processMessage(Message message) throws Exception {
         System.out.println(message);
         System.out.println("test : "+message);
     }

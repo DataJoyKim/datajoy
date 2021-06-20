@@ -25,7 +25,7 @@ public class MessageQueueConfig {
      */
     @Bean
     Queue queue() {
-        return new Queue(messageQueuePolicy.getQueueName(), false);
+        return new Queue(messageQueuePolicy.getQueueName(), true);
     }
 
     /**
@@ -34,7 +34,7 @@ public class MessageQueueConfig {
      */
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(messageQueuePolicy.getExchangeName());
+        return new TopicExchange(messageQueuePolicy.getExchangeName(), true, false);
     }
 
     /**
@@ -62,6 +62,10 @@ public class MessageQueueConfig {
         return rabbitTemplate;
     }
 
+    /**
+     * Object 메시지를 Json 타입으로 변환
+     * @return
+     */
     @Bean
     MessageConverter messageConverter() {
         return new Jackson2JsonMessageConverter();

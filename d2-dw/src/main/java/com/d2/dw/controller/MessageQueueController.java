@@ -18,9 +18,11 @@ public class MessageQueueController {
 	
 	@GetMapping(value="/api/queue/test")
 	public void getMessageQueueTest() {
-		String message = "message queue test";
-		System.out.println(message);
-		rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
+		for(int i=0; i<10000; i++) {
+			String message = "message queue test_"+i;
+			System.out.println(message);
+			rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
+		}
 		System.out.println("mq call after...");
 	}
 	

@@ -30,7 +30,7 @@ public class MessageQueueFilter implements Filter {
 		// HttpReuqest Wrapper
 		
 		// message queue send
-		String message = "message queue test";
+		String message = "message queue test"; 
 		try {
 			rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
 		}

@@ -28,6 +28,7 @@ public class MessageQueueFilter implements Filter {
 			throws IOException, ServletException {
 		
 		// HttpReuqest Wrapper
+		System.out.println("Filter test sucess");
 		
 		// message queue send
 		String message = "message queue test"; 

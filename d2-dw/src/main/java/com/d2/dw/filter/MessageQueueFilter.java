@@ -9,26 +9,24 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.stereotype.Component;
 
 import com.d2.dw.config.MessageQueuePolicy;
 
 import lombok.RequiredArgsConstructor;
 
-@Component
 @RequiredArgsConstructor
 public class MessageQueueFilter implements Filter {
 
 	private final RabbitTemplate rabbitTemplate;
 	
 	private final MessageQueuePolicy messageQueuePolicy;
-
+	
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		
+		System.out.println("Filter Enter !!!");
 		// HttpReuqest Wrapper
-		System.out.println("Filter test sucess");
+		System.out.println(request);
 		
 		// message queue send
 		String message = "message queue test"; 

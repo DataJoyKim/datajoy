@@ -27,9 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 세션사용하지 않음
 	        .and()
 	        .authorizeRequests()
-			.mvcMatchers("/").permitAll()
+			.mvcMatchers("/**").permitAll()
 			.mvcMatchers("/admin").hasRole("ADMIN")
-			.anyRequest().authenticated() 
+			.anyRequest().authenticated()
 			.and()
 			.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); // jwt filter add
 	}

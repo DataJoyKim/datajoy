@@ -10,9 +10,9 @@ public class SendMessage {
 	
 	private Integer port;
 	
-	private String requestPath;
+	private String requestPath; 
 	
-	private String remoteIp;
+	private String remoteIp; 
 	
 	private String remoteHost;
 	

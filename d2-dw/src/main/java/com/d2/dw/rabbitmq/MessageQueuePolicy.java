@@ -1,4 +1,4 @@
-package com.d2.dw.config;
+package com.d2.dw.rabbitmq;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

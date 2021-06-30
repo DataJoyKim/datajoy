@@ -1,6 +1,5 @@
 package com.d1.mq;
 
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class MessageQueueConsumer {
 	
     @RabbitListener(queues = "${myconfig.queuename}")
-    public void processMessage(Message message) throws Exception {
+    public void processMessage(SendMessage message) throws Exception {
         System.out.println(message);
         System.out.println("test : "+message);
     }

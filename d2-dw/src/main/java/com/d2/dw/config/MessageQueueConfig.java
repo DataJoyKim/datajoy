@@ -8,11 +8,10 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.d2.dw.filter.MessageQueueFilter;
+import com.d2.dw.rabbitmq.MessageQueuePolicy;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,18 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class MessageQueueConfig {
 	
 	private final MessageQueuePolicy messageQueuePolicy;
-	
-	/**
-	 * Message Queue Filter 등록
-	 * @return
-	 */
-	@Bean
-	public FilterRegistrationBean<MessageQueueFilter> getFilterRegistrationBean() {
-		System.out.println("Filter 등록");
-		FilterRegistrationBean<MessageQueueFilter> registrationBean = new FilterRegistrationBean<>(new MessageQueueFilter(new RabbitTemplate(), messageQueuePolicy));
-		registrationBean.addUrlPatterns("/*");
-		return registrationBean;
-	}
     
     /**
      * rabbitMQ Queue 설정.

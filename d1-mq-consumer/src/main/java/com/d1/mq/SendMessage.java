@@ -12,7 +12,7 @@ public class SendMessage {
 	
 	private String remoteHost;
 	
-	private String requestBody;
+	private String requestBody; 
 	
 	private String userId;
 }

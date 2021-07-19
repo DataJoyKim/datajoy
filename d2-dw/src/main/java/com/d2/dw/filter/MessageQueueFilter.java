@@ -28,9 +28,11 @@ public class MessageQueueFilter implements Filter {
 	private final MessageQueuePolicy messageQueuePolicy;
 	
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("Filter Enter !!!");
+		// get authentication
+		// TODO
+		
 		// message setting
 		SendMessage message = new SendMessage();
 		message.setDomain(request.getServerName());

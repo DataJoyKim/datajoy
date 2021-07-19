@@ -15,4 +15,6 @@ public class SendMessage {
 	private String requestBody; 
 	
 	private String userId;
+	
+	
 }

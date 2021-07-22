@@ -33,6 +33,8 @@ public class MessageQueueFilter implements Filter {
 		// get authentication
 		// TODO
 		
+		System.out.println(getRequestBody(request));
+		
 		// message setting
 		SendMessage message = new SendMessage();
 		message.setDomain(request.getServerName());

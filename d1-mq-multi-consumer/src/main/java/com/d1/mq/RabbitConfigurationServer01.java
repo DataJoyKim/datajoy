@@ -10,7 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
+@Profile("prod")
 @Configuration
 @ConfigurationProperties("spring.rabbitmq.server01")
 public class RabbitConfigurationServer01 extends RabbitConfiguration {

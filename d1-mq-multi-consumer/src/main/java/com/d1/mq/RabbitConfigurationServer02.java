@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainer
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
+@Profile("prod")
 @Configuration
 @ConfigurationProperties("spring.rabbitmq.server02")
 public class RabbitConfigurationServer02 extends RabbitConfiguration {

@@ -9,11 +9,12 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
 import com.d2.dw.rabbitmq.MessageQueuePolicy;
 import com.d2.dw.rabbitmq.SendMessage;
-import com.d2.dw.util.ServletRequestUtil;
+import com.d2.dw.util.RequestParseUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +38,7 @@ public class MessageQueueFilter implements Filter {
 		message.setPort(request.getServerPort());
 		message.setRemoteIp(request.getRemoteAddr());
 		message.setRemoteHost(request.getRemoteHost());
-		message.setRequestBody(ServletRequestUtil.getRequestBody(request));
+		message.setRequestBody(RequestParseUtil.getRequestBody(request));
 		message.setUserId("ks13ny");
 
 		// message queue send

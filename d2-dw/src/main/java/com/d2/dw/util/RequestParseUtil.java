@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 
 import javax.servlet.ServletRequest;
 
-public class ServletRequestUtil {
+public class RequestParseUtil {
 	public static String getRequestBody(ServletRequest request) throws IOException {
 		 
         String body = null;

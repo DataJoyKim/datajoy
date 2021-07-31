@@ -5,7 +5,11 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.client.LinkDiscoverer;
+import org.springframework.hateoas.client.LinkDiscoverers;
+import org.springframework.hateoas.mediatype.collectionjson.CollectionJsonLinkDiscoverer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.plugin.core.SimplePluginRegistry;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -43,11 +47,18 @@ public class SwaggerConfig {
                 .globalOperationParameters(globalParamters)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kjh.study.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.d2.dw.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
+    @Bean
+    public LinkDiscoverers discoverers() {
+        List<LinkDiscoverer> plugins = new ArrayList<>();
+        plugins.add(new CollectionJsonLinkDiscoverer());
+        return new LinkDiscoverers(SimplePluginRegistry.create(plugins));
+    }
+    
     public ApiInfo apiInfo() {
 	return new ApiInfoBuilder()
 		.title(API_NAME)

@@ -9,7 +9,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
 
 import com.d2.dw.rabbitmq.MessageQueuePolicy;
@@ -42,7 +41,12 @@ public class MessageQueueFilter implements Filter {
 		message.setUserId("ks13ny");
 
 		// message queue send
-		rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
+		try {
+			rabbitTemplate.convertAndSend(messageQueuePolicy.getExchangeName(), messageQueuePolicy.getRoutingKey(), message);
+		}
+		catch(Exception e) {
+			System.out.println("요청메시지 로깅 실패...");
+		}
 		
 		// do filter
 		chain.doFilter(request, response);

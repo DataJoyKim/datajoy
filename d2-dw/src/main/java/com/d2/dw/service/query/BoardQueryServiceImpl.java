@@ -22,13 +22,13 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	private final BoardRepository boardRepository;
 	
 	@Override
-	public BoardDTO getBoard(Long boardId) {
-		return BoardDTO.convert(boardRepository.findBoardById(boardId));
+	public BoardDTO.BoardResponse getBoard(Long boardId) {
+		return BoardDTO.BoardResponse.convert(boardRepository.findBoardById(boardId));
 	}
 
 	@Override
 	public List<BoardTreeDTO> getBoardsTree(Project project, Map<String, String> params) {
-		return BoardDTO.convert(boardRepository.findBoardTreeByProject(project));
+		return BoardDTO.BoardResponse.convert(boardRepository.findBoardTreeByProject(project));
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import com.d2.dw.dto.BoardTreeDTO;
 
 public interface BoardQueryService {
 
-	BoardDTO getBoard(Long boardId);
+	BoardDTO.BoardResponse getBoard(Long boardId);
 
 	List<BoardTreeDTO> getBoardsTree(Project project, Map<String, String> params);
 

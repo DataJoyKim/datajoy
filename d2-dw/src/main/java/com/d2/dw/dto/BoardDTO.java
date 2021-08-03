@@ -14,39 +14,42 @@ import lombok.Setter;
 @Getter @Setter
 public class BoardDTO {
 	
-	private Long id;
-	
-	private BoardStatus status;
-	
-	private String title;
-	
-	private String content;
-	
-	private UserDTO user;
-	
-	private ProjectDTO project;
-	
-	public static BoardDTO convert(Board board) {
-		if(board == null) return null;
+	@Getter @Setter
+	public static class BoardResponse {
+		private Long id;
 		
-		ModelMapper mapper = new ModelMapper();
+		private BoardStatus status;
 		
-		//Object Skip convert setting
-		mapper.createTypeMap(Board.class, BoardDTO.class)
-				.addMappings(mapping -> mapping.skip(BoardDTO::setUser))
-				.addMappings(mapping -> mapping.skip(BoardDTO::setProject));
+		private String title;
 		
-		BoardDTO boardDto = mapper.map(board, BoardDTO.class);
+		private String content;
 		
-		boardDto.setUser(UserDTO.convert(board.getUser()));
-		boardDto.setProject(ProjectDTO.convert(board.getProject()));
+		private UserDTO user;
 		
-		return boardDto;
-	}
-
-	public static List<BoardTreeDTO> convert(List<Board> boards) {
-		return boards.stream()
-				.map(o -> BoardTreeDTO.convert(o))
-				.collect(Collectors.toList());
+		private ProjectDTO project;
+		
+		public static BoardResponse convert(Board board) {
+			if(board == null) return null;
+			
+			ModelMapper mapper = new ModelMapper();
+			
+			//Object Skip convert setting
+			mapper.createTypeMap(Board.class, BoardResponse.class)
+					.addMappings(mapping -> mapping.skip(BoardResponse::setUser))
+					.addMappings(mapping -> mapping.skip(BoardResponse::setProject));
+			
+			BoardResponse boardDto = mapper.map(board, BoardResponse.class);
+			
+			boardDto.setUser(UserDTO.convert(board.getUser()));
+			boardDto.setProject(ProjectDTO.convert(board.getProject()));
+			
+			return boardDto;
+		}
+	
+		public static List<BoardTreeDTO> convert(List<Board> boards) {
+			return boards.stream()
+					.map(o -> BoardTreeDTO.convert(o))
+					.collect(Collectors.toList());
+		}
 	}
 }

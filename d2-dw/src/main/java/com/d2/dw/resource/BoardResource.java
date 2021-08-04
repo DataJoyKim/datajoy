@@ -12,7 +12,7 @@ import com.d2.dw.dto.BoardTreeDTO;
 public class BoardResource extends RepresentationModel<BoardResource> {
 	private Object content;
 	
-	public BoardResource(BoardDTO board) {
+	public BoardResource(BoardDTO.BoardResponse board) {
 		this.content = board;
 		this.add(WebMvcLinkBuilder.linkTo(BoardController.class).withSelfRel());
 	}

@@ -50,7 +50,7 @@ public class BoardController {
 			//throw exception
 		}
 		
-		BoardDTO board = boardQueryService.getBoard(boardId);
+		BoardDTO.BoardResponse board = boardQueryService.getBoard(boardId);
 		
 		BoardResource resource = new BoardResource(board);
 		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
@@ -79,7 +79,7 @@ public class BoardController {
 		if(project == null) {
 			//throw exception
 		}
-		BoardDTO boardDto = boardQueryService.getBoard(boardId);
+		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
 
@@ -92,7 +92,7 @@ public class BoardController {
 		if(project == null) {
 			//throw exception
 		}
-		BoardDTO boardDto = boardQueryService.getBoard(boardId);
+		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
 
@@ -105,7 +105,7 @@ public class BoardController {
 		if(project == null) {
 			//throw exception
 		}
-		BoardDTO boardDto = boardQueryService.getBoard(boardId);
+		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		boardQueryService.deleteBoard(null);
 

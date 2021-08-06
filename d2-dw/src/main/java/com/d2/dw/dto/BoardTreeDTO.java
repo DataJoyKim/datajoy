@@ -19,7 +19,7 @@ import lombok.Setter;
 public class BoardTreeDTO {
 	
 	@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-	public class Response {
+	public static class Response {
 		private Long id;
 		
 		private BoardStatus status;
@@ -28,7 +28,7 @@ public class BoardTreeDTO {
 		
 		private String content;
 		
-		private List<BoardTreeDTO> childList = new ArrayList<>();	
+		private List<BoardTreeDTO.Response> childList = new ArrayList<>();	
 	
 		private EntityCreateUpdateData entityCreateUpdateData;
 		

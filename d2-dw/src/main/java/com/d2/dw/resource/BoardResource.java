@@ -17,7 +17,7 @@ public class BoardResource extends RepresentationModel<BoardResource> {
 		this.add(WebMvcLinkBuilder.linkTo(BoardController.class).withSelfRel());
 	}
 	
-	public BoardResource(List<BoardTreeDTO> boards) {
+	public BoardResource(List<BoardTreeDTO.BoardTreeResponse> boards) {
 		this.content = boards;
 		this.add(WebMvcLinkBuilder.linkTo(BoardController.class).withSelfRel());
 	}

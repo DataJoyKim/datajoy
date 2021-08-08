@@ -67,7 +67,7 @@ public class BoardController {
 		}
 		*/
 		
-		List<BoardTreeDTO> boards = boardQueryService.getBoardsTree(project, params);
+		List<BoardTreeDTO.BoardTreeResponse> boards = boardQueryService.getBoardsTree(project, params);
 		BoardResource resource = new BoardResource(boards);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);

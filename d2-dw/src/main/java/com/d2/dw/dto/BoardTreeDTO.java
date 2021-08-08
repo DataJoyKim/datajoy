@@ -19,7 +19,7 @@ import lombok.Setter;
 public class BoardTreeDTO {
 	
 	@Getter @Setter @NoArgsConstructor @AllArgsConstructor
-	public static class Response {
+	public static class BoardTreeResponse {
 		private Long id;
 		
 		private BoardStatus status;
@@ -28,23 +28,29 @@ public class BoardTreeDTO {
 		
 		private String content;
 		
-		private List<BoardTreeDTO.Response> childList = new ArrayList<>();	
+		private List<BoardTreeDTO.BoardTreeResponse> childList = new ArrayList<>();	
 	
 		private EntityCreateUpdateData entityCreateUpdateData;
 		
-		public static BoardTreeDTO.Response convert(Board board) {
+		public static BoardTreeDTO.BoardTreeResponse convert(Board board) {
 			if(board == null) return null;
 			
 			ModelMapper mapper = new ModelMapper();
-			mapper.createTypeMap(Board.class, BoardTreeDTO.Response.class)
-					.addMappings(mapping -> mapping.skip(BoardTreeDTO.Response::setChildList));
+			mapper.createTypeMap(Board.class, BoardTreeDTO.BoardTreeResponse.class)
+					.addMappings(mapping -> mapping.skip(BoardTreeDTO.BoardTreeResponse::setChildList));
 			
-			BoardTreeDTO.Response boardTreeDTO = mapper.map(board, BoardTreeDTO.Response.class);
+			BoardTreeDTO.BoardTreeResponse boardTreeDTO = mapper.map(board, BoardTreeDTO.BoardTreeResponse.class);
 			boardTreeDTO.setChildList(board.getChildList().stream()
-												.map(o -> BoardTreeDTO.Response.convert(o))
+												.map(o -> BoardTreeDTO.BoardTreeResponse.convert(o))
 												.collect(Collectors.toList()));
 			
 			return boardTreeDTO;
+		}
+	
+		public static List<BoardTreeDTO.BoardTreeResponse> convert(List<Board> boards) {
+			return boards.stream()
+					.map(o -> BoardTreeDTO.BoardTreeResponse.convert(o))
+					.collect(Collectors.toList());
 		}
 	}
 }

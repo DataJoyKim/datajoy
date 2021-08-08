@@ -27,8 +27,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public List<BoardTreeDTO> getBoardsTree(Project project, Map<String, String> params) {
-		return BoardDTO.BoardResponse.convert(boardRepository.findBoardTreeByProject(project));
+	public List<BoardTreeDTO.BoardTreeResponse> getBoardsTree(Project project, Map<String, String> params) {
+		return BoardTreeDTO.BoardTreeResponse.convert(boardRepository.findBoardTreeByProject(project));
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public interface BoardQueryService {
 
 	BoardDTO.BoardResponse getBoard(Long boardId);
 
-	List<BoardTreeDTO> getBoardsTree(Project project, Map<String, String> params);
+	List<BoardTreeDTO.BoardTreeResponse> getBoardsTree(Project project, Map<String, String> params);
 
 	Board saveBoard(Board board);
 

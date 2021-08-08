@@ -45,11 +45,5 @@ public class BoardDTO {
 			
 			return boardDto;
 		}
-	
-		public static List<BoardTreeDTO> convert(List<Board> boards) {
-			return boards.stream()
-					.map(o -> BoardTreeDTO.convert(o))
-					.collect(Collectors.toList());
-		}
 	}
 }

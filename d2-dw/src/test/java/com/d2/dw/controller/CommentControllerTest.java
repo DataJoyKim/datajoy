@@ -18,7 +18,7 @@ class CommentControllerTest extends BaseTest {
 		mockMvc.perform(get("/api/v1/projects/1/boards/1/comments")
 					.param("page", "0")
 					.param("size", "10")
-					.param("sort", "DESC")
+					.param("sort", "boardNo DESC")
 				)
 				.andDo(print())
 				.andExpect(status().isOk())

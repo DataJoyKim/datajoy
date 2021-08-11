@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,5 +40,26 @@ public class CommentController {
 		Page<CommentDTO> comments = commentQueryService.getCommentsByBoard(board, pageable);
 		
 		return new ResponseEntity<>(assembler.toModel(comments, e -> new CommentResource(e)), HttpStatus.OK);
+	}
+	
+	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
+	public ResponseEntity<?> postComments(@PathVariable Long projectId, @PathVariable Long boardId) {
+		Board board = boardSerive.getBoardById(boardId);
+		if(board == null) {
+			
+		}
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
+	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
+	public ResponseEntity<?> putComments(@PathVariable Long projectId, @PathVariable Long boardId) {
+		Board board = boardSerive.getBoardById(boardId);
+		if(board == null) {
+			
+		}
+		
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 }

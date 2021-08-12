@@ -6,6 +6,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +55,18 @@ public class CommentController {
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> putComments(@PathVariable Long projectId, @PathVariable Long boardId) {
+		Board board = boardSerive.getBoardById(boardId);
+		if(board == null) {
+			
+		}
+		
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+
+	
+	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
+	public ResponseEntity<?> deleteComments(@PathVariable Long projectId, @PathVariable Long boardId) {
 		Board board = boardSerive.getBoardById(boardId);
 		if(board == null) {
 			

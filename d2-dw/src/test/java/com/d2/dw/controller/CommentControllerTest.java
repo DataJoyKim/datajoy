@@ -16,9 +16,8 @@ class CommentControllerTest extends BaseTest {
 	@DisplayName("게시글에 매핑된 코멘트전체 가져오기 테스트")
 	public void getCommentsTest() throws Exception {
 		mockMvc.perform(get("/api/v1/projects/1/boards/1/comments")
-					.param("page", "0")
-					.param("size", "10")
-					.param("sort", "+boardNo")
+					.param("page", "1")
+					.param("size", "2")
 				)
 				.andDo(print())
 				.andExpect(status().isOk())

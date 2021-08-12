@@ -20,7 +20,9 @@ public class CommentQueryServiceImpl implements CommentQueryService {
 	
 	@Override
 	public Page<CommentDTO> getCommentsByBoard(Board board, Pageable pageable) {
-		return CommentDTO.convert(commentRepository.findCommentWithReplyByBoard(board, pageable));
+		Page<CommentDTO> comments = CommentDTO.convert(commentRepository.findCommentWithReplyByBoard(board, pageable));
+
+		 return comments;
 	}
 
 }

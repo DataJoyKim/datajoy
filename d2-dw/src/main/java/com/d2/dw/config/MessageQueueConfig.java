@@ -28,7 +28,7 @@ public class MessageQueueConfig {
     @Bean
     Queue queue() {
         return new Queue(messageQueuePolicy.getQueueName(), true);
-    }
+    } 
 
     /**
      * rabbitMQ Exchange 설정.

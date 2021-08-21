@@ -37,7 +37,7 @@ public class Board {
 	private BoardStatus status;
 	
 	@Column(name = "title", columnDefinition = "TEXT")
-	private String title;
+	private String title; 
 	
 	@Lob
 	@Column(name = "content")
@@ -52,7 +52,7 @@ public class Board {
 	private Project project;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_board_no")
+	@JoinColumn(name = "parent_board_no") 
 	private Board parent;
 	
 	@OneToMany(mappedBy = "parent")

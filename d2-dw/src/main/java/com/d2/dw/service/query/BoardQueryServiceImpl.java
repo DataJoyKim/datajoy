@@ -40,5 +40,4 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	public void deleteBoard(Board board) {
 		boardRepository.delete(board);;
 	}
-
 }

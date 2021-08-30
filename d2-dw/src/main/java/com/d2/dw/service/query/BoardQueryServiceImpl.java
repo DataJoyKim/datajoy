@@ -3,6 +3,7 @@ package com.d2.dw.service.query;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 		return BoardDTO.BoardResponse.convert(boardRepository.findBoardById(boardId));
 	}
 
+	@Cacheable(cacheNames = "boards", key = "#project")
 	@Override
 	public List<BoardTreeDTO.BoardTreeResponse> getBoardsTree(Project project, Map<String, String> params) {
 		return BoardTreeDTO.BoardTreeResponse.convert(boardRepository.findBoardTreeByProject(project));
@@ -38,6 +40,6 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 
 	@Override
 	public void deleteBoard(Board board) {
-		boardRepository.delete(board);;
+		boardRepository.delete(board);
 	}
 }

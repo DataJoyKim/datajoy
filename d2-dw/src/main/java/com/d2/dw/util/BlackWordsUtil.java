@@ -19,7 +19,7 @@ public class BlackWordsUtil {
 		
 		String blackWordsRegEx = "";
 		for(String bWord : blackWords) {
-			blackWordsRegEx +=  bWord + "|";
+			blackWordsRegEx += bWord + "|";
 		}
 
 		if(blackWordsRegEx.length() > 0) {

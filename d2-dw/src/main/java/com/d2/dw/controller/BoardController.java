@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ import com.d2.dw.service.query.BoardQueryService;
 import lombok.RequiredArgsConstructor;
 
 
+@EnableCaching
 @RestController
 @RequestMapping(produces = MediaTypes.HAL_JSON_VALUE)
 @RequiredArgsConstructor
@@ -58,7 +60,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/api/v1/projects/{projectId}/boards/tree")
-	public ResponseEntity<?> getBoardsTree(@PathVariable Long projectId, @RequestParam Map<String, String> params, Errors errors) {
+	public ResponseEntity<?> getBoardsTree(@PathVariable Long projectId, @RequestParam Map<String, String> params) {
 		Project project = projectService.findProject(projectId);
 		/*
 		boardValidator.validate(project, errors);
@@ -66,9 +68,12 @@ public class BoardController {
 			return ResponseEntity.badRequest().build();
 		}
 		*/
-		
+		long t1 = System.currentTimeMillis();
 		List<BoardTreeDTO.BoardTreeResponse> boards = boardQueryService.getBoardsTree(project, params);
 		BoardResource resource = new BoardResource(boards);
+		long t2 = System.currentTimeMillis();
+		
+		System.out.println("수행시간 : " + String.valueOf(t2 - t1));
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}

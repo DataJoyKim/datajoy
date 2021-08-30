@@ -12,8 +12,6 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
 import com.d2.dw.rabbitmq.MessageQueuePolicy;
-import com.d2.dw.rabbitmq.SendMessage;
-import com.d2.dw.util.RequestParseUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +27,8 @@ public class MessageQueueFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("Filter Enter !!!");
 		// get authentication
-		// TODO
-		
+
+		/*
 		// message setting
 		SendMessage message = new SendMessage();
 		message.setDomain(request.getServerName());
@@ -47,7 +45,7 @@ public class MessageQueueFilter implements Filter {
 		catch(Exception e) {
 			System.out.println("요청메시지 로깅 실패...");
 		}
-		
+		*/
 		// do filter
 		chain.doFilter(request, response);
 	}

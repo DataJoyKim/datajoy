@@ -45,8 +45,18 @@ public class BoardRepositoryImpl extends QuerydslRepositorySupport implements Bo
 				.where(qBoard.project().eq(project).and(qBoard.parent().isNull()))
 				.distinct();
 		
+		slowQuery(2000);
+		
 		return query.fetch();
 	}
+	
+    private void slowQuery(long seconds) {
+        try {
+            Thread.sleep(seconds);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
 
 	
 }

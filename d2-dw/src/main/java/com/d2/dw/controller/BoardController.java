@@ -2,7 +2,6 @@ package com.d2.dw.controller;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.hateoas.MediaTypes;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d2.dw.domain.Board;
@@ -24,6 +22,7 @@ import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardTreeDTO;
 import com.d2.dw.error.BoardErrorCode;
+import com.d2.dw.exception.BusinessException;
 import com.d2.dw.resource.BoardResource;
 import com.d2.dw.service.ProjectService;
 import com.d2.dw.service.query.BoardQueryService;
@@ -54,7 +53,7 @@ public class BoardController {
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
-			return new ResponseEntity<>(BoardErrorCode.NOT_FOUND_PROJECT, HttpStatus.NOT_FOUND);
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 		
 		BoardDTO.BoardResponse board = boardQueryService.getBoard(boardId);
@@ -67,22 +66,15 @@ public class BoardController {
 	@GetMapping("/api/v1/projects/{projectId}/boards/tree")
 	public ResponseEntity<?> getBoardsTree(
 			@PathVariable Long projectId
-			, @RequestParam Map<String, String> params
 			) {
 		
 		Project project = projectService.findProject(projectId);
-		/*
-		boardValidator.validate(project, errors);
-		if(errors.hasErrors()) {
-			return ResponseEntity.badRequest().build();
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
-		*/
-		long t1 = System.currentTimeMillis();
-		List<BoardTreeDTO.BoardTreeResponse> boards = boardQueryService.getBoardsTree(project, params);
-		BoardResource resource = new BoardResource(boards);
-		long t2 = System.currentTimeMillis();
 		
-		System.out.println("수행시간 : " + String.valueOf(t2 - t1));
+		List<BoardTreeDTO.BoardTreeResponse> boards = boardQueryService.getBoardsTree(project);
+		BoardResource resource = new BoardResource(boards);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
@@ -96,8 +88,9 @@ public class BoardController {
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
-			//throw exception
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
+		
 		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
@@ -114,8 +107,9 @@ public class BoardController {
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
-			//throw exception
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
+		
 		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		Board board = boardQueryService.saveBoard(null);
@@ -132,8 +126,9 @@ public class BoardController {
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
-			//throw exception
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
+		
 		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		boardQueryService.deleteBoard(null);

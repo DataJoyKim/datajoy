@@ -1,8 +1,5 @@
 package com.d2.dw.dto;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 
 import com.d2.dw.code.BoardStatus;
@@ -13,6 +10,9 @@ import lombok.Setter;
 
 @Getter @Setter
 public class BoardDTO {
+	@Getter @Setter
+	public static class BoardRequest {
+	}
 	
 	@Getter @Setter
 	public static class BoardResponse {

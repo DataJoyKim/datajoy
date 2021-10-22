@@ -63,7 +63,7 @@ public class BoardController {
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
-	@GetMapping("/api/v1/projects/{projectId}/boards/tree")
+	@GetMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> getBoardsTree(
 			@PathVariable Long projectId
 			) {

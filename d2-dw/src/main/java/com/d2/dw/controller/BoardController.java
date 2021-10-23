@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,7 @@ public class BoardController {
 	@GetMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> getBoardsTree(
 			@PathVariable Long projectId
+			, Pageable pageable
 			) {
 		
 		Project project = projectService.findProject(projectId);

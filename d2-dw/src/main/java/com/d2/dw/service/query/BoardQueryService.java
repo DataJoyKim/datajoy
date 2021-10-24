@@ -7,20 +7,19 @@ import org.springframework.data.domain.Pageable;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
-import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
-import com.d2.dw.dto.BoardTreeDTO;
+import com.d2.dw.dto.BoardTreeDTO.BoardTreeResponse;
 
 public interface BoardQueryService {
 
-	BoardDTO.BoardResponse getBoard(Long boardId);
+	BoardResponse getBoard(Long boardId);
 
-	List<BoardTreeDTO.BoardTreeResponse> getBoardsTree(Project project);
+	Page<BoardResponse> findBoards(Project project, String query, Pageable pageable);
+
+	List<BoardTreeResponse> getBoardsTree(Project project);
 
 	Board saveBoard(Board board);
 
 	void deleteBoard(Board board);
-
-	Page<BoardResponse> findBoards(Project project, String query, Pageable pageable);
 
 }

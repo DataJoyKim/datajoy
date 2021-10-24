@@ -22,9 +22,8 @@ import com.d2.dw.code.BoardStatus;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter @EqualsAndHashCode(of = "id")
+@Getter @EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "board")
 public class Board {
@@ -57,7 +56,7 @@ public class Board {
 	
 	@OneToMany(mappedBy = "parent")
 	private List<Board> childList = new ArrayList<>();
-
+	
 	@Embedded
 	private EntityCreateUpdateData entityCreateUpdateData;
 }

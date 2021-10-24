@@ -48,7 +48,7 @@ public class BoardController {
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> getBoard(
-			Principal principal
+			Principal user
 			, @PathVariable Long projectId
 			, @PathVariable Long boardId
 			) {
@@ -58,7 +58,7 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 		
-		BoardDTO.BoardResponse board = boardQueryService.getBoard(boardId);
+		BoardResponse board = boardQueryService.getBoard(boardId);
 		
 		BoardResource resource = new BoardResource(board);
 		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
@@ -67,7 +67,8 @@ public class BoardController {
 	
 	@GetMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> getBoardsTree(
-			@PathVariable Long projectId
+			Principal user
+			, @PathVariable Long projectId
 			, @RequestParam("query") String query
 			, Pageable pageable
 			) {
@@ -84,7 +85,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> saveBoardsTree(
+	public ResponseEntity<?> saveBoard(
 			@PathVariable Long projectId
 			, @PathVariable Long boardId
 			, @RequestBody BoardDTO params
@@ -103,7 +104,7 @@ public class BoardController {
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> putBoardsTree(
+	public ResponseEntity<?> putBoard(
 			@PathVariable Long projectId
 			, @PathVariable Long boardId
 			, @RequestBody BoardDTO params
@@ -122,7 +123,7 @@ public class BoardController {
 	}
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> deleteBoardsTree(
+	public ResponseEntity<?> deleteBoard(
 			@PathVariable Long projectId
 			, @PathVariable Long boardId
 			, @RequestBody BoardDTO params

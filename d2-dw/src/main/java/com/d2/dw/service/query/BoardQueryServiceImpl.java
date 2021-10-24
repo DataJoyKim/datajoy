@@ -2,12 +2,15 @@ package com.d2.dw.service.query;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
+import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardTreeDTO;
 import com.d2.dw.repository.BoardRepository;
 
@@ -38,5 +41,10 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	@Override
 	public void deleteBoard(Board board) {
 		boardRepository.delete(board);
+	}
+
+	@Override
+	public Page<BoardResponse> findBoards(Project project, String query, Pageable pageable) {
+		return BoardResponse.convert(boardRepository.findAll(pageable));
 	}
 }

@@ -1,9 +1,9 @@
 package com.d2.dw.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
@@ -16,12 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
-import com.d2.dw.dto.BoardTreeDTO;
+import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.error.BoardErrorCode;
 import com.d2.dw.exception.BusinessException;
 import com.d2.dw.resource.BoardResource;
@@ -67,6 +68,7 @@ public class BoardController {
 	@GetMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> getBoardsTree(
 			@PathVariable Long projectId
+			, @RequestParam("query") String query
 			, Pageable pageable
 			) {
 		
@@ -75,7 +77,7 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 		
-		List<BoardTreeDTO.BoardTreeResponse> boards = boardQueryService.getBoardsTree(project);
+		Page<BoardResponse> boards = boardQueryService.findBoards(project, query, pageable);
 		BoardResource resource = new BoardResource(boards);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -83,25 +85,6 @@ public class BoardController {
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> saveBoardsTree(
-			@PathVariable Long projectId
-			, @PathVariable Long boardId
-			, @RequestBody BoardDTO params
-			) {
-		
-		Project project = projectService.findProject(projectId);
-		if(project == null) {
-			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
-		}
-		
-		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
-		
-		Board board = boardQueryService.saveBoard(null);
-
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> deleteBoardsTree(
 			@PathVariable Long projectId
 			, @PathVariable Long boardId
 			, @RequestBody BoardDTO params
@@ -134,6 +117,25 @@ public class BoardController {
 		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
 		boardQueryService.deleteBoard(null);
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
+	public ResponseEntity<?> deleteBoardsTree(
+			@PathVariable Long projectId
+			, @PathVariable Long boardId
+			, @RequestBody BoardDTO params
+			) {
+		
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+		
+		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
+		
+		Board board = boardQueryService.saveBoard(null);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

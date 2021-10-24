@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class BoardTreeDTO {
-	
+
 	@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 	public static class BoardTreeResponse {
 		private Long id;

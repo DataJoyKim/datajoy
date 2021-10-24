@@ -1,9 +1,11 @@
 package com.d2.dw.dto;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
+import com.d2.dw.dto.BoardDTO.BoardResponse;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -44,6 +46,11 @@ public class BoardDTO {
 			boardDto.setProject(ProjectDTO.convert(board.getProject()));
 			
 			return boardDto;
+		}
+
+		public static Page<BoardResponse> convert(Page<Board> findAll) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }

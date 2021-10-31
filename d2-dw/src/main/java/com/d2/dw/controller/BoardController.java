@@ -43,8 +43,6 @@ public class BoardController {
 	private final BoardQueryService boardQueryService;
 	
 	private final ProjectService projectService;
-	
-	//private final BoardValidator boardValidator;
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> getBoard(

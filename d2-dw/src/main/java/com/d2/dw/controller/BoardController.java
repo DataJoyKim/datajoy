@@ -23,9 +23,11 @@ import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
+import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
 import com.d2.dw.error.BoardErrorCode;
 import com.d2.dw.exception.BusinessException;
 import com.d2.dw.resource.BoardResource;
+import com.d2.dw.service.BoardService;
 import com.d2.dw.service.ProjectService;
 import com.d2.dw.service.query.BoardQueryService;
 
@@ -38,7 +40,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardController {
 	
-	//private final BoardService boardService;
+	private final BoardService boardService;
 	
 	private final BoardQueryService boardQueryService;
 	
@@ -82,23 +84,18 @@ public class BoardController {
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
-	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}")
+	@PostMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> saveBoard(
 			@PathVariable Long projectId
-			, @PathVariable Long boardId
-			, @RequestBody BoardDTO params
+			, @RequestBody SaveBoardRequest params
 			) {
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
-		
-		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
-		
-		Board board = boardQueryService.saveBoard(null);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(boardQueryService.insertBoard(project, params), HttpStatus.OK);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
@@ -112,8 +109,8 @@ public class BoardController {
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
-		
-		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
+
+		Board board = boardService.getBoardById(boardId);
 		
 		boardQueryService.deleteBoard(null);
 

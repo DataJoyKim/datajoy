@@ -53,4 +53,8 @@ public class BoardDTO {
 			return null;
 		}
 	}
+	
+	@Getter
+	public static class SaveBoardRequest {
+	}
 }

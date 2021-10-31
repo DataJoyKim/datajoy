@@ -19,11 +19,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d2.dw.code.BoardStatus;
+import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
+import com.d2.dw.validator.BoardValidator;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter @EqualsAndHashCode(of = "id")
+@Getter @EqualsAndHashCode(of = "id") @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder 
 @Entity
 @Table(name = "board")
 public class Board {
@@ -59,4 +65,10 @@ public class Board {
 	
 	@Embedded
 	private EntityCreateUpdateData entityCreateUpdateData;
+
+	public static Board write(BoardValidator boardValidator, Project project, SaveBoardRequest params) {
+		boardValidator.validateWrite(project, params);
+		
+		return null;
+	}
 }

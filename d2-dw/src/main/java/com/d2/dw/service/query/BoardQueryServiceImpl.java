@@ -11,6 +11,7 @@ import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
+import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
 import com.d2.dw.dto.BoardTreeDTO;
 import com.d2.dw.repository.BoardRepository;
 
@@ -34,11 +35,6 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public Board saveBoard(Board board) {
-		return boardRepository.save(board);
-	}
-
-	@Override
 	public void deleteBoard(Board board) {
 		boardRepository.delete(board);
 	}
@@ -46,5 +42,12 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	@Override
 	public Page<BoardResponse> findBoards(Project project, String query, Pageable pageable) {
 		return BoardResponse.convert(boardRepository.findAll(pageable));
+	}
+
+	@Override
+	public BoardResponse insertBoard(Project project, SaveBoardRequest params) {
+		Board board = Board.createBoard(project, params); 
+		
+		return BoardResponse.convert(boardRepository.save(board));
 	}
 }

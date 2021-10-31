@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
+import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
 import com.d2.dw.dto.BoardTreeDTO.BoardTreeResponse;
 
 public interface BoardQueryService {
@@ -18,8 +19,7 @@ public interface BoardQueryService {
 
 	List<BoardTreeResponse> getBoardsTree(Project project);
 
-	Board saveBoard(Board board);
-
 	void deleteBoard(Board board);
 
+	BoardResponse insertBoard(Project project, SaveBoardRequest params);
 }

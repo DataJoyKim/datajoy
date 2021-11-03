@@ -1,8 +1,5 @@
 package com.d2.dw.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -15,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d2.dw.code.BoardStatus;
@@ -56,19 +52,20 @@ public class Board {
 	@JoinColumn(name = "project_no")
 	private Project project;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_board_no")
-	private Board parent;
-	
-	@OneToMany(mappedBy = "parent")
-	private List<Board> childList = new ArrayList<>();
-	
 	@Embedded
 	private EntityCreateUpdateData entityCreateUpdateData;
 
-	public static Board write(BoardValidator boardValidator, Project project, SaveBoardRequest params) {
+	public static Board write(BoardValidator boardValidator, User writer, Project project, SaveBoardRequest params) {
 		boardValidator.validateWrite(project, params);
 		
-		return null;
+		Board board = Board.builder()
+							.project(project)
+							.content(params.getContent())
+							.title(params.getTitle())
+							.user(writer)
+							.status(BoardStatus.SAVE)
+							.build();
+		
+		return board;
 	}
 }

@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
-import com.d2.dw.dto.BoardDTO.BoardResponse;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,5 +55,7 @@ public class BoardDTO {
 	
 	@Getter
 	public static class SaveBoardRequest {
+		private String content;
+		private String title;
 	}
 }

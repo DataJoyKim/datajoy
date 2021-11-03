@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
+import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
@@ -86,7 +87,8 @@ public class BoardController {
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> saveBoard(
-			@PathVariable Long projectId
+			Principal user
+			, @PathVariable Long projectId
 			, @RequestBody SaveBoardRequest params
 			) {
 		
@@ -95,7 +97,12 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 
-		return new ResponseEntity<>(boardQueryService.writeBoard(project, params), HttpStatus.OK);
+		User writer = null;
+		
+		BoardResponse savedBoard = boardQueryService.writeBoard(writer, project, params);
+		BoardResource resource = new BoardResource(savedBoard);
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")

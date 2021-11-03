@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
+import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
@@ -47,8 +48,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public BoardResponse writeBoard(Project project, SaveBoardRequest params) { 
-		Board board = Board.write(boardValidator, project, params); 
+	public BoardResponse writeBoard(User writer, Project project, SaveBoardRequest params) { 
+		Board board = Board.write(boardValidator, writer, project, params); 
 		
 		return BoardResponse.convert(boardRepository.save(board));
 	}

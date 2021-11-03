@@ -95,7 +95,7 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 
-		return new ResponseEntity<>(boardQueryService.insertBoard(project, params), HttpStatus.OK);
+		return new ResponseEntity<>(boardQueryService.writeBoard(project, params), HttpStatus.OK);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")

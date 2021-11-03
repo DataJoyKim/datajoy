@@ -14,6 +14,7 @@ import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
 import com.d2.dw.dto.BoardTreeDTO;
 import com.d2.dw.repository.BoardRepository;
+import com.d2.dw.validator.BoardValidator;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardQueryServiceImpl implements BoardQueryService{
 
 	private final BoardRepository boardRepository;
+	private final BoardValidator boardValidator;
 	
 	@Override
 	public BoardDTO.BoardResponse getBoard(Long boardId) {
@@ -45,8 +47,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public BoardResponse insertBoard(Project project, SaveBoardRequest params) {
-		Board board = Board.createBoard(project, params); 
+	public BoardResponse writeBoard(Project project, SaveBoardRequest params) { 
+		Board board = Board.write(boardValidator, project, params); 
 		
 		return BoardResponse.convert(boardRepository.save(board));
 	}

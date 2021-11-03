@@ -21,5 +21,5 @@ public interface BoardQueryService {
 
 	void deleteBoard(Board board);
 
-	BoardResponse insertBoard(Project project, SaveBoardRequest params);
+	BoardResponse writeBoard(Project project, SaveBoardRequest params);
 }

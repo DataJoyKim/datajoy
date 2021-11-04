@@ -7,14 +7,16 @@ import javax.persistence.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Embeddable 
+@Embeddable
 @Getter @EqualsAndHashCode
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class EntityCreateUpdateData {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@Column(name = "reg_date")
@@ -23,4 +25,12 @@ public class EntityCreateUpdateData {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
 	@Column(name = "mod_date")
     private LocalDateTime modDate;
+	
+	public static EntityCreateUpdateData createNowDate() {
+		return EntityCreateUpdateData.builder()
+									.modDate(LocalDateTime.now())
+									.regDate(LocalDateTime.now())
+									.build();
+		
+	}
 }

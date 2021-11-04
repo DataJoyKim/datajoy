@@ -64,6 +64,7 @@ public class Board {
 							.title(params.getTitle())
 							.user(writer)
 							.status(BoardStatus.SAVE)
+							.entityCreateUpdateData(EntityCreateUpdateData.createNowDate())
 							.build();
 		
 		return board;

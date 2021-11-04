@@ -24,12 +24,13 @@ import com.d2.dw.domain.Project;
 import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
-import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.error.BoardErrorCode;
 import com.d2.dw.exception.BusinessException;
 import com.d2.dw.resource.BoardResource;
 import com.d2.dw.service.BoardService;
 import com.d2.dw.service.ProjectService;
+import com.d2.dw.service.UserService;
 import com.d2.dw.service.query.BoardQueryService;
 
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,9 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService boardService;
-	
 	private final BoardQueryService boardQueryService;
-	
 	private final ProjectService projectService;
+	private final UserService userService;
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> getBoard(
@@ -85,11 +85,11 @@ public class BoardController {
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
-	@PostMapping("/api/v1/projects/{projectId}/boards")
-	public ResponseEntity<?> saveBoard(
+	@PostMapping("/api/v1/projects/{projectId}/temp-boards")
+	public ResponseEntity<?> writeTempBoard(
 			Principal user
 			, @PathVariable Long projectId
-			, @RequestBody SaveBoardRequest params
+			, @RequestBody BoardWriteRequest params
 			) {
 		
 		Project project = projectService.findProject(projectId);
@@ -97,9 +97,12 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 
-		User writer = null;
+		User writer = userService.findUser(null);
+		if(writer == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
+		}
 		
-		BoardResponse savedBoard = boardQueryService.writeBoard(writer, project, params);
+		BoardResponse savedBoard = boardQueryService.writeTempBoard(writer, project, params);
 		BoardResource resource = new BoardResource(savedBoard);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -138,7 +141,7 @@ public class BoardController {
 		
 		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
 		
-		Board board = boardQueryService.saveBoard(null);
+		//Board board = boardQueryService.saveBoard(null);
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

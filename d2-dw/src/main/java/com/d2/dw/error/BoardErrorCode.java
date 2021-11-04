@@ -3,7 +3,8 @@ package com.d2.dw.error;
 import com.d2.dw.exception.BusinessErrorCode;
 
 public enum BoardErrorCode implements BusinessErrorCode {
-	NOT_FOUND_PROJECT(404, "R001","프로젝트 데이터가 존재하지 않습니다."),
+	NOT_FOUND_PROJECT(404, "R001","프로젝트 데이터가 존재하지 않습니다."), 
+	NOT_FOUND_WRITER(404, "R002","작성자 데이터가 존재하지 않습니다."),
 	;
 
 	private final String errorKind = "Board";

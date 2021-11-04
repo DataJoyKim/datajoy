@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.d2.dw.code.BoardStatus;
-import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.validator.BoardValidator;
 
 import lombok.AccessLevel;
@@ -55,7 +55,16 @@ public class Board {
 	@Embedded
 	private EntityCreateUpdateData entityCreateUpdateData;
 
-	public static Board write(BoardValidator boardValidator, User writer, Project project, SaveBoardRequest params) {
+	/**
+	 * 생성자 메서드
+	 * 임시 게시글 작성 시 사용
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 * @param params
+	 * @return
+	 */
+	public static Board writeTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
 		boardValidator.validateWrite(project, params);
 		
 		Board board = Board.builder()
@@ -64,6 +73,30 @@ public class Board {
 							.title(params.getTitle())
 							.user(writer)
 							.status(BoardStatus.SAVE)
+							.entityCreateUpdateData(EntityCreateUpdateData.createNowDate())
+							.build();
+		
+		return board;
+	}
+
+	/**
+	 * 생성자 메서드
+	 * 게시글 포스팅 시 사용
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 * @param params
+	 * @return
+	 */
+	public static Board postingBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+		boardValidator.validatePosting(project, params);
+		
+		Board board = Board.builder()
+							.project(project)
+							.content(params.getContent())
+							.title(params.getTitle())
+							.user(writer)
+							.status(BoardStatus.POSTING)
 							.entityCreateUpdateData(EntityCreateUpdateData.createNowDate())
 							.build();
 		

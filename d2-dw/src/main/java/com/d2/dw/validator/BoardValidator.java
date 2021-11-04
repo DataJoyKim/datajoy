@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 import com.d2.dw.domain.Project;
-import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.error.BoardErrorCode;
 import com.d2.dw.exception.BusinessException;
 
@@ -16,7 +16,13 @@ public class BoardValidator {
 		
 	}
 
-	public void validateWrite(Project project, SaveBoardRequest params) {
+	public void validateWrite(Project project, BoardWriteRequest params) {
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+	}
+
+	public void validatePosting(Project project, BoardWriteRequest params) {
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}

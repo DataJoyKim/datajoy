@@ -1,7 +1,5 @@
 package com.d2.dw.service.query;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,8 +10,7 @@ import com.d2.dw.domain.Project;
 import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
-import com.d2.dw.dto.BoardDTO.SaveBoardRequest;
-import com.d2.dw.dto.BoardTreeDTO;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.repository.BoardRepository;
 import com.d2.dw.validator.BoardValidator;
 
@@ -33,11 +30,6 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public List<BoardTreeDTO.BoardTreeResponse> getBoardsTree(Project project) {
-		return BoardTreeDTO.BoardTreeResponse.convert(boardRepository.findBoardTreeByProject(project));
-	}
-
-	@Override
 	public void deleteBoard(Board board) {
 		boardRepository.delete(board);
 	}
@@ -48,8 +40,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public BoardResponse writeBoard(User writer, Project project, SaveBoardRequest params) { 
-		Board board = Board.write(boardValidator, writer, project, params); 
+	public BoardResponse writeTempBoard(User writer, Project project, BoardWriteRequest params) { 
+		Board board = Board.writeTempBoard(boardValidator, writer, project, params); 
 		
 		return BoardResponse.convert(boardRepository.save(board));
 	}

@@ -54,8 +54,11 @@ public class BoardDTO {
 	}
 	
 	@Getter
-	public static class SaveBoardRequest {
+	public static class BoardWriteRequest {
+		
 		private String content;
+		
 		private String title;
+		
 	}
 }

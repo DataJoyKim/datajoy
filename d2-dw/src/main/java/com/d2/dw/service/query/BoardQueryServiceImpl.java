@@ -12,6 +12,8 @@ import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.repository.BoardRepository;
+import com.d2.dw.repository.ProjectRepository;
+import com.d2.dw.repository.UserRepository;
 import com.d2.dw.validator.BoardValidator;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 
 	private final BoardRepository boardRepository;
 	private final BoardValidator boardValidator;
+	private final UserRepository userRepository;
+	private final ProjectRepository projectRepository;
 	
 	@Override
 	public BoardDTO.BoardResponse getBoard(Long boardId) {
@@ -40,7 +44,12 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 	}
 
 	@Override
-	public BoardResponse writeTempBoard(User writer, Project project, BoardWriteRequest params) { 
+	public BoardResponse writeTempBoard(Long userId, Long projectId, BoardWriteRequest params) { 
+		// 엔티티 조회
+		User writer = userRepository.findById(userId).get();
+		Project project = projectRepository.findById(projectId).get();
+		
+		// 임시 게시글 작성
 		Board board = Board.writeTempBoard(boardValidator, writer, project, params); 
 		
 		return BoardResponse.convert(boardRepository.save(board));

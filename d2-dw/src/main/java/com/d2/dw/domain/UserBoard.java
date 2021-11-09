@@ -12,8 +12,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter @EqualsAndHashCode(of = "id")
-@Entity
-@Table(name = "user_board")
 public class UserBoard {
 
 	private Long id;

@@ -13,8 +13,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter @EqualsAndHashCode(of = "id")
-@Entity
-@Table(name = "user_project")
 public class UserProject {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

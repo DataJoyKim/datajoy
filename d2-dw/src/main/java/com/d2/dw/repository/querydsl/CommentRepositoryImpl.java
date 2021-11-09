@@ -32,7 +32,7 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
 									.leftJoin(qComment.board(), qBoard)
 									.leftJoin(qBoard.project(), qProject)
 									.leftJoin(qBoard.user(), qUser)
-									.where(qComment.board().eq(board).and(qComment.parent().isNull()))
+									.where(qComment.board().eq(board))
 									.distinct();
 		
 		List<Comment> results = getQuerydsl()

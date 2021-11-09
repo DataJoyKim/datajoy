@@ -1,4 +1,4 @@
-package com.d2.dw.jwt;
+package com.d2.dw.security;
 
 import java.io.IOException;
 
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
+
+import com.d2.dw.error.SecurityErrorCode;
+import com.d2.dw.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +35,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         }
         else {
         	System.out.println("***** token valid failed ********");
-        }	
+        	throw new BusinessException(SecurityErrorCode.FAILED_AUTHENTICATION);
+        }
+        
+        System.out.println("??????????");
         
         chain.doFilter(request, response);
 	}

@@ -1,9 +1,5 @@
 package com.d2.dw.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 
@@ -22,22 +18,15 @@ public class CommentDTO {
 	
 	private BoardDTO board;
 	
-	private List<CommentDTO> childList = new ArrayList<>();
-	
 	private EntityCreateUpdateData entityCreateUpdateData;
 	
 	public static CommentDTO convert(Comment comment) {
 		if(comment == null) return null;
 		
 		ModelMapper mapper = new ModelMapper();
-		mapper.createTypeMap(Comment.class, CommentDTO.class)
-				.addMappings(m -> m.skip(CommentDTO::setChildList));
+		mapper.createTypeMap(Comment.class, CommentDTO.class);
 		
 		CommentDTO commentDTO = mapper.map(comment, CommentDTO.class);
-		commentDTO.setChildList(comment.getChildList()
-										.stream()
-										.map(o -> CommentDTO.convert(o))
-										.collect(Collectors.toList()));
 		
 		return commentDTO;
 	}

@@ -5,7 +5,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
-import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 
@@ -17,5 +16,5 @@ public interface BoardQueryService {
 
 	void deleteBoard(Board board);
 
-	BoardResponse writeTempBoard(User writer, Project project, BoardWriteRequest params);
+	BoardResponse writeTempBoard(Long userId, Long projectId, BoardWriteRequest params);
 }

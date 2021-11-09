@@ -7,8 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.d2.dw.jwt.JwtAuthenticationFilter;
-import com.d2.dw.jwt.JwtTokenProvider;
+import com.d2.dw.security.JwtAuthenticationFilter;
+import com.d2.dw.security.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;
 

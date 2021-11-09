@@ -65,7 +65,7 @@ public class Board {
 	 * @return
 	 */
 	public static Board writeTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
-		boardValidator.validateWrite(project, params);
+		boardValidator.validateWrite(writer, project, params);
 		
 		Board board = Board.builder()
 							.project(project)
@@ -89,7 +89,7 @@ public class Board {
 	 * @return
 	 */
 	public static Board postingBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
-		boardValidator.validatePosting(project, params);
+		boardValidator.validatePosting(writer, project, params);
 		
 		Board board = Board.builder()
 							.project(project)

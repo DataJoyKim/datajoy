@@ -23,9 +23,10 @@ class BoardControllerTest extends BaseTest {
 	}
 
 	@Test
-	@DisplayName("게시글 트리 가져오기 테스트")
-	public void getBoardTreeTest() throws Exception {
-		mockMvc.perform(get("/api/v1/projects/1/boards/tree")
+	@DisplayName("게시글 리스트 가져오기 테스트")
+	public void getBoardsTest() throws Exception {
+		mockMvc.perform(get("/api/v1/projects/1/boards")
+					.param("query", "")
 					)
 					.andDo(print())
 					.andExpect(status().isOk())

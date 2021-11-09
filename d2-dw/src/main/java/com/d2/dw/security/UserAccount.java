@@ -1,4 +1,4 @@
-package com.d2.dw.jwt;
+package com.d2.dw.security;
 
 import java.util.Arrays;
 

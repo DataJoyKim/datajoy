@@ -43,10 +43,11 @@ public class BoardQueryServiceImpl implements BoardQueryService{
 		return BoardResponse.convert(boardRepository.findAll(pageable));
 	}
 
+	@Transactional
 	@Override
-	public BoardResponse writeTempBoard(Long userId, Long projectId, BoardWriteRequest params) { 
+	public BoardResponse writeTempBoard(String username, Long projectId, BoardWriteRequest params) { 
 		// 엔티티 조회
-		User writer = userRepository.findById(userId).get();
+		User writer = userRepository.findByEmail(username).get();
 		Project project = projectRepository.findById(projectId).get();
 		
 		// 임시 게시글 작성

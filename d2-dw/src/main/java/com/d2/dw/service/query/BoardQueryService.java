@@ -16,5 +16,5 @@ public interface BoardQueryService {
 
 	void deleteBoard(Board board);
 
-	BoardResponse writeTempBoard(Long userId, Long projectId, BoardWriteRequest params);
+	BoardResponse writeTempBoard(String username, Long projectId, BoardWriteRequest params);
 }

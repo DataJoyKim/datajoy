@@ -25,6 +25,7 @@ public class SecurityController {
 
 	@PostMapping(value = "/auth/v1/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest params, HttpServletResponse response) {
+		
 		// 인증
 		Account account = jwtTokenGenerator.authentication(params.getUsername(), params.getPassword());
 		if(account == null) {
@@ -42,7 +43,7 @@ public class SecurityController {
 		// Token header 세팅
 		jwtTokenGenerator.setTokenIn(response, token);
         
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(token);
 	}
 
 	@GetMapping(value = "/auth/v1/sso")

@@ -46,8 +46,7 @@ public class BoardController {
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> getBoard(
-			Principal principal
-			, @PathVariable Long projectId
+			@PathVariable Long projectId
 			, @PathVariable Long boardId
 			) {
 		
@@ -65,13 +64,10 @@ public class BoardController {
 	
 	@GetMapping("/api/v1/projects/{projectId}/boards")
 	public ResponseEntity<?> getBoards(
-			Principal principal
-			, @PathVariable Long projectId
+			@PathVariable Long projectId
 			, @RequestParam("query") String query
 			, Pageable pageable
 			) {
-		System.out.println("here");
-		System.out.println(principal.getName());
 		
 		Project project = projectService.findProject(projectId);
 		if(project == null) {
@@ -91,7 +87,7 @@ public class BoardController {
 			, @RequestBody BoardWriteRequest params
 			) {
 		
-		BoardResponse savedBoard = boardQueryService.writeTempBoard(null, projectId, params);
+		BoardResponse savedBoard = boardQueryService.writeTempBoard(principal.getName(), projectId, params);
 		BoardResource resource = new BoardResource(savedBoard);
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);

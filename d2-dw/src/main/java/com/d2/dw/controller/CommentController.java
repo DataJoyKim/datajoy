@@ -33,7 +33,7 @@ public class CommentController {
 	
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> getComments(@PathVariable Long projectId, @PathVariable Long boardId, Pageable pageable, PagedResourcesAssembler<CommentDTO> assembler) {
-		Board board = boardSerive.getBoardById(boardId);
+		Board board = boardSerive.findBoard(boardId);
 		if(board == null) {
 			
 		}
@@ -45,20 +45,12 @@ public class CommentController {
 	
 	@PostMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> postComments(@PathVariable Long projectId, @PathVariable Long boardId) {
-		Board board = boardSerive.getBoardById(boardId);
-		if(board == null) {
-			
-		}
 		
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> putComments(@PathVariable Long projectId, @PathVariable Long boardId) {
-		Board board = boardSerive.getBoardById(boardId);
-		if(board == null) {
-			
-		}
 		
 		
 		return new ResponseEntity<>(null, HttpStatus.OK);
@@ -67,10 +59,6 @@ public class CommentController {
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}/comments")
 	public ResponseEntity<?> deleteComments(@PathVariable Long projectId, @PathVariable Long boardId) {
-		Board board = boardSerive.getBoardById(boardId);
-		if(board == null) {
-			
-		}
 		
 		
 		return new ResponseEntity<>(null, HttpStatus.OK);

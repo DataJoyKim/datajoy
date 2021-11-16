@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
-import com.d2.dw.dto.BoardDTO;
 import com.d2.dw.dto.BoardDTO.BoardResponse;
 import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
 import com.d2.dw.error.BoardErrorCode;
@@ -29,10 +28,8 @@ import com.d2.dw.exception.BusinessException;
 import com.d2.dw.resource.BoardResource;
 import com.d2.dw.service.BoardService;
 import com.d2.dw.service.ProjectService;
-import com.d2.dw.service.query.BoardQueryService;
 
 import lombok.RequiredArgsConstructor;
-
 
 @EnableCaching
 @RestController
@@ -41,7 +38,6 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService boardService;
-	private final BoardQueryService boardQueryService;
 	private final ProjectService projectService;
 
 	@GetMapping("/api/v1/projects/{projectId}/boards/{boardId}")
@@ -55,7 +51,7 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 		
-		BoardResponse board = boardQueryService.getBoard(boardId);
+		BoardResponse board = BoardResponse.convert(boardService.findBoard(boardId));
 		
 		BoardResource resource = new BoardResource(board);
 		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
@@ -67,6 +63,7 @@ public class BoardController {
 			@PathVariable Long projectId
 			, @RequestParam("query") String query
 			, Pageable pageable
+			, PagedResourcesAssembler<BoardResponse> assembler
 			) {
 		
 		Project project = projectService.findProject(projectId);
@@ -74,10 +71,45 @@ public class BoardController {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
 		}
 		
-		Page<BoardResponse> boards = boardQueryService.findBoards(project, query, pageable);
-		BoardResource resource = new BoardResource(boards);
+		Page<BoardResponse> boards = BoardResponse.convert(boardService.findBoards(query, pageable));
 		
+		return new ResponseEntity<>(assembler.toModel(boards, e -> new BoardResource(e)), HttpStatus.OK);
+	}
+
+	@GetMapping("/api/v1/projects/{projectId}/temp-boards/{boardId}")
+	public ResponseEntity<?> getTempBoard(
+			@PathVariable Long projectId
+			, @PathVariable Long boardId
+			) {
+		
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+		
+		BoardResponse board = BoardResponse.convert(boardService.findTempBoard(boardId));
+		
+		BoardResource resource = new BoardResource(board);
+		resource.add(WebMvcLinkBuilder.linkTo(BoardController.class).withRel("boards"));
 		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+	
+	@GetMapping("/api/v1/projects/{projectId}/temp-boards")
+	public ResponseEntity<?> getTempBoards(
+			@PathVariable Long projectId
+			, @RequestParam("query") String query
+			, Pageable pageable
+			, PagedResourcesAssembler<BoardResponse> assembler
+			) {
+		
+		Project project = projectService.findProject(projectId);
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+		
+		Page<BoardResponse> boards = BoardResponse.convert(boardService.findTempBoards(query, pageable));
+
+		return new ResponseEntity<>(assembler.toModel(boards, e -> new BoardResource(e)), HttpStatus.OK);
 	}
 	
 	@PostMapping("/api/v1/projects/{projectId}/temp-boards")
@@ -87,47 +119,74 @@ public class BoardController {
 			, @RequestBody BoardWriteRequest params
 			) {
 		
-		BoardResponse savedBoard = boardQueryService.writeTempBoard(principal.getName(), projectId, params);
+		BoardResponse savedBoard = BoardResponse.convert(boardService.writeTempBoard(principal.getName(), projectId, params));
 		BoardResource resource = new BoardResource(savedBoard);
 		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/api/v1/projects/{projectId}/temp-boards/{boardId}")
+	public ResponseEntity<?> updateTempBoard(
+			Principal principal
+			, @PathVariable Long projectId
+			, @PathVariable Long boardId
+			, @RequestBody BoardWriteRequest params
+			) {
+
+		BoardResponse savedBoard = BoardResponse.convert(boardService.updateTempBoard(principal.getName(), projectId, boardId, params));
+		BoardResource resource = new BoardResource(savedBoard);
+
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/api/v1/projects/{projectId}/temp-boards/{boardId}")
+	public ResponseEntity<?> deleteTempBoard(
+			Principal principal
+			, @PathVariable Long projectId
+			, @PathVariable Long boardId
+			) {
+
+		boardService.deteleTempBoard(principal.getName(), projectId, boardId);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
+	@PostMapping("/api/v1/projects/{projectId}/boards")
+	public ResponseEntity<?> postingBoard(
+			Principal principal
+			, @PathVariable Long projectId
+			, @RequestBody BoardWriteRequest params
+			) {
+		
+		BoardResponse savedBoard = BoardResponse.convert(boardService.postBoard(principal.getName(), projectId, params));
+		BoardResource resource = new BoardResource(savedBoard);
+		
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}/boards/{boardId}")
-	public ResponseEntity<?> putBoard(
-			@PathVariable Long projectId
+	public ResponseEntity<?> updateBoard(
+			Principal principal
+			, @PathVariable Long projectId
 			, @PathVariable Long boardId
-			, @RequestBody BoardDTO params
+			, @RequestBody BoardWriteRequest params
 			) {
-		
-		Project project = projectService.findProject(projectId);
-		if(project == null) {
-			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
-		}
 
-		Board board = boardService.getBoardById(boardId);
-		
-		boardQueryService.deleteBoard(null);
+		BoardResponse savedBoard = BoardResponse.convert(boardService.updateBoard(principal.getName(), projectId, boardId, params));
+		BoardResource resource = new BoardResource(savedBoard);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(resource, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/api/v1/projects/{projectId}/boards/{boardId}")
 	public ResponseEntity<?> deleteBoard(
-			@PathVariable Long projectId
+			Principal principal
+			, @PathVariable Long projectId
 			, @PathVariable Long boardId
-			, @RequestBody BoardDTO params
 			) {
-		
-		Project project = projectService.findProject(projectId);
-		if(project == null) {
-			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
-		}
-		
-		BoardDTO.BoardResponse boardDto = boardQueryService.getBoard(boardId);
-		
-		//Board board = boardQueryService.saveBoard(null);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		boardService.deteleBoard(principal.getName(), projectId, boardId);
+
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }

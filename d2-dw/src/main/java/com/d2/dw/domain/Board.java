@@ -65,7 +65,7 @@ public class Board {
 	 * @return
 	 */
 	public static Board writeTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
-		boardValidator.validateWrite(writer, project, params);
+		boardValidator.validateWriteTempBoard(writer, project, params);
 		
 		Board board = Board.builder()
 							.project(project)
@@ -89,7 +89,7 @@ public class Board {
 	 * @return
 	 */
 	public static Board postingBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
-		boardValidator.validatePosting(writer, project, params);
+		boardValidator.validatePostBoard(writer, project, params);
 		
 		Board board = Board.builder()
 							.project(project)
@@ -101,5 +101,54 @@ public class Board {
 							.build();
 		
 		return board;
+	}
+
+	/**
+	 * 임시 게시글 수정
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 * @param params
+	 */
+	public void updateTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+		boardValidator.validateUpdateTempBoard(writer, project, params);
+		
+		this.content = params.getContent();
+		this.title = params.getTitle();
+	}
+
+	/**
+	 * 임시 게시글 삭제
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 * @param params
+	 */
+	public void deleteTempBoard(BoardValidator boardValidator, User writer, Project project) {
+		boardValidator.validateDeleteTempBoard(writer, project);
+	}
+
+	/**
+	 * 게시글 수정
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 * @param params
+	 */
+	public void updateBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+		boardValidator.validateUpdateBoard(writer, project, params);
+		
+		this.content = params.getContent();
+		this.title = params.getTitle();
+	}
+
+	/**
+	 * 게시글 삭제
+	 * @param boardValidator
+	 * @param writer
+	 * @param project
+	 */
+	public void deleteBoard(BoardValidator boardValidator, User writer, Project project) {
+		boardValidator.validateDeleteBoard(writer, project);
 	}
 }

@@ -17,7 +17,7 @@ public class BoardValidator {
 		
 	}
 
-	public void validateWrite(User writer, Project project, BoardWriteRequest params) {
+	public void validateWriteTempBoard(User writer, Project project, BoardWriteRequest params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
@@ -27,7 +27,55 @@ public class BoardValidator {
 		}
 	}
 
-	public void validatePosting(User writer, Project project, BoardWriteRequest params) {
+	public void validatePostBoard(User writer, Project project, BoardWriteRequest params) {
+		if(writer == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
+		}
+		
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+		
+		if(params.getTitle() == null || params.getTitle().isEmpty()) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_TITLE_NULL);
+		}
+		
+		if(params.getContent() == null || params.getContent().isEmpty()) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_CONTENTS_NULL);
+		}
+	}
+
+	public void validateUpdateTempBoard(User writer, Project project, BoardWriteRequest params) {
+		if(writer == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
+		}
+		
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+	}
+
+	public void validateDeleteTempBoard(User writer, Project project) {
+		if(writer == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
+		}
+		
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+	}
+
+	public void validateUpdateBoard(User writer, Project project, BoardWriteRequest params) {
+		if(writer == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
+		}
+		
+		if(project == null) {
+			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+	}
+
+	public void validateDeleteBoard(User writer, Project project) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}

@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 
 import com.d2.dw.domain.Project;
 import com.d2.dw.domain.User;
-import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequestDTO;
 import com.d2.dw.error.BoardErrorCode;
 import com.d2.dw.exception.BusinessException;
 
@@ -17,7 +17,7 @@ public class BoardValidator {
 		
 	}
 
-	public void validateWriteTempBoard(User writer, Project project, BoardWriteRequest params) {
+	public void validateWriteTempBoard(User writer, Project project, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
@@ -27,7 +27,7 @@ public class BoardValidator {
 		}
 	}
 
-	public void validatePostBoard(User writer, Project project, BoardWriteRequest params) {
+	public void validatePostBoard(User writer, Project project, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
@@ -45,7 +45,7 @@ public class BoardValidator {
 		}
 	}
 
-	public void validateUpdateTempBoard(User writer, Project project, BoardWriteRequest params) {
+	public void validateUpdateTempBoard(User writer, Project project, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
@@ -65,7 +65,7 @@ public class BoardValidator {
 		}
 	}
 
-	public void validateUpdateBoard(User writer, Project project, BoardWriteRequest params) {
+	public void validateUpdateBoard(User writer, Project project, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}

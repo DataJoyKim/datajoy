@@ -1,7 +1,10 @@
 package com.d2.dw.dto;
 
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
@@ -12,11 +15,11 @@ import lombok.Setter;
 @Getter @Setter
 public class BoardDTO {
 	@Getter @Setter
-	public static class BoardRequest {
+	public static class BoardRequestDTO {
 	}
 	
 	@Getter @Setter
-	public static class BoardResponse {
+	public static class BoardResponseDTO {
 		private Long id;
 		
 		private BoardStatus status;
@@ -29,17 +32,19 @@ public class BoardDTO {
 		
 		private ProjectDTO project;
 		
-		public static BoardResponse convert(Board board) {
-			if(board == null) return null;
+		public static BoardResponseDTO of(Board board) {
+			if(board == null) {
+				return null;
+			}
 			
 			ModelMapper mapper = new ModelMapper();
 			
 			//Object Skip convert setting
-			mapper.createTypeMap(Board.class, BoardResponse.class)
-					.addMappings(mapping -> mapping.skip(BoardResponse::setUser))
-					.addMappings(mapping -> mapping.skip(BoardResponse::setProject));
+			mapper.createTypeMap(Board.class, BoardResponseDTO.class)
+					.addMappings(mapping -> mapping.skip(BoardResponseDTO::setUser))
+					.addMappings(mapping -> mapping.skip(BoardResponseDTO::setProject));
 			
-			BoardResponse boardDto = mapper.map(board, BoardResponse.class);
+			BoardResponseDTO boardDto = mapper.map(board, BoardResponseDTO.class);
 			
 			boardDto.setUser(UserDTO.convert(board.getUser()));
 			boardDto.setProject(ProjectDTO.convert(board.getProject()));
@@ -47,14 +52,16 @@ public class BoardDTO {
 			return boardDto;
 		}
 
-		public static Page<BoardResponse> convert(Page<Board> findAll) {
-			// TODO Auto-generated method stub
-			return null;
+		public static Page<BoardResponseDTO> of(Page<Board> boards) {
+			return new PageImpl<BoardResponseDTO>(
+								boards.getContent().stream().map(o -> BoardResponseDTO.of(o)).collect(Collectors.toList())
+								, boards.getPageable()
+								, boards.getTotalElements());
 		}
 	}
 	
 	@Getter
-	public static class BoardWriteRequest {
+	public static class BoardWriteRequestDTO {
 		
 		private String content;
 		

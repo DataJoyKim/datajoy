@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.d2.dw.code.BoardStatus;
-import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequestDTO;
 import com.d2.dw.validator.BoardValidator;
 
 import lombok.AccessLevel;
@@ -64,7 +64,7 @@ public class Board {
 	 * @param params
 	 * @return
 	 */
-	public static Board writeTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+	public static Board writeTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
 		boardValidator.validateWriteTempBoard(writer, project, params);
 		
 		Board board = Board.builder()
@@ -88,7 +88,7 @@ public class Board {
 	 * @param params
 	 * @return
 	 */
-	public static Board postingBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+	public static Board postingBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
 		boardValidator.validatePostBoard(writer, project, params);
 		
 		Board board = Board.builder()
@@ -110,7 +110,7 @@ public class Board {
 	 * @param project
 	 * @param params
 	 */
-	public void updateTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+	public void updateTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
 		boardValidator.validateUpdateTempBoard(writer, project, params);
 		
 		this.content = params.getContent();
@@ -135,7 +135,7 @@ public class Board {
 	 * @param project
 	 * @param params
 	 */
-	public void updateBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequest params) {
+	public void updateBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
 		boardValidator.validateUpdateBoard(writer, project, params);
 		
 		this.content = params.getContent();

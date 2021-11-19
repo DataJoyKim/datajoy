@@ -1,10 +1,8 @@
 package com.d2.dw.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.d2.dw.domain.Board;
-import com.d2.dw.dto.BoardDTO.BoardWriteRequest;
+import com.d2.dw.dto.BoardDTO.BoardResponseDTO;
+import com.d2.dw.dto.BoardDTO.BoardWriteRequestDTO;
 
 public interface BoardService {
 
@@ -16,41 +14,13 @@ public interface BoardService {
 	Board findBoard(Long boardId);
 
 	/**
-	 * 게시글 리스트 가져오기
-	 * 페이징
-	 * @param query
-	 * @param pageable
-	 * @return
-	 */
-	Page<Board> findBoards(String query, Pageable pageable);
-	
-	/**
-	 * 특정 임시 게시글 리스트 가져오기
-	 * 페이징
-	 * @param query
-	 * @param pageable
-	 * @return
-	 */
-	Board findTempBoard(Long boardId);
-	
-	
-	/**
-	 * 임시 게시글 리스트 가져오기
-	 * 페이징
-	 * @param query
-	 * @param pageable
-	 * @return
-	 */
-	Page<Board> findTempBoards(String query, Pageable pageable);
-
-	/**
 	 * 임시게시글 작성하기
 	 * @param username
 	 * @param projectId
 	 * @param params
 	 * @return
 	 */
-	Board writeTempBoard(String username, Long projectId, BoardWriteRequest params);
+	BoardResponseDTO writeTempBoard(String username, Long projectId, BoardWriteRequestDTO params);
 
 	/**
 	 * 임시게시글 수정하기
@@ -59,7 +29,7 @@ public interface BoardService {
 	 * @param params
 	 * @return
 	 */
-	Board updateTempBoard(String username, Long projectId, Long boardId, BoardWriteRequest params);
+	BoardResponseDTO updateTempBoard(String username, Long projectId, Long boardId, BoardWriteRequestDTO params);
 	
 	/**
 	 * 임시게시글 삭제하기
@@ -77,7 +47,7 @@ public interface BoardService {
 	 * @param params
 	 * @return
 	 */
-	Board postBoard(String username, Long projectId, BoardWriteRequest params);
+	BoardResponseDTO postBoard(String username, Long projectId, BoardWriteRequestDTO params);
 
 	/**
 	 * 게시글 수정하기
@@ -86,7 +56,7 @@ public interface BoardService {
 	 * @param params
 	 * @return
 	 */
-	Board updateBoard(String username, Long projectId, Long boardId, BoardWriteRequest params);
+	BoardResponseDTO updateBoard(String username, Long projectId, Long boardId, BoardWriteRequestDTO params);
 	
 	/**
 	 * 게시글 삭제하기

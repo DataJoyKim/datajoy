@@ -34,7 +34,10 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
 									.leftJoin(qBoard.user(), qUser)
 									.where(qComment.board().eq(board))
 									.distinct();
-		
+
+		System.out.println(pageable.getOffset());
+		System.out.println(pageable.getPageSize());
+		System.out.println(pageable.getPageNumber());
 		List<Comment> results = getQuerydsl()
 									.applyPagination(pageable, query) //페이징 적용
 									.fetch(); // list type return

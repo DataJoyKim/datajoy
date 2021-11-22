@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Comment;
+import com.d2.dw.domain.Project;
 import com.d2.dw.domain.QBoard;
 import com.d2.dw.domain.QComment;
 import com.d2.dw.domain.QProject;
@@ -22,7 +23,7 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
 	}
 
 	@Override
-	public Page<Comment> findCommentWithReplyByBoard(Board board, Pageable pageable) {
+	public Page<Comment> findCommentsOfBoard(Project project, Board board, Pageable pageable) {
 		QComment qComment = QComment.comment1;
 		QBoard qBoard = QBoard.board;
 		QProject qProject = QProject.project;
@@ -32,12 +33,9 @@ public class CommentRepositoryImpl extends QuerydslRepositorySupport implements 
 									.leftJoin(qComment.board(), qBoard)
 									.leftJoin(qBoard.project(), qProject)
 									.leftJoin(qBoard.user(), qUser)
-									.where(qComment.board().eq(board))
+									.where(qComment.board().eq(board).and(qBoard.project().eq(project)))
 									.distinct();
 
-		System.out.println(pageable.getOffset());
-		System.out.println(pageable.getPageSize());
-		System.out.println(pageable.getPageNumber());
 		List<Comment> results = getQuerydsl()
 									.applyPagination(pageable, query) //페이징 적용
 									.fetch(); // list type return

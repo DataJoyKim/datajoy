@@ -6,32 +6,40 @@ import org.springframework.data.domain.Page;
 import com.d2.dw.domain.Comment;
 import com.d2.dw.domain.EntityCreateUpdateData;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+
 public class CommentDTO {
-	
-	private Long id;
-	
-	private String comment;
-	
-	private BoardDTO board;
-	
-	private EntityCreateUpdateData entityCreateUpdateData;
-	
-	public static CommentDTO convert(Comment comment) {
-		if(comment == null) return null;
-		
-		ModelMapper mapper = new ModelMapper();
-		mapper.createTypeMap(Comment.class, CommentDTO.class);
-		
-		CommentDTO commentDTO = mapper.map(comment, CommentDTO.class);
-		
-		return commentDTO;
-	}
 
-	public static Page<CommentDTO> convert(Page<Comment> comments) {
-		return comments.map(o -> CommentDTO.convert(o));
+	@Getter @Builder
+	public static class CommentResponseDTO {
+		private Long id;
+		
+		private String comment;
+		
+		private BoardDTO board;
+		
+		private EntityCreateUpdateData entityCreateUpdateData;
+		
+		public static CommentResponseDTO of(Comment comment) {
+			if(comment == null) return null;
+			
+			ModelMapper mapper = new ModelMapper();
+			mapper.createTypeMap(Comment.class, CommentResponseDTO.class);
+			
+			CommentResponseDTO commentResponseDTO = mapper.map(comment, CommentResponseDTO.class);
+			
+			return commentResponseDTO;
+		}
+	
+		public static Page<CommentResponseDTO> of(Page<Comment> comments) {
+			return comments.map(o -> CommentResponseDTO.of(o));
+		}
+	}
+	
+	@Getter @Builder
+	public static class CommentWriteRequestDTO {
+		private String comment;
 	}
 }

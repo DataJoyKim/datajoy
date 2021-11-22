@@ -73,7 +73,7 @@ public class BoardController {
 		
 		Page<BoardResponseDTO> boards = boardQueryService.findBoards(query, pageable);
 		
-		return new ResponseEntity<>(assembler.toModel(boards, e -> new BoardResource(e)), HttpStatus.OK);
+		return new ResponseEntity<>(assembler.toModel(boards), HttpStatus.OK);
 	}
 
 	@GetMapping("/api/v1/projects/{projectId}/temp-boards/{boardId}")

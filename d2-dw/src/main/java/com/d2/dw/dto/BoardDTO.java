@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageImpl;
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,7 +61,7 @@ public class BoardDTO {
 		}
 	}
 	
-	@Getter
+	@Getter @Builder
 	public static class BoardWriteRequestDTO {
 		
 		private String content;

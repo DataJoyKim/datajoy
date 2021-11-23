@@ -11,35 +11,37 @@ import com.d2.dw.domain.Project;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
 public class ProjectDTO {
-	
-	private Long id;
-	
-	private String projectNm;
-	
-	private String description;
-	
-	private EntityCreateUpdateData entityCreateUpdateData;
-	
-	private UserDTO user;
-	
-	public static ProjectDTO convert(Project project) {
-		if(project == null) return null; 
-		
-		ModelMapper mapper = new ModelMapper();
-		mapper.createTypeMap(Project.class, ProjectDTO.class)
-				.addMappings(mapping -> mapping.skip(ProjectDTO::setUser));
-		
-		ProjectDTO projectDto = mapper.map(project, ProjectDTO.class);
-		//projectDto.setUser(UserDTO.convert(project.get));
-		
-		return projectDto;
-	}
 
-	public static List<ProjectDTO> convert(List<Project> projects) {
-		return projects.stream()
-						.map(o -> ProjectDTO.convert(o))
-						.collect(Collectors.toList());
+	@Getter @Setter
+	public static class ProjectResponseDTO { 
+		private Long id;
+		
+		private String projectNm;
+		
+		private String description;
+		
+		private EntityCreateUpdateData entityCreateUpdateData;
+		
+		private UserDTO user;
+		
+		public static ProjectResponseDTO of(Project project) {
+			if(project == null) return null; 
+			
+			ModelMapper mapper = new ModelMapper();
+			mapper.createTypeMap(Project.class, ProjectResponseDTO.class)
+					.addMappings(mapping -> mapping.skip(ProjectResponseDTO::setUser));
+			
+			ProjectResponseDTO projectDto = mapper.map(project, ProjectResponseDTO.class);
+			//projectDto.setUser(UserDTO.convert(project.get));
+			
+			return projectDto;
+		}
+	
+		public static List<ProjectResponseDTO> of(List<Project> projects) {
+			return projects.stream()
+							.map(o -> ProjectResponseDTO.of(o))
+							.collect(Collectors.toList());
+		}
 	}
 }

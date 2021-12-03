@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 
 import com.d2.dw.domain.EntityCreateUpdateData;
 import com.d2.dw.domain.Project;
@@ -43,5 +44,16 @@ public class ProjectDTO {
 							.map(o -> ProjectResponseDTO.of(o))
 							.collect(Collectors.toList());
 		}
+
+		public static Page<ProjectResponseDTO> of(Page<Project> projects) {
+			return projects.map(o -> ProjectResponseDTO.of(o));
+		}
+	}
+
+	@Getter
+	public static class ProjectWriteRequestDTO {
+		private String projectNm;
+		
+		private String description;
 	}
 }

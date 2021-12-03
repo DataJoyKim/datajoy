@@ -2,6 +2,7 @@ package com.d2.dw.controller;
 
 import java.security.Principal;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.MediaTypes;
@@ -16,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.d2.dw.dto.CommentDTO.CommentResponseDTO;
-import com.d2.dw.dto.CommentDTO.CommentWriteRequestDTO;
 import com.d2.dw.dto.ProjectDTO.ProjectResponseDTO;
+import com.d2.dw.dto.ProjectDTO.ProjectWriteRequestDTO;
+import com.d2.dw.service.ProjectService;
 import com.d2.dw.service.query.ProjectQueryService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,17 +29,17 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping(produces = MediaTypes.HAL_JSON_VALUE)
 public class ProjectController {
 	
+	private final ProjectService projectService;
 	private final ProjectQueryService projectQueryService;
 
 	@GetMapping("/api/v1/projects")
 	public ResponseEntity<?> getProjects(
-			@PathVariable Long projectId
-			, Pageable pageable
+			Pageable pageable
 			, PagedResourcesAssembler<ProjectResponseDTO> assembler
 			) {
-		
+		Page<ProjectResponseDTO> projects = projectQueryService.findProject(pageable); 
 		 
-		return new ResponseEntity<>(assembler.toModel(null), HttpStatus.OK);
+		return new ResponseEntity<>(assembler.toModel(projects), HttpStatus.OK);
 	}
 
 	@GetMapping("/api/v1/projects/{projectId}")
@@ -46,27 +47,32 @@ public class ProjectController {
 			@PathVariable Long projectId
 			) {
 		
+		ProjectResponseDTO project = projectQueryService.findProjectBy(projectId); 
 		 
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		return new ResponseEntity<>(project, HttpStatus.OK);
 	}
 	
 	@PostMapping("/api/v1/projects")
 	public ResponseEntity<?> createProjects(
 			Principal principal
-			, @RequestBody CommentWriteRequestDTO params
+			, @RequestBody ProjectWriteRequestDTO params
 			) {
 		
-		return new ResponseEntity<>(null, HttpStatus.CREATED);
+		ProjectResponseDTO project = projectService.createProject(principal.getName(), params);
+		
+		return new ResponseEntity<>(project, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/api/v1/projects/{projectId}")
 	public ResponseEntity<?> putProject(
 			Principal principal
 			, @PathVariable Long projectId
-			, @RequestBody CommentWriteRequestDTO params
+			, @RequestBody ProjectWriteRequestDTO params
 			) {
+
+		ProjectResponseDTO project = projectService.updateProjectBy(projectId, principal.getName(), params);
 		
-		return new ResponseEntity<>(null, HttpStatus.CREATED);
+		return new ResponseEntity<>(project, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/api/v1/projects/{projectId}")
@@ -74,6 +80,8 @@ public class ProjectController {
 			Principal principal
 			, @PathVariable Long projectId
 			) {
+		
+		projectService.deleteProjectBy(projectId, principal.getName());
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

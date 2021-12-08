@@ -3,6 +3,7 @@ package com.d2.dw.validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
+import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Project;
 import com.d2.dw.domain.User;
 import com.d2.dw.dto.BoardDTO.BoardWriteRequestDTO;
@@ -45,43 +46,59 @@ public class BoardValidator {
 		}
 	}
 
-	public void validateUpdateTempBoard(User writer, Project project, BoardWriteRequestDTO params) {
+	public void validateUpdateTempBoard(User writer, Project project, Board board, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
 		
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+		
+		if(project.equals(board.getProject()) == false) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_NOT_FOUND_PROJECT);
 		}
 	}
 
-	public void validateDeleteTempBoard(User writer, Project project) {
+	public void validateDeleteTempBoard(User writer, Project project, Board board) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
 		
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+
+		if(project.equals(board.getProject()) == false) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_NOT_FOUND_PROJECT);
 		}
 	}
 
-	public void validateUpdateBoard(User writer, Project project, BoardWriteRequestDTO params) {
+	public void validateUpdateBoard(User writer, Project project, Board board, BoardWriteRequestDTO params) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
 		
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+
+		if(project.equals(board.getProject()) == false) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_NOT_FOUND_PROJECT);
 		}
 	}
 
-	public void validateDeleteBoard(User writer, Project project) {
+	public void validateDeleteBoard(User writer, Project project, Board board) {
 		if(writer == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_WRITER);
 		}
 		
 		if(project == null) {
 			throw new BusinessException(BoardErrorCode.NOT_FOUND_PROJECT);
+		}
+
+		if(project.equals(board.getProject()) == false) {
+			throw new BusinessException(BoardErrorCode.FAULT_REQUEST_BY_NOT_FOUND_PROJECT);
 		}
 	}
 }

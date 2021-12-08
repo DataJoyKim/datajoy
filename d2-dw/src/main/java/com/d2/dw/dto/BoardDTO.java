@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageImpl;
 
 import com.d2.dw.code.BoardStatus;
 import com.d2.dw.domain.Board;
+import com.d2.dw.dto.ProjectDTO.ProjectResponseDTO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -31,7 +32,7 @@ public class BoardDTO {
 		
 		private UserDTO user;
 		
-		private ProjectDTO project;
+		private ProjectResponseDTO project;
 		
 		public static BoardResponseDTO of(Board board) {
 			if(board == null) {
@@ -48,7 +49,7 @@ public class BoardDTO {
 			BoardResponseDTO boardDto = mapper.map(board, BoardResponseDTO.class);
 			
 			boardDto.setUser(UserDTO.convert(board.getUser()));
-			boardDto.setProject(ProjectDTO.convert(board.getProject()));
+			boardDto.setProject(ProjectResponseDTO.of(board.getProject()));
 			
 			return boardDto;
 		}

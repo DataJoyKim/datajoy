@@ -1,6 +1,7 @@
 package com.d2.dw.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.d2.dw.domain.Board;
 import com.d2.dw.domain.Comment;
@@ -27,6 +28,7 @@ public class CommentServiceImpl implements CommentService {
 	private final CommentRepository commentRepository;
 	private final CommentValidator commentValidator;
 	
+	@Transactional
 	@Override
 	public CommentResponseDTO writeComment(String username, Long projectId, Long boardId, CommentWriteRequestDTO params)
 			throws BusinessException {
@@ -40,6 +42,7 @@ public class CommentServiceImpl implements CommentService {
 		return CommentResponseDTO.of(commentRepository.save(comment));
 	}
 
+	@Transactional
 	@Override
 	public CommentResponseDTO updateComment(String username, Long projectId, Long boardId, Long commentId,
 			CommentWriteRequestDTO params) throws BusinessException {
@@ -53,7 +56,8 @@ public class CommentServiceImpl implements CommentService {
 		
 		return CommentResponseDTO.of(commentRepository.save(comment));
 	}
-
+	
+	@Transactional
 	@Override
 	public void deleteComment(String username, Long projectId, Long boardId, Long commentId)
 			throws BusinessException {

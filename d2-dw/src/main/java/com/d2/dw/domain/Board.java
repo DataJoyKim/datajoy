@@ -111,7 +111,7 @@ public class Board {
 	 * @param params
 	 */
 	public void updateTempBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
-		boardValidator.validateUpdateTempBoard(writer, project, params);
+		boardValidator.validateUpdateTempBoard(writer, project, this, params);
 		
 		this.content = params.getContent();
 		this.title = params.getTitle();
@@ -125,7 +125,7 @@ public class Board {
 	 * @param params
 	 */
 	public void deleteTempBoard(BoardValidator boardValidator, User writer, Project project) {
-		boardValidator.validateDeleteTempBoard(writer, project);
+		boardValidator.validateDeleteTempBoard(writer, project, this);
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class Board {
 	 * @param params
 	 */
 	public void updateBoard(BoardValidator boardValidator, User writer, Project project, BoardWriteRequestDTO params) {
-		boardValidator.validateUpdateBoard(writer, project, params);
+		boardValidator.validateUpdateBoard(writer, project, this, params);
 		
 		this.content = params.getContent();
 		this.title = params.getTitle();
@@ -149,6 +149,6 @@ public class Board {
 	 * @param project
 	 */
 	public void deleteBoard(BoardValidator boardValidator, User writer, Project project) {
-		boardValidator.validateDeleteBoard(writer, project);
+		boardValidator.validateDeleteBoard(writer, project, this);
 	}
 }

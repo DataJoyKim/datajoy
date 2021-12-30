@@ -1,7 +1,10 @@
 package com.d2.dw.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,10 @@ class ProjectRepositoryTest {
 	private ProjectRepository projectRepository;
 	
 	@Test
-	void test() {
+	@DisplayName("프로젝트 DB 조회 테스트")
+	void getProjectTest() {
 		List<Project> projects = projectRepository.findAll();
-		
-		System.out.println(projects);
+		assertThat(projects.size() >= 0 ? true : false);
 	}
 
 }

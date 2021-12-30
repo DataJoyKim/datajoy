@@ -25,5 +25,4 @@ class CommentControllerTest extends BaseTest {
 				.andExpect(jsonPath("page").exists())
 				.andExpect(jsonPath("_embedded.commentResourceList[0]._links.self").exists());
 	}
-
 }

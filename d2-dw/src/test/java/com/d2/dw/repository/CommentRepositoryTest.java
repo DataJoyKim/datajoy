@@ -1,7 +1,10 @@
 package com.d2.dw.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +21,10 @@ class CommentRepositoryTest {
 	private CommentRepository commentRepository;
 	
 	@Test
-	void test() {
+	@DisplayName("댓글 DB 조회 테스트")
+	void getCommentsTest() {
 		List<Comment> comments = commentRepository.findAll();
-		
-		System.out.println(comments);
+		assertThat(comments.size() >= 0 ? true : false);
 	}
 
 }

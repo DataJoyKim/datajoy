@@ -11,4 +11,8 @@ public class GoalPlan {
 	private LocalDate endYmd;
 	
 	private String content;
+	
+	public GoalPlan write() {
+		return null;
+	}
 }

@@ -1,5 +1,8 @@
 package com.d1.goalset.modules.goal.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 
@@ -35,7 +38,7 @@ public class Goal {
 	
 	private String contents;
 	
-	private GoalPlan goalPlan;
+	private Set<GoalPlan> goalPlans = new HashSet<>();
 	
 	public Boolean validateSubmit() {
 		return null;

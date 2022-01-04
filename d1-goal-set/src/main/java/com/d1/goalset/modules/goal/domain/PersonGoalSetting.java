@@ -1,12 +1,15 @@
 package com.d1.goalset.modules.goal.domain;
 
+import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.user.Org;
 import com.d1.goalset.modules.user.User;
 
 public class PersonGoalSetting extends GoalSetting {
 
 	@Override
-	public Goal write(Goal goal, Org writeOrg, User writer) {
+	public Goal write(Org writeOrg, User writer, GoalWritingRequest params) {
+		
+		Goal goal = new Goal(writer, params);
 		return null;
 	}
 

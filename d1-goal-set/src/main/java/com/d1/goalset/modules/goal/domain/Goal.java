@@ -5,6 +5,8 @@ import java.util.Set;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
+import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.user.User;
 
 import lombok.Getter;
 
@@ -40,6 +42,10 @@ public class Goal {
 	
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 	
+	public Goal(User writer, GoalWritingRequest params) {
+		
+	}
+
 	public Boolean validateSubmit() {
 		return null;
 	}

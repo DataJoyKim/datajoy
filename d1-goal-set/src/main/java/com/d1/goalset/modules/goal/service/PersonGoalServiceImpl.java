@@ -29,9 +29,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	public Goal write(GoalWritingRequest params) {
 		
 		GoalSetting goalSetting = new PersonGoalSetting();
+		Goal goal = goalSetting.write(null, null, params);
 		
-		
-		Goal savedGoal = goalRepository.save(null);
+		Goal savedGoal = goalRepository.save(goal);
 		
 		Set<GoalPlan> savedGoalPlans = saveGoalPlan(goal.getGoalPlans());
 		

@@ -1,8 +1,8 @@
 package com.d1.goalset.modules.goal.domain;
 
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
-import com.d1.goalset.modules.user.Org;
-import com.d1.goalset.modules.user.User;
+import com.d1.goalset.modules.user.domain.Org;
+import com.d1.goalset.modules.user.domain.User;
 
 public class PersonGoalSetting extends GoalSetting {
 

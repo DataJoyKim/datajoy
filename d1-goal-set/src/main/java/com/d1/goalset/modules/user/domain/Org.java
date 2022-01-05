@@ -1,4 +1,4 @@
-package com.d1.goalset.modules.user;
+package com.d1.goalset.modules.user.domain;
 
 import lombok.Getter;
 

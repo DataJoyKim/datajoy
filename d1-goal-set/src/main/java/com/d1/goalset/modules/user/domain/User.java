@@ -1,4 +1,4 @@
-package com.d1.goalset.modules.user;
+package com.d1.goalset.modules.user.domain;
 
 import javax.persistence.Entity;
 
@@ -12,4 +12,5 @@ public class User {
 	private String name;
 	private Boolean isPrimaryAccount;
 	private String dutyCd;
+	private Org org;
 }

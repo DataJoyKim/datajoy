@@ -6,7 +6,7 @@ import java.util.Set;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
-import com.d1.goalset.modules.user.User;
+import com.d1.goalset.modules.user.domain.User;
 
 import lombok.Getter;
 

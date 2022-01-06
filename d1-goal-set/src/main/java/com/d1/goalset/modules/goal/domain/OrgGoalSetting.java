@@ -7,7 +7,7 @@ public class OrgGoalSetting extends GoalSetting {
 
 	@Override
 	public Goal write(GoalSetter writer, GoalWritingRequest params) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		return null;
 	}
 

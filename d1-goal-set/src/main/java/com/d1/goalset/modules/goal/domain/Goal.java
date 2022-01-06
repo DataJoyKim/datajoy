@@ -49,8 +49,6 @@ public class Goal {
 	
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 	
-	
-	
 	public static Goal createGoal(User writer, GoalWritingRequest params) {
 		Goal goal = Goal.builder().build();
 		
@@ -82,5 +80,9 @@ public class Goal {
 		this.qualityStdD = qualityStdD;
 		this.contents = contents;
 		this.goalPlans = goalPlans;
+	}
+
+	public void setGoalPlans(Set<GoalPlan> savedGoalPlans) {
+		this.goalPlans = savedGoalPlans;
 	}
 }

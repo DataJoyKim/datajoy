@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.Approver;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 
@@ -16,7 +17,7 @@ public abstract class GoalSetting {
 	private Approver approver;
 	private Set<Goal> goals = new HashSet<>();
 	
-	public abstract Goal write(GoalSetter writer, GoalWritingRequest params);
+	public abstract Goal write(GoalSettingValidator goalSettingValidator, GoalSetter writer, GoalWritingRequest params);
 	
 	public abstract void submit();
 	

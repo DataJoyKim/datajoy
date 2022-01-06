@@ -1,15 +1,15 @@
 package com.d1.goalset.modules.goal.domain;
 
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 
 public class PersonGoalSetting extends GoalSetting {
 
 	@Override
-	public Goal write(GoalSetter writer, GoalWritingRequest params) {
-		
+	public Goal write(GoalSettingValidator goalSettingValidator, GoalSetter writer, GoalWritingRequest params) {
+
 		Goal goal = Goal.createGoal(writer, params);
-		 
 		return goal;
 	}
 

@@ -24,6 +24,10 @@ public class GoalSettingValidator {
 		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_WRITE_BY_SUBMIT_STATE);
 		}
+		
+		if(params.getWeight() <= 0 || params.getWeight() > 100) {
+			throw new BusinessException(PersonGoalErrorCode.NOT_RANGE_WEIGHT);
+		}
 	}
 
 }

@@ -28,7 +28,7 @@ public class PersonGoalSetting extends GoalSetting {
 	@Override
 	public void reject() {
 		// TODO Auto-generated method stub
-		
+	
 	}
 	 
 }

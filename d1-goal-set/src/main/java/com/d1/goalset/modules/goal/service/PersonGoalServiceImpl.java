@@ -1,13 +1,9 @@
 package com.d1.goalset.modules.goal.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.modules.goal.domain.Goal;
-import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
@@ -29,38 +25,43 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	
 	@Transactional
 	@Override
-	public Goal write(GoalSetter goalSetter, GoalWritingRequest params) {
+	public GoalSetting write(GoalSetter goalSetter, GoalWritingRequest params) {
+		
+		// 목표계획 생성
+		
+		// 목표 생성
+		
+		// 목표수립 생성
 		
 		GoalSetting goalSetting = new PersonGoalSetting();
 		Goal goal = goalSetting.write(goalSettingValidator, goalSetter, params);
 		
-		Goal savedGoal = goalRepository.save(goal);
+		GoalSetting savedGoalSetting = goalSettingRepository.save(goalSetting);
 		
-		Set<GoalPlan> savedGoalPlans = saveGoalPlan(goal.getGoalPlans());
-		savedGoal.setGoalPlans(savedGoalPlans);
-		
-		return savedGoal;
-	}
-
-	private Set<GoalPlan> saveGoalPlan(Set<GoalPlan> goalPlans) {
-		Set<GoalPlan> savedGoalPlans = new HashSet<>();
-		
-		for(GoalPlan plan : goalPlans) {
-			savedGoalPlans.add(goalPlanRepository.save(plan));
-		}
-		
-		return savedGoalPlans;
+		return savedGoalSetting;
 	}
 
 	@Transactional
 	@Override
-	public Goal update(GoalSetter goalSetter, GoalWritingRequest params) {
-		// TODO Auto-generated method stub
+	public GoalSetting updateBy(Long goalCd, GoalSetter goalSetter, GoalWritingRequest params) {
+		
 		return null;
 	}
 
 	@Override
-	public void delete() {
+	public void deleteBy(Long goalCd, GoalSetter goalSetter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void submit(GoalSetter goalSetter) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cancel(GoalSetter goalSetter) {
 		// TODO Auto-generated method stub
 		
 	}

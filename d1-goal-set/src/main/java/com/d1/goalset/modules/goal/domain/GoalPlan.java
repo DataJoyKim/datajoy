@@ -4,33 +4,30 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalPlanWritingDto;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class GoalPlan {
 	private LocalDate staYmd;
 	
 	private LocalDate endYmd;
 	
 	private String content;
-	
-	public static GoalPlan createGoalPlan(GoalWritingRequest params) {
-		GoalPlan goalPlan = GoalPlan.builder().build();
-		return goalPlan;
-	}
 
-	@Builder
-	public GoalPlan(LocalDate staYmd, LocalDate endYmd, String content) {
-		super();
-		this.staYmd = staYmd;
-		this.endYmd = endYmd;
-		this.content = content;
+	public static GoalPlan createGoalPlan(GoalPlanWritingDto param) {
+		GoalPlan goalPlan = GoalPlan.builder()
+									.staYmd(param.getStaYmd())
+									.endYmd(param.getEndYmd())
+									.content(param.getContent())
+									.build();
+		return goalPlan;
 	}
 }

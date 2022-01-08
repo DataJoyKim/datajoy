@@ -8,9 +8,9 @@ public class PersonGoalSetting extends GoalSetting {
 
 	@Override
 	public Goal write(GoalSettingValidator goalSettingValidator, GoalSetter writer, GoalWritingRequest params) {
-
-		Goal goal = Goal.createGoal(writer, params);
-		return goal;
+		goalSettingValidator.validateWrite(this, writer, params);
+		
+		return Goal.createGoal(writer, params);
 	}
 
 	@Override

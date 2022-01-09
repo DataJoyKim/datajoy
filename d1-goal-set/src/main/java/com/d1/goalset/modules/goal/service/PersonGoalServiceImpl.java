@@ -5,7 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalPlanRepository;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
@@ -25,27 +24,24 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	
 	@Transactional
 	@Override
-	public GoalSetting write(GoalSetter goalSetter, GoalWritingRequest params) {
+	public Goal write(GoalSetter goalSetter, GoalWritingRequest params) {
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
 		
-		// 목표계획 생성
+		Goal goal = Goal.createGoal(goalSettingValidator, goalSetting, goalSetter, params);
 		
-		// 목표 생성
-		
-		// 목표수립 생성
-		
-		GoalSetting goalSetting = new PersonGoalSetting();
-		Goal goal = goalSetting.write(goalSettingValidator, goalSetter, params);
-		
-		GoalSetting savedGoalSetting = goalSettingRepository.save(goalSetting);
-		
-		return savedGoalSetting;
+		return goalRepository.save(goal);
 	}
 
 	@Transactional
 	@Override
-	public GoalSetting updateBy(Long goalCd, GoalSetter goalSetter, GoalWritingRequest params) {
+	public Goal updateBy(Long goalCd, GoalSetter goalSetter, GoalWritingRequest params) {
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
 		
-		return null;
+		Goal goal = goalRepository.findById(goalCd).get();
+		
+		goal.update(goalSettingValidator, goalSetting, goalSetter, params);
+
+		return goalRepository.save(goal);
 	}
 
 	@Override

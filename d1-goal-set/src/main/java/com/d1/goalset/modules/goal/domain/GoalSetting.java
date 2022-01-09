@@ -3,21 +3,23 @@ package com.d1.goalset.modules.goal.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Entity;
+
 import com.d1.goalset.modules.goal.code.GoalSettingState;
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
-import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.Approver;
-import com.d1.goalset.modules.user.domain.GoalSetter;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Getter
+@Entity
+@Getter @Setter 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GoalSetting {
 	private GoalSettingState goalSettingStatCd;
 	private Approver approver;
 	private Set<Goal> goals = new HashSet<>();
-	
-	public abstract Goal write(GoalSettingValidator goalSettingValidator, GoalSetter writer, GoalWritingRequest params);
 	
 	public abstract void submit();
 	

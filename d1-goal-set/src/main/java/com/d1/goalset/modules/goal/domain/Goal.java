@@ -9,6 +9,8 @@ import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalPlanWritingDto;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
+import com.d1.goalset.modules.user.domain.GoalSetter;
 import com.d1.goalset.modules.user.domain.User;
 
 import lombok.AccessLevel;
@@ -50,8 +52,13 @@ public class Goal {
 	private String contents;
 	
 	private Set<GoalPlan> goalPlans = new HashSet<>();
-	
-	public static Goal createGoal(User writer, GoalWritingRequest params) {
+
+
+	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
+			GoalWritingRequest params) {
+		
+		goalSettingValidator.validateWrite(goalSetting, goalSetter, params);
+		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
 						.weight(params.getWeight())
@@ -70,6 +77,12 @@ public class Goal {
 						.build();
 		
 		return goal;
+	}
+
+	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
+			GoalWritingRequest params) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> params) {

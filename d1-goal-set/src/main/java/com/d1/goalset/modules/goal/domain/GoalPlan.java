@@ -16,18 +16,25 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class GoalPlan {
+	private Long id;
+	
 	private LocalDate staYmd;
 	
 	private LocalDate endYmd;
 	
 	private String content;
 
-	public static GoalPlan createGoalPlan(GoalPlanWritingDto param) {
+	public static GoalPlan createGoalPlan(GoalPlanWritingDto params) {
 		GoalPlan goalPlan = GoalPlan.builder()
-									.staYmd(param.getStaYmd())
-									.endYmd(param.getEndYmd())
-									.content(param.getContent())
+									.staYmd(params.getStaYmd())
+									.endYmd(params.getEndYmd())
+									.content(params.getContent())
 									.build();
 		return goalPlan;
+	}
+
+	public void update(GoalPlanWritingDto params) {
+		// TODO Auto-generated method stub
+		
 	}
 }

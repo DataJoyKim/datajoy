@@ -7,9 +7,9 @@ import com.d1.goalset.modules.user.domain.GoalSetter;
 public interface PersonGoalService {
 	Goal write(GoalSetter goalSetter, GoalWritingRequest params);
 	
-	Goal updateBy(Long goalCd, GoalSetter goalSetter, GoalWritingRequest params);
+	Goal updateBy(Long goalId, GoalSetter goalSetter, GoalWritingRequest params);
 	
-	void deleteBy(Long goalCd, GoalSetter goalSetter);
+	void deleteBy(Long goalId, GoalSetter goalSetter);
 	
 	void submit(GoalSetter goalSetter);
 	

@@ -12,7 +12,7 @@ import com.d1.goalset.modules.user.domain.GoalSetter;
 @Component
 public class GoalSettingValidator {
 
-	public void validateWrite(GoalSetting goalSetting, GoalSetter writer, GoalWritingRequest params) {
+	public void validateCreate(GoalSetting goalSetting, GoalSetter writer, GoalWritingRequest params) {
 		if(writer == null) {
 			throw new BusinessException(PersonGoalErrorCode.NULL_WRITER);
 		}

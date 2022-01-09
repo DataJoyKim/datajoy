@@ -12,6 +12,8 @@ public class PersonGoalDto {
 	
 	@Getter
 	public class GoalWritingRequest {
+		private Long id;
+		
 		private String goalName;
 		
 		private Integer weight;
@@ -41,6 +43,8 @@ public class PersonGoalDto {
 	
 	@Getter
 	public class GoalPlanWritingDto {
+		private Long id;
+		
 		private LocalDate staYmd;
 		
 		private LocalDate endYmd;

@@ -1,9 +1,14 @@
 package com.d1.goalset.modules.goal.domain;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
@@ -11,7 +16,6 @@ import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalPlanWritingDto;
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
-import com.d1.goalset.modules.user.domain.User;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,7 +27,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class Goal {
-	private Long goalCd;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
 	private String goalName;
 	
@@ -53,11 +58,10 @@ public class Goal {
 	
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 
-
 	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
 			GoalWritingRequest params) {
 		
-		goalSettingValidator.validateWrite(goalSetting, goalSetter, params);
+		goalSettingValidator.validateCreate(goalSetting, goalSetter, params);
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
@@ -81,8 +85,28 @@ public class Goal {
 
 	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
 			GoalWritingRequest params) {
-		// TODO Auto-generated method stub
+		this.goalName = params.getGoalName();
+		this.weight = params.getWeight();
+		this.goalWritingStateCd = GoalWritingState.SAVE;
+		this.evalWayCd = params.getEvalWayCd();
+		this.qualityStdS = params.getQualityStdS();
+		this.qualityStdA = params.getQualityStdA();
+		this.qualityStdB = params.getQualityStdB();
+		this.qualityStdC = params.getQualityStdC();
+		this.qualityStdD = params.getQualityStdD();
+		this.quantStdMax = params.getQuantStdMax();
+		this.quantStdGoal = params.getQuantStdGoal();
+		this.quantStdMin = params.getQuantStdMin();
+		this.contents = params.getContents();
 		
+		Map<Long, GoalPlanWritingDto> goalPlanMap = new HashMap<>();
+		for(GoalPlanWritingDto goalPlan : params.getGoalPlans()) {
+			goalPlanMap.put(goalPlan.getId(), goalPlan);
+		}
+		
+		for(GoalPlan goalPlan : this.goalPlans) {
+			goalPlan.update(goalPlanMap.get(goalPlan.getId()));
+		}
 	}
 
 	private static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> params) {

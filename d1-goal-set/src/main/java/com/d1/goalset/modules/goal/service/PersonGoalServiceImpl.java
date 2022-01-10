@@ -34,30 +34,36 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Override
 	public Goal updateBy(Long goalId, GoalSetter goalSetter, GoalWritingRequest params) {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
-		
 		Goal goal = goalRepository.findById(goalId).get();
 		
 		goal.update(goalSettingValidator, goalSetting, goalSetter, params);
-
-		return goalRepository.save(goal);
+		
+		return goal;
 	}
 
+	@Transactional
 	@Override
 	public void deleteBy(Long goalId, GoalSetter goalSetter) {
-		// TODO Auto-generated method stub
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		Goal goal = goalRepository.findById(goalId).get();
 		
+		goal.delete(goalSettingValidator, goalSetting, goalSetter);
 	}
 
+	@Transactional
 	@Override
 	public void submit(GoalSetter goalSetter) {
-		// TODO Auto-generated method stub
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
 		
+		goalSetting.submit(goalSettingValidator);
 	}
 
+	@Transactional
 	@Override
 	public void cancel(GoalSetter goalSetter) {
-		// TODO Auto-generated method stub
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
 		
+		goalSetting.cancel(goalSettingValidator);
 	}
 
 }

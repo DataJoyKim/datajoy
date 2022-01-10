@@ -61,7 +61,7 @@ public class Goal {
 	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
 			GoalWritingRequest params) {
 		
-		goalSettingValidator.validateCreate(goalSetting, goalSetter, params);
+		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
@@ -85,6 +85,8 @@ public class Goal {
 
 	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
 			GoalWritingRequest params) {
+		goalSettingValidator.validateUpdateGoal(this, goalSetting, goalSetter, params);
+		
 		this.goalName = params.getGoalName();
 		this.weight = params.getWeight();
 		this.goalWritingStateCd = GoalWritingState.SAVE;
@@ -99,14 +101,36 @@ public class Goal {
 		this.quantStdMin = params.getQuantStdMin();
 		this.contents = params.getContents();
 		
-		Map<Long, GoalPlanWritingDto> goalPlanMap = new HashMap<>();
-		for(GoalPlanWritingDto goalPlan : params.getGoalPlans()) {
+		Map<Long, GoalPlan> goalPlanMap = createGoalPlanMap(this.goalPlans);
+		
+		saveGoalPlans(params.getGoalPlans(), goalPlanMap);
+	}
+
+	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter) {
+		goalSettingValidator.validateDeleteGoal(this, goalSetting, goalSetter);
+		
+		this.goalWritingStateCd = GoalWritingState.DELETE;
+	}
+
+	private void saveGoalPlans(Set<GoalPlanWritingDto> goalPlans, Map<Long, GoalPlan> goalPlanMap) {
+		for(GoalPlanWritingDto param : goalPlans) {
+			if(goalPlanMap.containsKey(param.getId())) {
+				GoalPlan goalPlan = goalPlanMap.get(param.getId());
+				goalPlan.update(param);
+			}
+			else {
+				this.goalPlans.add(GoalPlan.createGoalPlan(param));
+			}
+		}
+	}
+
+	private Map<Long, GoalPlan> createGoalPlanMap(Set<GoalPlan> goalPlans) {
+		Map<Long, GoalPlan> goalPlanMap = new HashMap<>();
+		for(GoalPlan goalPlan : goalPlans) {
 			goalPlanMap.put(goalPlan.getId(), goalPlan);
 		}
 		
-		for(GoalPlan goalPlan : this.goalPlans) {
-			goalPlan.update(goalPlanMap.get(goalPlan.getId()));
-		}
+		return goalPlanMap;
 	}
 
 	private static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> params) {
@@ -116,10 +140,6 @@ public class Goal {
 		}
 		
 		return goalPlans;
-	}
-
-	public Boolean validateSubmit() {
-		return null;
 	}
 
 	public void setGoalPlans(Set<GoalPlan> savedGoalPlans) {

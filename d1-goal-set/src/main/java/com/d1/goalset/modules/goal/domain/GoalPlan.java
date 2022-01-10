@@ -34,7 +34,8 @@ public class GoalPlan {
 	}
 
 	public void update(GoalPlanWritingDto params) {
-		// TODO Auto-generated method stub
-		
+		this.staYmd = params.getStaYmd();
+		this.endYmd = params.getEndYmd();
+		this.content = params.getContent();
 	}
 }

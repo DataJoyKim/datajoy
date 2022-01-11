@@ -3,6 +3,9 @@ package com.d1.goalset.modules.goal.domain;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalPlanWritingDto;
 
@@ -16,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class GoalPlan {
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private LocalDate staYmd;

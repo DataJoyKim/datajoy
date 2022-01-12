@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.Approver;
-import com.d1.goalset.modules.user.domain.GoalSetter;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,11 +29,8 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GoalSetting {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "goal_setting_id")
 	private Long id;
-	
-	private String companyCd;
-	
-	private String seasonCd;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_setting_state_cd")
@@ -42,14 +38,10 @@ public abstract class GoalSetting {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private GoalSetter goalSetter;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
 	private Approver approver;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "target_id")
 	private Set<Goal> goals = new HashSet<>();
 	
 	public abstract void submit(GoalSettingValidator goalSettingValidator);

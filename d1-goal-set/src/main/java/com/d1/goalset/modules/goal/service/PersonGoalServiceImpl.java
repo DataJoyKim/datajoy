@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;

@@ -7,7 +7,7 @@ import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 

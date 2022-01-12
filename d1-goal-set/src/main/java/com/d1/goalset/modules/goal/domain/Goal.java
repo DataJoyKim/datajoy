@@ -5,15 +5,23 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalPlanWritingDto;
-import com.d1.goalset.modules.goal.dto.PersonGoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 
@@ -28,34 +36,53 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class Goal {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "goal_id")
 	private Long id;
 	
+	@Column(name = "goal_name")
 	private String goalName;
 	
+	@Column(name = "weight")
 	private Integer weight;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "goal_writing_state_cd")
 	private GoalWritingState goalWritingStateCd;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "eval_way_cd")
 	private EvalWay evalWayCd;
 	
+	@Column(name = "quant_std_max")
 	private String quantStdMax;
 	
+	@Column(name = "quant_std_goal")
 	private String quantStdGoal;
 	
+	@Column(name = "quant_std_min")
 	private String quantStdMin;
 	
+	@Column(name = "quality_std_s")
 	private String qualityStdS;
 	
+	@Column(name = "quality_std_a")
 	private String qualityStdA;
 	
+	@Column(name = "quality_std_b")
 	private String qualityStdB;
 	
+	@Column(name = "quality_std_c")
 	private String qualityStdC;
 	
+	@Column(name = "quality_std_d")
 	private String qualityStdD;
 	
+	@Lob
+	@Column(name = "contents")
 	private String contents;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "goal_id")
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 
 	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,

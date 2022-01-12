@@ -5,19 +5,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
+import com.sun.istack.NotNull;
 
 import lombok.Getter;
 
-public class PersonGoalDto {
+public class GoalDto {
 	
 	@Getter
 	public class GoalWritingRequest {
 		private Long id;
 		
+		@NotNull
 		private String goalName;
 		
+		@NotNull
 		private Integer weight;
 		
+		@NotNull
 		private EvalWay evalWayCd;
 		
 		private String quantStdMax;
@@ -49,6 +53,6 @@ public class PersonGoalDto {
 		
 		private LocalDate endYmd;
 		
-		private String content;
+		private String plan;
 	}
 }

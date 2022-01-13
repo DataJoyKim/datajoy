@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
@@ -32,6 +33,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "goal")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class Goal {
@@ -85,8 +87,8 @@ public class Goal {
 	@JoinColumn(name = "goal_id")
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 
-	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
-			GoalWritingRequest params) {
+	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter, 
+			Set<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
 		
@@ -104,7 +106,7 @@ public class Goal {
 						.quantStdGoal(params.getQuantStdGoal())
 						.quantStdMin(params.getQuantStdMin())
 						.contents(params.getContents())
-						.goalPlans(createGoalPlans(params.getGoalPlans()))
+						.goalPlans(goalPlans)
 						.build();
 		
 		return goal;
@@ -127,6 +129,8 @@ public class Goal {
 		this.quantStdGoal = params.getQuantStdGoal();
 		this.quantStdMin = params.getQuantStdMin();
 		this.contents = params.getContents();
+		
+		// goal plan update
 		
 		Map<Long, GoalPlan> goalPlanMap = createGoalPlanMap(this.goalPlans);
 		
@@ -158,15 +162,6 @@ public class Goal {
 		}
 		
 		return goalPlanMap;
-	}
-
-	private static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> params) {
-		Set<GoalPlan> goalPlans = new HashSet<>();
-		for(GoalPlanWritingDto param : params) {
-			goalPlans.add(GoalPlan.createGoalPlan(param));
-		}
-		
-		return goalPlans;
 	}
 
 	public void setGoalPlans(Set<GoalPlan> savedGoalPlans) {

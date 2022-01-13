@@ -1,9 +1,12 @@
 package com.d1.goalset.modules.goal.service;
 
+import java.util.Set;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.modules.goal.domain.Goal;
+import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
@@ -25,7 +28,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	public Goal write(GoalSetter goalSetter, GoalWritingRequest params) {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
 		
-		Goal goal = Goal.createGoal(goalSettingValidator, goalSetting, goalSetter, params);
+		Set<GoalPlan> goalPlans = GoalPlan.createGoalPlans(params.getGoalPlans()); 
+		
+		Goal goal = Goal.createGoal(goalSettingValidator, goalSetting, goalSetter, goalPlans, params);
 		
 		return goalRepository.save(goal);
 	}

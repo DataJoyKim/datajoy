@@ -1,9 +1,11 @@
 package com.d1.goalset.modules.goal.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class PersonGoalServiceImplTest {
 
 	@Test

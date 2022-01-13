@@ -1,12 +1,14 @@
 package com.d1.goalset.modules.goal.domain;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
 
@@ -17,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "goal_plan")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class GoalPlan {
@@ -42,9 +45,18 @@ public class GoalPlan {
 		return goalPlan;
 	}
 
+	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> goalPlans) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void update(GoalPlanWritingDto params) {
 		this.staYmd = params.getStaYmd();
 		this.endYmd = params.getEndYmd();
 		this.plan = params.getPlan();
+	}
+	
+	public boolean hasData() {
+		return (this.id != null) ? true : false;
 	}
 }

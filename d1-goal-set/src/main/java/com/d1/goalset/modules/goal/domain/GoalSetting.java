@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
@@ -25,6 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "goal_setting")
 @Getter @Setter 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GoalSetting {

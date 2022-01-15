@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -13,8 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
@@ -25,8 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "goal_setting")
+@MappedSuperclass
 @Getter @Setter 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class GoalSetting {
@@ -39,7 +37,7 @@ public abstract class GoalSetting {
 	private GoalSettingState goalSettingStatCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "approver_id")
 	private Approver approver;
 	
 	@OneToMany(fetch = FetchType.LAZY)

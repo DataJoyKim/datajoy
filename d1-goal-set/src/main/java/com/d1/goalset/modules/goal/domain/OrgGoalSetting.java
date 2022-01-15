@@ -1,7 +1,12 @@
 package com.d1.goalset.modules.goal.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 
+@Entity
+@Table(name = "goal_setting")
 public class OrgGoalSetting extends GoalSetting {
 
 	@Override

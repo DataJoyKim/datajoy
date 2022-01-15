@@ -7,12 +7,14 @@ import java.util.Set;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.sun.istack.NotNull;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 public class GoalDto {
 	
-	@Getter
-	public class GoalWritingRequest {
+	@Getter @AllArgsConstructor @Builder
+	public static class GoalWritingRequest {
 		private Long id;
 		
 		@NotNull

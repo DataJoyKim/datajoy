@@ -33,7 +33,7 @@ public class GoalPlan {
 	@Column(name = "end_ymd")
 	private LocalDate endYmd;
 	
-	@Column(name = "plan")
+	@Column(name = "plan", columnDefinition = "TEXT")
 	private String plan;
 
 	public static GoalPlan createGoalPlan(GoalPlanWritingDto params) {

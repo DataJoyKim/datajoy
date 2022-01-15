@@ -1,16 +1,40 @@
 package com.d1.goalset.modules.goal.service;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.d1.goalset.modules.goal.code.EvalWay;
+import com.d1.goalset.modules.goal.domain.Goal;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.user.domain.GoalSetter;
+
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 class PersonGoalServiceImplTest {
 
+	@Autowired PersonGoalService personGoalService;
+	
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		GoalSetter goalSetter = (GoalSetter) GoalSetter.builder()
+										.id((long) 1155991)
+										.build(); 
+		
+		GoalWritingRequest params = GoalWritingRequest.builder()
+														.goalName("목표1")
+														.evalWayCd(EvalWay.QUANT_EVAL)
+														.quantStdMax("테스트")
+														.quantStdGoal("목표기준")
+														.quantStdMin("최소기준")
+														.weight(40)
+														.contents("테스트")
+														.build();
+		
+		Goal goal = personGoalService.write(goalSetter, params );
+		
 	}
 
 	// 작성 테스트

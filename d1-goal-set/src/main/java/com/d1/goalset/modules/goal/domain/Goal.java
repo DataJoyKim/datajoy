@@ -44,7 +44,7 @@ public class Goal {
 	@Column(name = "goal_name")
 	private String goalName;
 	
-	@Column(name = "weight")
+	@Column(name = "weight", columnDefinition = "TINYINT")
 	private Integer weight;
 	
 	@Enumerated(EnumType.STRING)
@@ -55,28 +55,28 @@ public class Goal {
 	@Column(name = "eval_way_cd")
 	private EvalWay evalWayCd;
 	
-	@Column(name = "quant_std_max")
+	@Column(name = "quant_std_max", columnDefinition = "TEXT")
 	private String quantStdMax;
 	
-	@Column(name = "quant_std_goal")
+	@Column(name = "quant_std_goal", columnDefinition = "TEXT")
 	private String quantStdGoal;
 	
-	@Column(name = "quant_std_min")
+	@Column(name = "quant_std_min", columnDefinition = "TEXT")
 	private String quantStdMin;
 	
-	@Column(name = "quality_std_s")
+	@Column(name = "quality_std_s", columnDefinition = "TEXT")
 	private String qualityStdS;
 	
-	@Column(name = "quality_std_a")
+	@Column(name = "quality_std_a", columnDefinition = "TEXT")
 	private String qualityStdA;
 	
-	@Column(name = "quality_std_b")
+	@Column(name = "quality_std_b", columnDefinition = "TEXT")
 	private String qualityStdB;
 	
-	@Column(name = "quality_std_c")
+	@Column(name = "quality_std_c", columnDefinition = "TEXT")
 	private String qualityStdC;
 	
-	@Column(name = "quality_std_d")
+	@Column(name = "quality_std_d", columnDefinition = "TEXT")
 	private String qualityStdD;
 	
 	@Lob

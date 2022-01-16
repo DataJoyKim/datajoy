@@ -1,5 +1,6 @@
 package com.d1.goalset.modules.goal.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ class PersonGoalServiceImplTest {
 
 	@Autowired PersonGoalService personGoalService;
 	
+	@DisplayName("작성 테스트")
 	@Test
-	void test() {
+	void writeTest() {
 		GoalSetter goalSetter = (GoalSetter) GoalSetter.builder()
 										.id((long) 1155991)
 										.build(); 
@@ -34,7 +36,6 @@ class PersonGoalServiceImplTest {
 														.build();
 		
 		Goal goal = personGoalService.write(goalSetter, params );
-		
 	}
 
 	// 작성 테스트

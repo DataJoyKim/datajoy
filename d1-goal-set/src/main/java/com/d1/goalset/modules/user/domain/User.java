@@ -10,12 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @MappedSuperclass 
-@Getter @AllArgsConstructor @Builder
-public class User {
+@Getter 
+@AllArgsConstructor
+public abstract class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;

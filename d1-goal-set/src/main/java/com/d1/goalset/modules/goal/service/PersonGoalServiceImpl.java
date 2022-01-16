@@ -5,10 +5,12 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.d1.goalset.modules.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
@@ -26,7 +28,8 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public Goal write(GoalSetter goalSetter, GoalWritingRequest params) {
-		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		Set<GoalPlan> goalPlans = GoalPlan.createGoalPlans(params.getGoalPlans()); 
 		
@@ -38,7 +41,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public Goal updateBy(Long goalId, GoalSetter goalSetter, GoalWritingRequest params) {
-		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
+		
 		Goal goal = goalRepository.findById(goalId).get();
 		
 		goal.update(goalSettingValidator, goalSetting, goalSetter, params);
@@ -49,7 +54,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void deleteBy(Long goalId, GoalSetter goalSetter) {
-		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
+		
 		Goal goal = goalRepository.findById(goalId).get();
 		
 		goal.delete(goalSettingValidator, goalSetting, goalSetter);
@@ -58,7 +65,8 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void submit(GoalSetter goalSetter) {
-		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		goalSetting.submit(goalSettingValidator);
 	}
@@ -66,7 +74,8 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void cancel(GoalSetter goalSetter) {
-		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter).get();
+		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		goalSetting.cancel(goalSettingValidator);
 	}

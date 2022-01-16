@@ -6,7 +6,8 @@ public enum PersonGoalErrorCode implements BusinessErrorCode {
 	NULL_WRITER(400, "R001","작성자가 존재하지 않습니다."), 
 	CAN_NOT_WRITE_BY_APPROVAL_STATE(400, "R002","승인되어 작성할수없습니다."), 
 	CAN_NOT_WRITE_BY_SUBMIT_STATE(400, "R003","제출하여 작성할수없습니다. 회수 후 작성해주세요."), 
-	NOT_RANGE_WEIGHT(400, "R004","가중치 범위가 아닙니다."),
+	NOT_RANGE_WEIGHT(400, "R004","가중치 범위가 아닙니다."), 
+	NOT_FOUND_GOAL_SETTING(404, "R005","목표수립 데이터가 존재하지 않습니다."),
 	;
 
 	private final String errorKind = "PersonGoal";

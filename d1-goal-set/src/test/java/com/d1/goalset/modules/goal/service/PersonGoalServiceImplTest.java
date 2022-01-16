@@ -21,7 +21,7 @@ class PersonGoalServiceImplTest {
 	@DisplayName("작성 테스트")
 	@Test
 	void writeTest() {
-		GoalSetter goalSetter = (GoalSetter) GoalSetter.builder()
+		GoalSetter goalSetter = GoalSetter.builder()
 										.id((long) 1155991)
 										.build(); 
 		

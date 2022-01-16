@@ -11,11 +11,11 @@ import org.springframework.web.servlet.function.EntityResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/goal-goals/**")
+@RequestMapping("/api/v1/org-goals")
 @RequiredArgsConstructor
 public class OrgGoalController {
 
-	@GetMapping("")
+	@GetMapping("/")
 	public EntityResponse<?> getOrgGoals() {
 		return null;
 	}
@@ -25,7 +25,7 @@ public class OrgGoalController {
 		return null;
 	}
 	
-	@PostMapping("")
+	@PostMapping("/")
 	public EntityResponse<?> postOrgGoals() {
 		return null;
 	}

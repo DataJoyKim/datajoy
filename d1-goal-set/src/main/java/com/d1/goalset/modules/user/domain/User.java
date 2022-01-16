@@ -11,14 +11,21 @@ import javax.persistence.MappedSuperclass;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @MappedSuperclass 
 @Getter 
-@AllArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 public abstract class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;
+	
+	@Column(name = "season_cd")
+	private String seasonCd;
+	
+	@Column(name = "company_cd")
+	private String companyCd;
 	
 	@Column(name = "emp_no")
 	private String empNo;
@@ -41,4 +48,7 @@ public abstract class User {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "org_id")
 	private Org org;
+	
+	@Column(name = "use_flag")
+	private Boolean isUse;
 }

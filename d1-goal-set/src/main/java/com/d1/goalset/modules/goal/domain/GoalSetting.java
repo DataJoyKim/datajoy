@@ -16,6 +16,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
+import com.d1.goalset.modules.goal.code.GoalType;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.Approver;
 
@@ -31,6 +32,16 @@ public abstract class GoalSetting {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "goal_setting_id")
 	private Long id;
+	
+	@Column(name = "season_cd")
+	private String seasonCd;
+	
+	@Column(name = "company_cd")
+	private String companyCd;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "goal_type")
+	private GoalType goalType;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_setting_state_cd")

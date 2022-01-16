@@ -9,8 +9,12 @@ import javax.persistence.Table;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "goal_setting")
+@Getter @Setter
 public class PersonGoalSetting extends GoalSetting {
 	
 	@ManyToOne(fetch = FetchType.LAZY)

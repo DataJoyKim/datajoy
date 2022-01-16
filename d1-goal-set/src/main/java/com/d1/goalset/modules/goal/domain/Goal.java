@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
+import com.d1.goalset.modules.goal.code.GoalType;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
@@ -43,6 +44,16 @@ public class Goal {
 	
 	@Column(name = "goal_name")
 	private String goalName;
+
+	@Column(name = "season_cd")
+	private String seasonCd;
+	
+	@Column(name = "company_cd")
+	private String companyCd;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "goal_type")
+	private GoalType goalType;
 	
 	@Column(name = "weight", columnDefinition = "TINYINT")
 	private Integer weight;
@@ -94,6 +105,9 @@ public class Goal {
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
+						.seasonCd(goalSetter.getSeasonCd())
+						.companyCd(goalSetter.getCompanyCd())
+						.goalType(GoalType.PERSON_GOAL)
 						.weight(params.getWeight())
 						.goalWritingStateCd(GoalWritingState.SAVE)
 						.evalWayCd(params.getEvalWayCd())

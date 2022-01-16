@@ -12,7 +12,7 @@ import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
-import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
+import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 
@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PersonGoalServiceImpl implements PersonGoalService {
 	private final GoalRepository goalRepository;
-	private final GoalSettingRepository goalSettingRepository;
+	private final PersonGoalSettingRepository goalSettingRepository;
 	private final GoalSettingValidator goalSettingValidator;
 	
 	@Transactional

@@ -47,8 +47,8 @@ public class GoalDto {
 		private Set<GoalPlanWritingDto> goalPlans = new HashSet<>();
 	}
 	
-	@Getter
-	public class GoalPlanWritingDto {
+	@Getter @Builder @AllArgsConstructor
+	public static class GoalPlanWritingDto {
 		private Long id;
 		
 		private LocalDate staYmd;

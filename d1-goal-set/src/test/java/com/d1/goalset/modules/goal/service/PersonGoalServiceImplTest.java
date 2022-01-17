@@ -16,7 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
-import com.d1.goalset.modules.goal.code.GoalType;
+import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
@@ -59,7 +59,7 @@ class PersonGoalServiceImplTest {
 		goalSetting.setGoalSetter(goalSetter);
 		goalSetting.setSeasonCd(seasonCd);
 		goalSetting.setCompanyCd(companyCd);
-		goalSetting.setGoalType(GoalType.PERSON_GOAL);
+		goalSetting.setGoalType(GoalTypeCode.PERSON_GOAL);
 		
 		Optional<PersonGoalSetting> savedGoalSetting = goalSettingRepository.findById((long) 1);
 		

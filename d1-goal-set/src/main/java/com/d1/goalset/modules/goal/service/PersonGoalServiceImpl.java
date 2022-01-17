@@ -9,6 +9,7 @@ import com.d1.goalset.modules.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
+import com.d1.goalset.modules.goal.domain.PersonGoal;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
@@ -33,7 +34,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		
 		Set<GoalPlan> goalPlans = GoalPlan.createGoalPlans(params.getGoalPlans()); 
 		
-		Goal goal = Goal.createGoal(goalSettingValidator, goalSetting, goalSetter, goalPlans, params);
+		Goal goal = Goal.createGoal(new PersonGoal(), goalSettingValidator, goalSetting, goalSetter, goalPlans, params);
 		
 		return goalRepository.save(goal);
 	}

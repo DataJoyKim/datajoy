@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
-import com.d1.goalset.modules.goal.code.GoalType;
+import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
@@ -53,7 +53,7 @@ public class Goal {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_type")
-	private GoalType goalType;
+	private GoalTypeCode goalType;
 	
 	@Column(name = "weight", columnDefinition = "TINYINT")
 	private Integer weight;
@@ -98,7 +98,7 @@ public class Goal {
 	@JoinColumn(name = "goal_id")
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 
-	public static Goal createGoal(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter, 
+	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter, 
 			Set<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
@@ -107,7 +107,7 @@ public class Goal {
 						.goalName(params.getGoalName())
 						.seasonCd(goalSetter.getSeasonCd())
 						.companyCd(goalSetter.getCompanyCd())
-						.goalType(GoalType.PERSON_GOAL)
+						.goalType(goalType.getGoalTypeCode())
 						.weight(params.getWeight())
 						.goalWritingStateCd(GoalWritingState.SAVE)
 						.evalWayCd(params.getEvalWayCd())

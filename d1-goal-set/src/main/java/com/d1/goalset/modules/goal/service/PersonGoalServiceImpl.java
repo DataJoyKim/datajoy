@@ -45,7 +45,8 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		Goal goal = goalRepository.findById(goalId).get();
+		Goal goal = goalRepository.findGoalBy(goalId)
+								.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL));
 		
 		goal.update(goalSettingValidator, goalSetting, goalSetter, params);
 		

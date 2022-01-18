@@ -98,8 +98,8 @@ public class Goal {
 	@JoinColumn(name = "goal_id")
 	private Set<GoalPlan> goalPlans = new HashSet<>();
 
-	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter, 
-			Set<GoalPlan> goalPlans, GoalWritingRequest params) {
+	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, 
+			GoalSetter goalSetter, Set<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
 		

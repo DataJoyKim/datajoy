@@ -1,6 +1,7 @@
 package com.d1.goalset.modules.goal.domain;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -45,9 +46,13 @@ public class GoalPlan {
 		return goalPlan;
 	}
 
-	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> goalPlans) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> goalPlansDto) {
+		Set<GoalPlan> goalPlans = new HashSet<>();
+		for(GoalPlanWritingDto goalPlanDto : goalPlansDto) {
+			goalPlans.add(createGoalPlan(goalPlanDto));
+		}
+		
+		return goalPlans;
 	}
 
 	public void update(GoalPlanWritingDto params) {

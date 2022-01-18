@@ -1,6 +1,11 @@
 package com.d1.goalset.modules.goal.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -17,10 +22,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
+import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
+import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
 import com.d1.goalset.modules.user.domain.GoalSetter;
 import com.d1.goalset.modules.user.repository.GoalSetterRepository;
@@ -30,23 +37,18 @@ import com.d1.goalset.modules.user.repository.GoalSetterRepository;
 class PersonGoalServiceImplTest {
 
 	@Autowired PersonGoalService personGoalService;
+	@Autowired GoalRepository goalRepository;
 	@Autowired GoalSetterRepository userRepository;
 	@Autowired PersonGoalSettingRepository goalSettingRepository; 
+	
+	private final String seasonCd = "202201";
+	private final String companyCd = "01";
 	
 	@DisplayName("작성 테스트")
 	@Test
 	void writeTest() {
-		String seasonCd = "202201";
-		String companyCd = "01";
-		
 		//given
-		GoalSetter goalSetter = GoalSetter.builder()
-										.id((long) 1)
-										.seasonCd(seasonCd)
-										.companyCd(companyCd)
-										.isPrimaryAccount(true)
-										.isUse(true)
-										.build();
+		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
 		
 		Optional<GoalSetter> savedGoalSetter = userRepository.findById((long) 1);
 		
@@ -57,8 +59,8 @@ class PersonGoalServiceImplTest {
 		PersonGoalSetting goalSetting = new PersonGoalSetting();
 		goalSetting.setGoalSettingStatCd(GoalSettingState.SETTING);
 		goalSetting.setGoalSetter(goalSetter);
-		goalSetting.setSeasonCd(seasonCd);
-		goalSetting.setCompanyCd(companyCd);
+		goalSetting.setSeasonCd(this.seasonCd);
+		goalSetting.setCompanyCd(this.companyCd);
 		goalSetting.setGoalType(GoalTypeCode.PERSON_GOAL);
 		
 		Optional<PersonGoalSetting> savedGoalSetting = goalSettingRepository.findById((long) 1);
@@ -93,13 +95,73 @@ class PersonGoalServiceImplTest {
 		assertNotNull(goal);
 	}
 
-	// 작성 테스트
+	private GoalSetter getGoalSetter(String seasonCd, String companyCd) {
+		return GoalSetter.builder()
+										.id((long) 1)
+										.seasonCd(seasonCd)
+										.companyCd(companyCd)
+										.isPrimaryAccount(true)
+										.isUse(true)
+										.build();
+	}
 
 	// 작성 시 이미 확정상태 테스트
 
-	// 수정 테스트
+	@DisplayName("수정 테스트") // 수정 시 목표계획이 조회되고 수정두번일어나는 이슈확인필요
+	@Test
+	void updateTest() {
+		// given
+		GoalPlanWritingDto updateGoalPlan = GoalPlanWritingDto.builder()
+														.id((long) 1)
+														.plan("테스트 수정")
+														.endYmd(LocalDate.now())
+														.staYmd(LocalDate.now())
+														.build();
+		
+		GoalPlanWritingDto insertGoalPlan = GoalPlanWritingDto.builder()
+														.plan("신규 테스트 저장")
+														.endYmd(LocalDate.now())
+														.staYmd(LocalDate.now())
+														.build();
 
-	// 삭제 테스트
+		
+		Set<GoalPlanWritingDto> goalPlans = new HashSet<>();
+		goalPlans.add(updateGoalPlan);
+		goalPlans.add(insertGoalPlan);
+		
+		GoalWritingRequest params = GoalWritingRequest.builder()
+														.goalName("목표1 수정")
+														.evalWayCd(EvalWay.QUANT_EVAL)
+														.quantStdMax("테스트 수정")
+														.quantStdGoal("목표기준 수정")
+														.quantStdMin("최소기준 수정")
+														.weight(80)
+														.contents("테스트 수정")
+														.goalPlans(goalPlans)
+														.build();
+		
+		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
+		
+		// when
+		Goal goal = personGoalService.updateBy((long) 3, goalSetter, params);
+		
+		// then
+		assertNotNull(goal);
+	}
+
+	@DisplayName("삭제 테스트")
+	@Test
+	void deleteTest() {
+		// given
+		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
+		
+		// when
+		personGoalService.deleteBy((long) 3, goalSetter);
+		
+		// then
+		Optional<Goal> goal = goalRepository.findById((long) 3);
+		assertEquals(goal.get().getGoalWritingStateCd(), GoalWritingState.DELETE);
+	}
 	
 	// 테스트는 메소드별로 단위테스트를 진행하는것이 좋음. DB 안붙고 목킹해서 테스트함.
 	// 도메인 모델 패턴으로 하면 좋은점은 핵심비즈니스로직이 

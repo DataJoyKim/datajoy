@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.GoalSetter;
@@ -157,8 +157,8 @@ public class Goal {
 		this.goalWritingStateCd = GoalWritingState.DELETE;
 	}
 
-	private void saveGoalPlans(Set<GoalPlanWritingDto> goalPlans, Map<Long, GoalPlan> goalPlanMap) {
-		for(GoalPlanWritingDto param : goalPlans) {
+	private void saveGoalPlans(Set<GoalPlanWritingRequest> goalPlans, Map<Long, GoalPlan> goalPlanMap) {
+		for(GoalPlanWritingRequest param : goalPlans) {
 			if(goalPlanMap.containsKey(param.getId())) {
 				GoalPlan goalPlan = goalPlanMap.get(param.getId());
 				goalPlan.update(param);

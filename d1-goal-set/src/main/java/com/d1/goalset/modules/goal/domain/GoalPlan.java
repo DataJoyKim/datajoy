@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,7 +37,7 @@ public class GoalPlan {
 	@Column(name = "plan", columnDefinition = "TEXT")
 	private String plan;
 
-	public static GoalPlan createGoalPlan(GoalPlanWritingDto params) {
+	public static GoalPlan createGoalPlan(GoalPlanWritingRequest params) {
 		GoalPlan goalPlan = GoalPlan.builder()
 									.staYmd(params.getStaYmd())
 									.endYmd(params.getEndYmd())
@@ -46,16 +46,16 @@ public class GoalPlan {
 		return goalPlan;
 	}
 
-	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingDto> goalPlansDto) {
+	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingRequest> goalPlansDto) {
 		Set<GoalPlan> goalPlans = new HashSet<>();
-		for(GoalPlanWritingDto goalPlanDto : goalPlansDto) {
+		for(GoalPlanWritingRequest goalPlanDto : goalPlansDto) {
 			goalPlans.add(createGoalPlan(goalPlanDto));
 		}
 		
 		return goalPlans;
 	}
 
-	public void update(GoalPlanWritingDto params) {
+	public void update(GoalPlanWritingRequest params) {
 		this.staYmd = params.getStaYmd();
 		this.endYmd = params.getEndYmd();
 		this.plan = params.getPlan();

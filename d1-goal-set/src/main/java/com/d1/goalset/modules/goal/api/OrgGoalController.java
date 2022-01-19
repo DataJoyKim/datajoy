@@ -1,4 +1,4 @@
-package com.d1.goalset.modules.goal.controller;
+package com.d1.goalset.modules.goal.api;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,42 +11,42 @@ import org.springframework.web.servlet.function.EntityResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/person-goals")
+@RequestMapping("/api/v1/org-goals")
 @RequiredArgsConstructor
-public class PersonGoalController {
+public class OrgGoalController {
 
 	@GetMapping("/")
-	public EntityResponse<?> getPersonGoals() {
+	public EntityResponse<?> getOrgGoals() {
 		return null;
 	}
 	
 	@GetMapping("/{goalCd}")
-	public EntityResponse<?> getPersonGoalsBy() {
+	public EntityResponse<?> getOrgGoalsBy() {
 		return null;
 	}
 	
 	@PostMapping("/")
-	public EntityResponse<?> postPersonGoals() {
+	public EntityResponse<?> postOrgGoals() {
 		return null;
 	}
 	
 	@PutMapping("/{goalCd}")
-	public EntityResponse<?> putPersonGoalsBy() {
+	public EntityResponse<?> putOrgGoalsBy() {
 		return null;
 	}
 	
 	@DeleteMapping("/{goalCd}")
-	public EntityResponse<?> deletePersonGoalsBy() {
+	public EntityResponse<?> deleteOrgGoalsBy() {
 		return null;
 	}
 	
 	@PutMapping("/cancel")
-	public EntityResponse<?> cancelPersonGoals() {
+	public EntityResponse<?> cancelOrgGoals() {
 		return null;
 	}
 	
 	@PutMapping("/submit")
-	public EntityResponse<?> submitPersonGoals() {
+	public EntityResponse<?> submitOrgGoals() {
 		return null;
 	}
 }

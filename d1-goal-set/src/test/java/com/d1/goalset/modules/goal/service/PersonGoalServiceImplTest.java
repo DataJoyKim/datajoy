@@ -1,11 +1,7 @@
 package com.d1.goalset.modules.goal.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -25,7 +21,7 @@ import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingDto;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
@@ -69,13 +65,13 @@ class PersonGoalServiceImplTest {
 			goalSettingRepository.save(goalSetting);
 		}
 		
-		GoalPlanWritingDto goalPlan = GoalPlanWritingDto.builder()
+		GoalPlanWritingRequest goalPlan = GoalPlanWritingRequest.builder()
 															.plan("테스트")
 															.endYmd(LocalDate.now())
 															.staYmd(LocalDate.now())
 															.build();
 		
-		Set<GoalPlanWritingDto> goalPlans = new HashSet<>();
+		Set<GoalPlanWritingRequest> goalPlans = new HashSet<>();
 		goalPlans.add(goalPlan);
 		
 		GoalWritingRequest params = GoalWritingRequest.builder()
@@ -111,21 +107,21 @@ class PersonGoalServiceImplTest {
 	@Test
 	void updateTest() {
 		// given
-		GoalPlanWritingDto updateGoalPlan = GoalPlanWritingDto.builder()
+		GoalPlanWritingRequest updateGoalPlan = GoalPlanWritingRequest.builder()
 														.id((long) 1)
 														.plan("테스트 수정")
 														.endYmd(LocalDate.now())
 														.staYmd(LocalDate.now())
 														.build();
 		
-		GoalPlanWritingDto insertGoalPlan = GoalPlanWritingDto.builder()
+		GoalPlanWritingRequest insertGoalPlan = GoalPlanWritingRequest.builder()
 														.plan("신규 테스트 저장")
 														.endYmd(LocalDate.now())
 														.staYmd(LocalDate.now())
 														.build();
 
 		
-		Set<GoalPlanWritingDto> goalPlans = new HashSet<>();
+		Set<GoalPlanWritingRequest> goalPlans = new HashSet<>();
 		goalPlans.add(updateGoalPlan);
 		goalPlans.add(insertGoalPlan);
 		

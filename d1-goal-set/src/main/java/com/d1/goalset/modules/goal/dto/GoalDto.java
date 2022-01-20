@@ -7,10 +7,8 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
-import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -110,6 +108,14 @@ public class GoalDto {
 			
 			return goalResponse;
 		}
+
+		public static List<GoalResponse> of(List<Goal> goals) {
+			List<GoalResponse> response = new ArrayList<>();
+			for(Goal goal : goals) {
+				response.add(GoalResponse.of(goal));
+			}
+			return response;
+		}
 	}
 
 	@Getter
@@ -126,22 +132,6 @@ public class GoalDto {
 		public static List<GoalPlanResponse> of(List<GoalPlan> goalPlans) {
 			// TODO Auto-generated method stub
 			return null;
-		}
-	}
-	
-	@Getter
-	public static class GoalSettingResponse {
-		private String seasonCd;
-		
-		private String companyCd;
-		
-		private GoalSettingState goalSettingStatCd;
-		
-		private List<GoalResponse> goals = new ArrayList<>();
-
-		public static GoalSettingResponse of(PersonGoalSetting goalSetting) {
-			 ModelMapper mapper = new ModelMapper();
-			 return mapper.map(goalSetting, GoalSettingResponse.class);
 		}
 	}
 }

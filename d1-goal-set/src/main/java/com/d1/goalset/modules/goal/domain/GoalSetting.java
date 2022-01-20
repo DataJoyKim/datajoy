@@ -1,8 +1,5 @@
 package com.d1.goalset.modules.goal.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
@@ -50,10 +46,6 @@ public abstract class GoalSetting {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "approver_id")
 	private Approver approver;
-	
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "target_id")
-	private List<Goal> goals = new ArrayList<>();
 	
 	public abstract void submit(GoalSettingValidator goalSettingValidator);
 	

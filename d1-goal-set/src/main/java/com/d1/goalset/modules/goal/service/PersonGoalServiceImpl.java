@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.d1.goalset.modules.common.exception.BusinessException;
+import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
@@ -28,7 +28,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	
 	@Transactional
 	@Override
-	public Goal write(GoalSetter goalSetter, GoalWritingRequest params) {
+	public Long write(GoalSetter goalSetter, GoalWritingRequest params) {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
@@ -36,26 +36,26 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		
 		Goal goal = Goal.createGoal(new PersonGoal(), goalSettingValidator, goalSetting, goalSetter, goalPlans, params);
 		
-		return goalRepository.save(goal);
+		goalRepository.save(goal);
+		
+		return goal.getId();
 	}
 
 	@Transactional
 	@Override
-	public Goal updateBy(Long goalId, GoalSetter goalSetter, GoalWritingRequest params) {
+	public void update(Long goalId, GoalSetter goalSetter, GoalWritingRequest params) {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		Goal goal = goalRepository.findGoalBy(goalId)
-								.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL));
+		Goal goal = goalRepository.findGoalBy(goalSetter.getId(), goalId)
+									.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL));
 		
 		goal.update(goalSettingValidator, goalSetting, goalSetter, params);
-		
-		return goal;
 	}
 
 	@Transactional
 	@Override
-	public void deleteBy(Long goalId, GoalSetter goalSetter) {
+	public void delete(Long goalId, GoalSetter goalSetter) {
 		GoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		

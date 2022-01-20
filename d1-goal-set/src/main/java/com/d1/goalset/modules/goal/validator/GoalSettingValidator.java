@@ -2,7 +2,7 @@ package com.d1.goalset.modules.goal.validator;
 
 import org.springframework.stereotype.Component;
 
-import com.d1.goalset.modules.common.exception.BusinessException;
+import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;

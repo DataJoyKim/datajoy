@@ -1,6 +1,6 @@
 package com.d1.goalset.modules.goal.error;
 
-import com.d1.goalset.modules.common.exception.BusinessErrorCode;
+import com.d1.goalset.common.exception.BusinessErrorCode;
 
 public enum PersonGoalErrorCode implements BusinessErrorCode { 
 	NULL_WRITER(400, "R001","작성자가 존재하지 않습니다."), 

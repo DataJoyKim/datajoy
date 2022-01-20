@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ class PersonGoalServiceImplTest {
 															.staYmd(LocalDate.now())
 															.build();
 		
-		Set<GoalPlanWritingRequest> goalPlans = new HashSet<>();
+		List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
 		goalPlans.add(goalPlan);
 		
 		GoalWritingRequest params = GoalWritingRequest.builder()
@@ -85,10 +85,10 @@ class PersonGoalServiceImplTest {
 														.goalPlans(goalPlans )
 														.build();
 		// when
-		Goal goal = personGoalService.write(goalSetter, params);
+		Long goalId = personGoalService.write(goalSetter, params);
 		
 		// then
-		assertNotNull(goal);
+		assertNotNull(goalId);
 	}
 
 	private GoalSetter getGoalSetter(String seasonCd, String companyCd) {
@@ -120,8 +120,8 @@ class PersonGoalServiceImplTest {
 														.staYmd(LocalDate.now())
 														.build();
 
-		
-		Set<GoalPlanWritingRequest> goalPlans = new HashSet<>();
+
+		List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
 		goalPlans.add(updateGoalPlan);
 		goalPlans.add(insertGoalPlan);
 		
@@ -139,10 +139,9 @@ class PersonGoalServiceImplTest {
 		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
 		
 		// when
-		Goal goal = personGoalService.updateBy((long) 3, goalSetter, params);
+		personGoalService.update((long) 3, goalSetter, params);
 		
 		// then
-		assertNotNull(goal);
 	}
 
 	@DisplayName("삭제 테스트")
@@ -152,7 +151,7 @@ class PersonGoalServiceImplTest {
 		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
 		
 		// when
-		personGoalService.deleteBy((long) 3, goalSetter);
+		personGoalService.delete((long) 3, goalSetter);
 		
 		// then
 		Optional<Goal> goal = goalRepository.findById((long) 3);

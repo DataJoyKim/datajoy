@@ -1,15 +1,13 @@
 package com.d1.goalset.modules.goal.repository.querydsl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import com.d1.goalset.modules.goal.domain.Goal;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.domain.QGoal;
 import com.d1.goalset.modules.goal.domain.QGoalPlan;
-import com.d1.goalset.modules.goal.domain.QPersonGoalSetting;
-import com.d1.goalset.modules.user.domain.GoalSetter;
 import com.querydsl.jpa.JPQLQuery;
 
 public class GoalRepositoryImpl extends QuerydslRepositorySupport implements GoalRepositoryQuerydsl {
@@ -19,29 +17,27 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 	}
 
 	@Override
-	public Optional<Goal> findGoalBy(Long goalId) {
+	public Optional<Goal> findGoalBy(Long targetId, Long goalId) {
 		QGoal qGoal = QGoal.goal;
 		QGoalPlan qGoalPlan = QGoalPlan.goalPlan;
 		
 		JPQLQuery<Goal> query = from(qGoal)
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
-				.where(qGoal.id.eq(goalId));
+				.where(qGoal.id.eq(goalId).and(qGoal.targetId.eq(targetId)));
 		
 		return Optional.ofNullable(query.fetchOne());
 	}
 
 	@Override
-	public Optional<PersonGoalSetting> findPersonGoalSettingBy(GoalSetter goalSetter) {
-		QPersonGoalSetting qPersonGoalSetting = QPersonGoalSetting.personGoalSetting;
+	public List<Goal> findGoalBy(Long targetId) {
 		QGoal qGoal = QGoal.goal;
 		QGoalPlan qGoalPlan = QGoalPlan.goalPlan;
 		
-		JPQLQuery<PersonGoalSetting> query = from(qPersonGoalSetting)
-				.leftJoin(qPersonGoalSetting.goals, qGoal)
+		JPQLQuery<Goal> query = from(qGoal)
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
-				.where(qPersonGoalSetting.goalSetter().eq(goalSetter));
+				.where(qGoal.targetId.eq(targetId));
 		
-		return Optional.ofNullable(query.fetchOne());
+		return query.fetch();
 	}
 
 }

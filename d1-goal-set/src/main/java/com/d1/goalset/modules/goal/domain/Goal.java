@@ -1,9 +1,9 @@
 package com.d1.goalset.modules.goal.domain;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -96,10 +96,10 @@ public class Goal {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "goal_id")
-	private Set<GoalPlan> goalPlans = new HashSet<>();
+	private List<GoalPlan> goalPlans = new ArrayList<>();
 
 	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, 
-			GoalSetter goalSetter, Set<GoalPlan> goalPlans, GoalWritingRequest params) {
+			GoalSetter goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
 		
@@ -157,7 +157,7 @@ public class Goal {
 		this.goalWritingStateCd = GoalWritingState.DELETE;
 	}
 
-	private void saveGoalPlans(Set<GoalPlanWritingRequest> goalPlans, Map<Long, GoalPlan> goalPlanMap) {
+	private void saveGoalPlans(List<GoalPlanWritingRequest> goalPlans, Map<Long, GoalPlan> goalPlanMap) {
 		for(GoalPlanWritingRequest param : goalPlans) {
 			if(goalPlanMap.containsKey(param.getId())) {
 				GoalPlan goalPlan = goalPlanMap.get(param.getId());
@@ -169,7 +169,7 @@ public class Goal {
 		}
 	}
 
-	private Map<Long, GoalPlan> createGoalPlanMap(Set<GoalPlan> goalPlans) {
+	private Map<Long, GoalPlan> createGoalPlanMap(List<GoalPlan> goalPlans) {
 		Map<Long, GoalPlan> goalPlanMap = new HashMap<>();
 		for(GoalPlan goalPlan : goalPlans) {
 			goalPlanMap.put(goalPlan.getId(), goalPlan);
@@ -178,7 +178,7 @@ public class Goal {
 		return goalPlanMap;
 	}
 
-	public void setGoalPlans(Set<GoalPlan> savedGoalPlans) {
+	public void setGoalPlans(List<GoalPlan> savedGoalPlans) {
 		this.goalPlans = savedGoalPlans;
 	}
 }

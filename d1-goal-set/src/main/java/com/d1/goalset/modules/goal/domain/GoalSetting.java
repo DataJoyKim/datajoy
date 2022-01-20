@@ -1,7 +1,7 @@
 package com.d1.goalset.modules.goal.domain;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -53,7 +53,7 @@ public abstract class GoalSetting {
 	
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "target_id")
-	private Set<Goal> goals = new HashSet<>();
+	private List<Goal> goals = new ArrayList<>();
 	
 	public abstract void submit(GoalSettingValidator goalSettingValidator);
 	

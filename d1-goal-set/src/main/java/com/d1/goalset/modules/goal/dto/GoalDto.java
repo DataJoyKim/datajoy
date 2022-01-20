@@ -1,8 +1,8 @@
 package com.d1.goalset.modules.goal.dto;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
@@ -50,7 +50,7 @@ public class GoalDto {
 		
 		private String contents;
 		
-		private Set<GoalPlanWritingRequest> goalPlans = new HashSet<>();
+		private List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
 	}
 	
 	@Getter @Builder @AllArgsConstructor
@@ -92,9 +92,9 @@ public class GoalDto {
 		
 		private String contents;
 		
-		private Set<GoalPlanResponse> goalPlans = new HashSet<>();
+		private List<GoalPlanResponse> goalPlans = new ArrayList<>();
 
-		public void setGoalPlans(Set<GoalPlanResponse> goalPlans) {
+		public void setGoalPlans(List<GoalPlanResponse> goalPlans) {
 			this.goalPlans = goalPlans;
 		}
 		
@@ -105,7 +105,7 @@ public class GoalDto {
 					.addMappings(mapping -> mapping.skip(GoalResponse::setGoalPlans));
 			
 			GoalResponse goalResponse = mapper.map(goal, GoalResponse.class);
-			Set<GoalPlanResponse> goalPlansResponse = GoalPlanResponse.of(goal.getGoalPlans());
+			List<GoalPlanResponse> goalPlansResponse = GoalPlanResponse.of(goal.getGoalPlans());
 			goalResponse.setGoalPlans(goalPlansResponse);
 			
 			return goalResponse;
@@ -123,7 +123,7 @@ public class GoalDto {
 		
 		private String plan;
 		
-		public static Set<GoalPlanResponse> of(Set<GoalPlan> goalPlans) {
+		public static List<GoalPlanResponse> of(List<GoalPlan> goalPlans) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -137,7 +137,7 @@ public class GoalDto {
 		
 		private GoalSettingState goalSettingStatCd;
 		
-		private Set<GoalResponse> goals = new HashSet<>();
+		private List<GoalResponse> goals = new ArrayList<>();
 
 		public static GoalSettingResponse of(PersonGoalSetting goalSetting) {
 			 ModelMapper mapper = new ModelMapper();

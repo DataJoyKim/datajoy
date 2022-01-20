@@ -1,8 +1,8 @@
 package com.d1.goalset.modules.goal.domain;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,8 +46,8 @@ public class GoalPlan {
 		return goalPlan;
 	}
 
-	public static Set<GoalPlan> createGoalPlans(Set<GoalPlanWritingRequest> goalPlansDto) {
-		Set<GoalPlan> goalPlans = new HashSet<>();
+	public static List<GoalPlan> createGoalPlans(List<GoalPlanWritingRequest> goalPlansDto) {
+		List<GoalPlan> goalPlans = new ArrayList<>();
 		for(GoalPlanWritingRequest goalPlanDto : goalPlansDto) {
 			goalPlans.add(createGoalPlan(goalPlanDto));
 		}

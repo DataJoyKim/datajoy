@@ -64,6 +64,13 @@ public class PersonGoalController {
 		return new ResponseEntity<>(new GoalResource(resource), HttpStatus.OK);
 	}
 	
+	@GetMapping("/status")
+	public ResponseEntity<?> getPersonGoalsStatus(
+			Principal principal
+			) {
+		return null;
+	}
+	
 	@PostMapping("")
 	public ResponseEntity<?> postPersonGoals(
 			Principal principal,

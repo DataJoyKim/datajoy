@@ -1,6 +1,5 @@
 package com.d1.goalset.modules.goal.api;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.hateoas.MediaTypes;
@@ -14,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.api.resource.GoalResource;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalBaseParam;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.service.PersonGoalService;
 import com.d1.goalset.modules.goal.service.query.PersonGoalQueryService;
@@ -36,10 +38,8 @@ public class PersonGoalController {
 	private final PersonGoalQueryService personGoalQueryService;
 	
 	@GetMapping("")
-	public ResponseEntity<?> getPersonGoals(
-			Principal principal
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> getPersonGoals(@RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
 		List<GoalResponse> response = personGoalQueryService.findGoalBy(goalSetter.getId());
 		
@@ -50,11 +50,8 @@ public class PersonGoalController {
 	}
 	
 	@GetMapping("/{goalId}")
-	public ResponseEntity<?> getPersonGoalsBy(
-			@PathVariable Long goalId,
-			Principal principal
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> getPersonGoalsBy(@PathVariable Long goalId, @RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
 		GoalResponse response = personGoalQueryService.findGoalBy(goalSetter.getId(), goalId);
 		
@@ -65,20 +62,22 @@ public class PersonGoalController {
 	}
 	
 	@GetMapping("/status")
-	public ResponseEntity<?> getPersonGoalsStatus(
-			Principal principal
-			) {
-		return null;
+	public ResponseEntity<?> getPersonGoalStatus(@RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+		
+		GoalSettingResponse response = personGoalQueryService.findGoalSettingBy(goalSetter);
+		
+		GoalResource resource = new GoalResource(response);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(new GoalResource(resource), HttpStatus.OK);
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> postPersonGoals(
-			Principal principal,
-			@RequestBody GoalWritingRequest params
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> postPersonGoals(@RequestParam GoalBaseParam params, @RequestBody GoalWritingRequest body) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
-		Long goalId = personGoalService.write(goalSetter, params);
+		Long goalId = personGoalService.write(goalSetter, body);
 
 		GoalResource resource = new GoalResource(goalId);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -89,12 +88,12 @@ public class PersonGoalController {
 	@PutMapping("/{goalId}")
 	public ResponseEntity<?> putPersonGoalsBy(
 			@PathVariable Long goalId,
-			Principal principal,
-			@RequestBody GoalWritingRequest params
+			@RequestParam GoalBaseParam params,
+			@RequestBody GoalWritingRequest body
 			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
-		personGoalService.update(goalId, goalSetter, params);
+		personGoalService.update(goalId, goalSetter, body);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -103,11 +102,8 @@ public class PersonGoalController {
 	}
 	
 	@DeleteMapping("/{goalId}")
-	public ResponseEntity<?> deletePersonGoalsBy(
-			@PathVariable Long goalId,
-			Principal principal
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> deletePersonGoalsBy(@PathVariable Long goalId, @RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
 		personGoalService.delete(goalId, goalSetter);
 
@@ -118,10 +114,8 @@ public class PersonGoalController {
 	}
 	
 	@PutMapping("/cancel")
-	public ResponseEntity<?> cancelPersonGoals(
-			Principal principal
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> cancelPersonGoals(@RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
 		personGoalService.cancel(goalSetter);
 
@@ -132,10 +126,8 @@ public class PersonGoalController {
 	}
 	
 	@PutMapping("/submit")
-	public ResponseEntity<?> submitPersonGoals(
-			Principal principal
-			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(null);
+	public ResponseEntity<?> submitPersonGoals(@RequestParam GoalBaseParam params) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
 		
 		personGoalService.submit(goalSetter);
 

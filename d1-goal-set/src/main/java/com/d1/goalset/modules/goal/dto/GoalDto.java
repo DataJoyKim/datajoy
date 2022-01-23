@@ -7,8 +7,12 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.d1.goalset.modules.goal.code.EvalWay;
+import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
+import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
+import com.d1.goalset.modules.user.domain.Approver;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -132,6 +136,31 @@ public class GoalDto {
 		public static List<GoalPlanResponse> of(List<GoalPlan> goalPlans) {
 			// TODO Auto-generated method stub
 			return null;
+		}
+	}
+	
+	@Getter
+	public static class GoalBaseParam {
+		@NotNull
+		private String seasonCd;
+		
+		@NotNull
+		private String companyCd;
+		
+		@NotNull
+		private Long userId;
+	}
+
+	@Getter @Builder @AllArgsConstructor
+	public static class GoalSettingResponse {
+		private GoalSettingState goalSettingStatCd;
+
+		public static GoalSettingResponse of(PersonGoalSetting personGoalSetting) {
+			GoalSettingResponse response = GoalSettingResponse.builder()
+														.goalSettingStatCd(personGoalSetting.getGoalSettingStatCd())
+														.build();
+			
+			return response;
 		}
 	}
 }

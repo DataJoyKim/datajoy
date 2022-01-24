@@ -1,5 +1,7 @@
 package com.d1.goalset.modules.goal.domain;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -47,11 +49,13 @@ public abstract class GoalSetting {
 	@JoinColumn(name = "approver_id")
 	private Approver approver;
 	
-	public abstract void submit(GoalSettingValidator goalSettingValidator);
+	private Integer sumWeight;
 	
-	public abstract void approve(GoalSettingValidator goalSettingValidator);
+	public abstract void submit(GoalSettingValidator goalSettingValidator, List<Goal> goals);
 	
-	public abstract void reject(GoalSettingValidator goalSettingValidator);
+	public abstract void approve(GoalSettingValidator goalSettingValidator, List<Goal> goals);
 	
-	public abstract void cancel(GoalSettingValidator goalSettingValidator);
+	public abstract void reject(GoalSettingValidator goalSettingValidator, List<Goal> goals);
+	
+	public abstract void cancel(GoalSettingValidator goalSettingValidator, List<Goal> goals);
 }

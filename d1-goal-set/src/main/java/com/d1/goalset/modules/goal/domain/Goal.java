@@ -97,6 +97,7 @@ public class Goal {
 	@Column(name = "contents")
 	private String contents;
 	
+	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "goal_id")
 	private List<GoalPlan> goalPlans = new ArrayList<>();
@@ -148,11 +149,7 @@ public class Goal {
 		this.quantStdMin = params.getQuantStdMin();
 		this.contents = params.getContents();
 		
-		// goal plan update
-		
-		Map<Long, GoalPlan> goalPlanMap = createGoalPlanMap(this.goalPlans);
-		
-		saveGoalPlans(params.getGoalPlans(), goalPlanMap);
+		saveGoalPlans(params.getGoalPlans(), createGoalPlanMap(this.goalPlans));
 	}
 
 	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter) {
@@ -180,9 +177,5 @@ public class Goal {
 		}
 		
 		return goalPlanMap;
-	}
-
-	public void setGoalPlans(List<GoalPlan> savedGoalPlans) {
-		this.goalPlans = savedGoalPlans;
 	}
 }

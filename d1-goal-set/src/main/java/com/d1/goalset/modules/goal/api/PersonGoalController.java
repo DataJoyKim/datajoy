@@ -6,6 +6,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.api.resource.GoalResource;
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalBaseParam;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
@@ -38,8 +38,12 @@ public class PersonGoalController {
 	private final PersonGoalQueryService personGoalQueryService;
 	
 	@GetMapping("")
-	public ResponseEntity<?> getPersonGoals(@RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> getPersonGoals(
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		List<GoalResponse> response = personGoalQueryService.findGoalBy(goalSetter.getId());
 		
@@ -50,8 +54,13 @@ public class PersonGoalController {
 	}
 	
 	@GetMapping("/{goalId}")
-	public ResponseEntity<?> getPersonGoalsBy(@PathVariable Long goalId, @RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> getPersonGoalsBy(
+			@PathVariable Long goalId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		GoalResponse response = personGoalQueryService.findGoalBy(goalSetter.getId(), goalId);
 		
@@ -62,8 +71,12 @@ public class PersonGoalController {
 	}
 	
 	@GetMapping("/status")
-	public ResponseEntity<?> getPersonGoalStatus(@RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> getPersonGoalStatus(
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		GoalSettingResponse response = personGoalQueryService.findGoalSettingBy(goalSetter);
 		
@@ -74,8 +87,13 @@ public class PersonGoalController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<?> postPersonGoals(@RequestParam GoalBaseParam params, @RequestBody GoalWritingRequest body) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> postPersonGoals(
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId,
+			@Validated @RequestBody GoalWritingRequest body
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		Long goalId = personGoalService.write(goalSetter, body);
 
@@ -88,10 +106,12 @@ public class PersonGoalController {
 	@PutMapping("/{goalId}")
 	public ResponseEntity<?> putPersonGoalsBy(
 			@PathVariable Long goalId,
-			@RequestParam GoalBaseParam params,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId,
 			@RequestBody GoalWritingRequest body
 			) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		personGoalService.update(goalId, goalSetter, body);
 
@@ -102,8 +122,13 @@ public class PersonGoalController {
 	}
 	
 	@DeleteMapping("/{goalId}")
-	public ResponseEntity<?> deletePersonGoalsBy(@PathVariable Long goalId, @RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> deletePersonGoalsBy(
+			@PathVariable Long goalId, 
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		personGoalService.delete(goalId, goalSetter);
 
@@ -114,8 +139,12 @@ public class PersonGoalController {
 	}
 	
 	@PutMapping("/cancel")
-	public ResponseEntity<?> cancelPersonGoals(@RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> cancelPersonGoals(
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		personGoalService.cancel(goalSetter);
 
@@ -126,8 +155,12 @@ public class PersonGoalController {
 	}
 	
 	@PutMapping("/submit")
-	public ResponseEntity<?> submitPersonGoals(@RequestParam GoalBaseParam params) {
-		GoalSetter goalSetter = userQueryService.findGoalSetterBy(params.getUserId());
+	public ResponseEntity<?> submitPersonGoals(
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalSetter goalSetter = userQueryService.findGoalSetterBy(userId);
 		
 		personGoalService.submit(goalSetter);
 

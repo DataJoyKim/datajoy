@@ -11,8 +11,6 @@ import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
-import com.d1.goalset.modules.user.domain.Approver;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -52,6 +50,7 @@ public class GoalDto {
 		
 		private String contents;
 		
+		@Builder.Default
 		private List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
 	}
 	
@@ -122,7 +121,7 @@ public class GoalDto {
 		}
 	}
 
-	@Getter
+	@Getter @Builder @AllArgsConstructor
 	public static class GoalPlanResponse {
 
 		private Long id;
@@ -134,21 +133,21 @@ public class GoalDto {
 		private String plan;
 		
 		public static List<GoalPlanResponse> of(List<GoalPlan> goalPlans) {
-			// TODO Auto-generated method stub
-			return null;
+			List<GoalPlanResponse> response = new ArrayList<>();
+			for(GoalPlan plan : goalPlans) {
+				response.add(GoalPlanResponse.of(plan));
+			}
+			return response;
 		}
-	}
-	
-	@Getter
-	public static class GoalBaseParam {
-		@NotNull
-		private String seasonCd;
-		
-		@NotNull
-		private String companyCd;
-		
-		@NotNull
-		private Long userId;
+
+		private static GoalPlanResponse of(GoalPlan plan) {
+			return GoalPlanResponse.builder()
+									.id(plan.getId())
+									.staYmd(plan.getStaYmd())
+									.endYmd(plan.getEndYmd())
+									.plan(plan.getPlan())
+									.build();
+		}
 	}
 
 	@Getter @Builder @AllArgsConstructor

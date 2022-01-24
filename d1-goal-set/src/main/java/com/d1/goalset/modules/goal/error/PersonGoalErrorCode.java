@@ -8,7 +8,16 @@ public enum PersonGoalErrorCode implements BusinessErrorCode {
 	CAN_NOT_WRITE_BY_SUBMIT_STATE(400, "R003","제출하여 작성할수없습니다. 회수 후 작성해주세요."), 
 	NOT_RANGE_WEIGHT(400, "R004","가중치 범위가 아닙니다."), 
 	NOT_FOUND_GOAL_SETTING(404, "R005","목표수립 데이터가 존재하지 않습니다."), 
-	NOT_FOUND_GOAL(404, "R006","목표데이터가 존재하지않습니다."),
+	NOT_FOUND_GOAL(404, "R006","목표데이터가 존재하지않습니다."), 
+	CAN_NOT_UPDATE_BY_DELETE_STATE(400, "R007","삭제상태에서는 목표슬 수정 할 수 없습니다."), 
+	CAN_NOT_DELETE_BY_DELETE_STATE(400, "R008","삭제상태에서는 목표슬 삭제 할 수 없습니다."),
+	CAN_NOT_UPDATE_BY_APPROVAL_STATE(400, "R009","승인되어 수정 할 수 없습니다."), 
+	CAN_NOT_UPDATE_BY_SUBMIT_STATE(400, "R010","제출하여 수정 할 수 없습니다. 회수 후 수정해주세요."),
+	CAN_NOT_DELETE_BY_APPROVAL_STATE(400, "R011","승인되어 삭제 할 수 없습니다."), 
+	CAN_NOT_DELETE_BY_SUBMIT_STATE(400, "R012","제출하여 삭제 할 수 없습니다. 회수 후 삭제해주세요."), 
+	NOT_FAULT_VALUE_BY_SUM_WEIGHT(400, "R013","가중치의 합이 100이 아닙니다."), 
+	CAN_NOT_SUBMIT_BY_APPROVAL_STATE(400, "R014","승인되어 제출 할 수 없습니다."),
+	CAN_NOT_SUBMIT_BY_SUBMIT_STATE(400, "R015","이미 제출하였습니다."),
 	;
 
 	private final String errorKind = "PersonGoal";

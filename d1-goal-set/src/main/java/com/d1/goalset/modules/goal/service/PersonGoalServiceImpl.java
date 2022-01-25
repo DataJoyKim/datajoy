@@ -70,7 +70,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		goalSetting.submit(goalSettingValidator);
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());
+		
+		goalSetting.submit(goalSettingValidator, goals);
 	}
 
 	@Transactional
@@ -79,7 +81,9 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		goalSetting.cancel(goalSettingValidator);
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());
+		
+		goalSetting.cancel(goalSettingValidator, goals);
 	}
 
 }

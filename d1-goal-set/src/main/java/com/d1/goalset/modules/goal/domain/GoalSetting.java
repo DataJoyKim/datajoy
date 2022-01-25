@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
@@ -48,7 +49,8 @@ public abstract class GoalSetting {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "approver_id")
 	private Approver approver;
-	
+
+	@Transient
 	private Integer sumWeight;
 	
 	public abstract void submit(GoalSettingValidator goalSettingValidator, List<Goal> goals);

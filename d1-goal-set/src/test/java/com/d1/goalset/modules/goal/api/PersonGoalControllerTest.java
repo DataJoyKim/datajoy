@@ -2,6 +2,7 @@ package com.d1.goalset.modules.goal.api;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -94,6 +95,50 @@ class PersonGoalControllerTest extends BaseTest {
 										.build();
 		
 		this.mockMvc.perform(post("/api/v1/person-goals")
+				.param("seasonCd", "202201")
+				.param("companyCd", "01")
+				.param("userId", "1")
+				.content(mapper.registerModule(new JavaTimeModule()).writeValueAsString(body))
+				.contentType(MediaTypes.HAL_JSON_VALUE)
+				)
+				.andDo(print())
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("content").exists());
+	}
+
+	@DisplayName("개인목표 수정")
+	@Test
+	void personGoalPutApiTest() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		GoalPlanWritingRequest goalPlan_1 = GoalPlanWritingRequest.builder()
+															.staYmd(LocalDate.now())
+															.endYmd(LocalDate.now())
+															.plan("계획합니다.1")
+															.build();
+		
+		GoalPlanWritingRequest goalPlan_2 = GoalPlanWritingRequest.builder()
+															.staYmd(LocalDate.now())
+															.endYmd(LocalDate.now())
+															.plan("계획합니다.2")
+															.build();
+		
+		List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
+		goalPlans.add(goalPlan_1);
+		goalPlans.add(goalPlan_2);
+		
+		GoalWritingRequest body = GoalWritingRequest.builder()
+										.goalName("목표 수정했다!!!!!!!!!!")
+										.contents("목표 테스트 내용")
+										.evalWayCd(EvalWay.QUALITY_EVAL)
+										.quantStdMax("최대")
+										.quantStdGoal("목표")
+										.quantStdMin("최소")
+										.weight(100)
+										.goalPlans(goalPlans)
+										.build();
+		
+		this.mockMvc.perform(put("/api/v1/person-goals/3")
 				.param("seasonCd", "202201")
 				.param("companyCd", "01")
 				.param("userId", "1")

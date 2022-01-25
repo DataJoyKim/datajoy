@@ -53,4 +53,8 @@ public class PersonGoalSetting extends GoalSetting {
 			this.setSumWeight(this.getSumWeight() + goal.getWeight());
 		}
 	}
+
+	public Long getTargetId() {
+		return (this.goalSetter != null) ? this.goalSetter.getId() : null;
+	}
 }

@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.common.exception.BusinessException;
-import com.d1.goalset.modules.user.domain.GoalSetter;
-import com.d1.goalset.modules.user.error.GoalSetterErrorCode;
-import com.d1.goalset.modules.user.repository.GoalSetterRepository;
+import com.d1.goalset.modules.user.domain.User;
+import com.d1.goalset.modules.user.error.UserErrorCode;
+import com.d1.goalset.modules.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -16,11 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserQueryServiceImpl implements UserQueryService{
 
-	private final GoalSetterRepository goalSetterRepository;
+	private final UserRepository goalSetterRepository;
 	
 	@Override 
-	public GoalSetter findGoalSetterBy(Long userId) {
-		return goalSetterRepository.findById(userId).orElseThrow(() -> new BusinessException(GoalSetterErrorCode.NULL_GOAL_SETTER)); 
+	public User findUserBy(Long userId) {
+		return goalSetterRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)); 
 	}
  
 }

@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
-import com.d1.goalset.modules.user.domain.Approver;
+import com.d1.goalset.modules.user.domain.User;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -48,7 +48,7 @@ public abstract class GoalSetting {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "approver_id")
-	private Approver approver;
+	private User approver;
 
 	@Transient
 	private Integer sumWeight;

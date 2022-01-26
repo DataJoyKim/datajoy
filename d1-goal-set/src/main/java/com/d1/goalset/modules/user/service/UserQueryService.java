@@ -1,7 +1,7 @@
 package com.d1.goalset.modules.user.service;
 
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 public interface UserQueryService {
-	GoalSetter findGoalSetterBy(Long userId);
+	User findUserBy(Long userId);
 }

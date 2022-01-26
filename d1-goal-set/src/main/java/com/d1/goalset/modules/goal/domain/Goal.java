@@ -25,7 +25,7 @@ import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -103,7 +103,7 @@ public class Goal {
 	private List<GoalPlan> goalPlans = new ArrayList<>();
 
 	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, 
-			GoalSetter goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
+			User goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
 		
@@ -131,7 +131,7 @@ public class Goal {
 		return goal;
 	}
 
-	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter,
+	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User goalSetter,
 			GoalWritingRequest params) {
 		goalSettingValidator.validateUpdateGoal(this, goalSetting, goalSetter, params);
 		
@@ -152,7 +152,7 @@ public class Goal {
 		saveGoalPlans(params.getGoalPlans(), createGoalPlanMap(this.goalPlans));
 	}
 
-	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, GoalSetter goalSetter) {
+	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User goalSetter) {
 		goalSettingValidator.validateDeleteGoal(this, goalSetting, goalSetter);
 		
 		this.goalWritingStateCd = GoalWritingState.DELETE;

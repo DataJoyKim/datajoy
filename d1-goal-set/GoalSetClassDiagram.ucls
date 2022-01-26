@@ -11,17 +11,7 @@
     <position height="221" width="976" x="209" y="414"/>    
     <display autosize="false" stereotype="false" sort-features="false" accessors="true"/>  
   </package>  
-  <class id="3" language="java" name="com.d1.goalset.modules.user.domain.GoalSetter" project="d1-goal-set" 
-    file="/d1-goal-set/src/main/java/com/d1/goalset/modules/user/domain/GoalSetter.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="498" y="507"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="com.d1.goalset.modules.user.domain.User" project="d1-goal-set" 
+  <class id="3" language="java" name="com.d1.goalset.modules.user.domain.User" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/user/domain/User.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="600" y="584"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
@@ -30,17 +20,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.d1.goalset.modules.user.domain.Approver" project="d1-goal-set" 
-    file="/d1-goal-set/src/main/java/com/d1/goalset/modules/user/domain/Approver.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="725" y="507"/>    
-    <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="com.d1.goalset.modules.user.domain.Org" project="d1-goal-set" 
+  <class id="4" language="java" name="com.d1.goalset.modules.user.domain.Org" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/user/domain/Org.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="827" y="584"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
@@ -49,7 +29,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <interface id="7" language="java" name="com.d1.goalset.modules.goal.domain.GoalType" project="d1-goal-set" 
+  <interface id="5" language="java" name="com.d1.goalset.modules.goal.domain.GoalType" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/GoalType.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="985" y="133"/>    
@@ -59,7 +39,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </interface>  
-  <class id="8" language="java" name="com.d1.goalset.modules.goal.domain.OrgGoalSetting" project="d1-goal-set" 
+  <class id="6" language="java" name="com.d1.goalset.modules.goal.domain.OrgGoalSetting" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/OrgGoalSetting.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="314" y="214"/>    
@@ -69,7 +49,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.d1.goalset.modules.goal.domain.GoalSetting" project="d1-goal-set" 
+  <class id="7" language="java" name="com.d1.goalset.modules.goal.domain.GoalSetting" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/GoalSetting.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="417" y="137"/>    
@@ -79,7 +59,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.d1.goalset.modules.goal.domain.PersonGoal" project="d1-goal-set" 
+  <class id="8" language="java" name="com.d1.goalset.modules.goal.domain.PersonGoal" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/PersonGoal.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="887" y="215"/>    
@@ -89,7 +69,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.d1.goalset.modules.goal.domain.Goal" project="d1-goal-set" 
+  <class id="9" language="java" name="com.d1.goalset.modules.goal.domain.Goal" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/Goal.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="710" y="137"/>    
     <display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
@@ -98,7 +78,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.d1.goalset.modules.goal.domain.OrgGoal" project="d1-goal-set" 
+  <class id="10" language="java" name="com.d1.goalset.modules.goal.domain.OrgGoal" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/OrgGoal.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1082" y="218"/>    
@@ -108,7 +88,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="com.d1.goalset.modules.goal.domain.GoalPlan" project="d1-goal-set" 
+  <class id="11" language="java" name="com.d1.goalset.modules.goal.domain.GoalPlan" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/GoalPlan.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="710" y="215"/>    
@@ -118,7 +98,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="com.d1.goalset.modules.goal.domain.PersonGoalSetting" project="d1-goal-set" 
+  <class id="12" language="java" name="com.d1.goalset.modules.goal.domain.PersonGoalSetting" project="d1-goal-set" 
     file="/d1-goal-set/src/main/java/com/d1/goalset/modules/goal/domain/PersonGoalSetting.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="519" y="214"/>    
@@ -128,118 +108,57 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="15">    
+  <dependency id="13">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="14">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="15" name="org">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="16" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="17">    
     <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="16" name="approver">        
+      <attribute id="18" name="goalPlans">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="17" minimum="0" maximum="1">        
+      <multiplicity id="19" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
+    <end type="TARGET" refId="11" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="18">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
+  <dependency id="20">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="7"/>  
   </dependency>  
-  <generalization id="19">    
+  <generalization id="21">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <realization id="22">    
     <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <realization id="20">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="7"/>  
+    <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="21">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <association id="22">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="23" name="goalPlans">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="24" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="25">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <dependency id="26">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <dependency id="28">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <association id="29">    
-    <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="30" name="org">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="32">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <generalization id="33">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <association id="34">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="35" name="goalSetter">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="36" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="37">    
+  <realization id="23">    
     <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <realization id="38">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="7"/>  
+    <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="39">    
-    <end type="SOURCE" refId="11"/>    
+  <dependency id="24">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <generalization id="25">    
+    <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="40">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="41">    
-    <bendpoint x="992" y="509"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="3"/>  
-  </dependency>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="4"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="false" package="true" initial-value="false" signature="false" 
     sort-features="false" accessors="true" visibility="true">    

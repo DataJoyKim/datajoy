@@ -1,22 +1,25 @@
 package com.d1.goalset.modules.user.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@MappedSuperclass 
+@Entity
+@Table(name = "user")
 @Getter 
-@AllArgsConstructor @NoArgsConstructor
-public abstract class User {
+@AllArgsConstructor @NoArgsConstructor @Builder
+public class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;

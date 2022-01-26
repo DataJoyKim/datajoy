@@ -10,12 +10,12 @@ import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 @Component
 public class GoalSettingValidator {
 
-	public void validateCreateGoal(GoalSetting goalSetting, GoalSetter writer, GoalWritingRequest params) {
+	public void validateCreateGoal(GoalSetting goalSetting, User writer, GoalWritingRequest params) {
 		if(writer == null) {
 			throw new BusinessException(PersonGoalErrorCode.NULL_WRITER);
 		}
@@ -33,7 +33,7 @@ public class GoalSettingValidator {
 		}
 	}
 
-	public void validateUpdateGoal(Goal goal, GoalSetting goalSetting, GoalSetter goalSetter, GoalWritingRequest params) {
+	public void validateUpdateGoal(Goal goal, GoalSetting goalSetting, User goalSetter, GoalWritingRequest params) {
 		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_UPDATE_BY_APPROVAL_STATE);
 		}
@@ -48,7 +48,7 @@ public class GoalSettingValidator {
 		
 	}
 
-	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, GoalSetter goalSetter) {
+	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, User goalSetter) {
 
 		
 		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ public class PersonGoalSetting extends GoalSetting {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "target_id")
-	private GoalSetter goalSetter;
+	private User goalSetter;
 
 	@Override
 	public void submit(GoalSettingValidator goalSettingValidator, List<Goal> goals) {

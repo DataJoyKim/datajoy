@@ -25,8 +25,8 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
-import com.d1.goalset.modules.user.domain.GoalSetter;
-import com.d1.goalset.modules.user.repository.GoalSetterRepository;
+import com.d1.goalset.modules.user.domain.User;
+import com.d1.goalset.modules.user.repository.UserRepository;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -34,7 +34,7 @@ class PersonGoalServiceImplTest {
 
 	@Autowired PersonGoalService personGoalService;
 	@Autowired GoalRepository goalRepository;
-	@Autowired GoalSetterRepository userRepository;
+	@Autowired UserRepository userRepository;
 	@Autowired PersonGoalSettingRepository goalSettingRepository; 
 	
 	private final String seasonCd = "202201";
@@ -44,9 +44,9 @@ class PersonGoalServiceImplTest {
 	@Test
 	void writeTest() {
 		//given
-		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
+		User goalSetter = getUser(this.seasonCd, this.companyCd);
 		
-		Optional<GoalSetter> savedGoalSetter = userRepository.findById((long) 1);
+		Optional<User> savedGoalSetter = userRepository.findById((long) 1);
 		
 		if(savedGoalSetter.isPresent() == false) {
 			userRepository.save(goalSetter);
@@ -91,8 +91,8 @@ class PersonGoalServiceImplTest {
 		assertNotNull(goalId);
 	}
 
-	private GoalSetter getGoalSetter(String seasonCd, String companyCd) {
-		return GoalSetter.builder()
+	private User getUser(String seasonCd, String companyCd) {
+		return User.builder()
 										.id((long) 1)
 										.seasonCd(seasonCd)
 										.companyCd(companyCd)
@@ -136,7 +136,7 @@ class PersonGoalServiceImplTest {
 														.goalPlans(goalPlans)
 														.build();
 		
-		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
+		User goalSetter = getUser(this.seasonCd, this.companyCd);
 		
 		// when
 		personGoalService.update((long) 3, goalSetter, params);
@@ -148,7 +148,7 @@ class PersonGoalServiceImplTest {
 	@Test
 	void deleteTest() {
 		// given
-		GoalSetter goalSetter = getGoalSetter(this.seasonCd, this.companyCd);
+		User goalSetter = getUser(this.seasonCd, this.companyCd);
 		
 		// when
 		personGoalService.delete((long) 3, goalSetter);

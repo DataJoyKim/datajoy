@@ -1,7 +1,7 @@
 package com.d1.goalset.modules.goal.domain;
 
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 public class OrgGoal implements GoalType {
 
@@ -11,7 +11,7 @@ public class OrgGoal implements GoalType {
 	}
 
 	@Override
-	public Long getTargetId(GoalSetter goalSetter) {
+	public Long getTargetId(User goalSetter) {
 		return goalSetter.getOrg().getId();
 	}
 

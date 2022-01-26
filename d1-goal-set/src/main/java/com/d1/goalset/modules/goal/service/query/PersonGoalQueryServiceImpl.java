@@ -13,7 +13,7 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
-import com.d1.goalset.modules.user.domain.GoalSetter;
+import com.d1.goalset.modules.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,8 +41,8 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	}
 
 	@Override
-	public GoalSettingResponse findGoalSettingBy(GoalSetter goalSetter) {
-		PersonGoalSetting personGoalSetting = personGoalSettingRepository.findByGoalSetter(goalSetter)
+	public GoalSettingResponse findGoalSettingBy(User goalSetter) {
+		PersonGoalSetting personGoalSetting = personGoalSettingRepository.findByUser(goalSetter)
 																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));;
 		return GoalSettingResponse.of(personGoalSetting);
 	}

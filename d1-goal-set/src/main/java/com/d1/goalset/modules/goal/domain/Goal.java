@@ -102,10 +102,7 @@ public class Goal {
 	@JoinColumn(name = "goal_id")
 	private List<GoalPlan> goalPlans = new ArrayList<>();
 
-	public static Goal createGoal(GoalType goalType, GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, 
-			User goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
-		
-		goalSettingValidator.validateCreateGoal(goalSetting, goalSetter, params);
+	public static Goal createGoal(GoalType goalType, User goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())

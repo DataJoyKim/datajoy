@@ -1,7 +1,9 @@
 package com.d1.goalset.modules.goal.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,8 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
@@ -50,6 +54,15 @@ public abstract class GoalSetting {
 	@JoinColumn(name = "approver_id")
 	private User approver;
 
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns({
+		@JoinColumn(name = "target_id"),
+		@JoinColumn(name = "base_cd"),
+		@JoinColumn(name = "company_cd"),
+		@JoinColumn(name = "goal_type")
+	})
+	private List<Goal> goals = new ArrayList<>();
+	
 	@Transient
 	private Integer sumWeight;
 	

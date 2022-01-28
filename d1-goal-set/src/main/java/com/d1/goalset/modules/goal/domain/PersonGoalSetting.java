@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.User;
 
@@ -46,6 +47,13 @@ public class PersonGoalSetting extends GoalSetting {
 	@Override
 	public void cancel(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		this.setGoalSettingStatCd(GoalSettingState.CANCEL);
+	}
+
+	public void writeGoal(GoalSettingValidator goalSettingValidator, User writer, Goal goal, GoalWritingRequest params) {
+		goalSettingValidator.validateCreateGoal(this, writer, params);
+		
+		setGoalSettingStatCd(GoalSettingState.SETTING);
+		getGoals().add(goal);
 	}
 
 	private void calculateSumWeight(List<Goal> goals) {

@@ -102,6 +102,14 @@ public class Goal {
 	@JoinColumn(name = "goal_id")
 	private List<GoalPlan> goalPlans = new ArrayList<>();
 
+	/**
+	 * 목표 생성하기
+	 * @param goalType
+	 * @param goalSetter
+	 * @param goalPlans
+	 * @param params
+	 * @return
+	 */
 	public static Goal createGoal(GoalType goalType, User goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		Goal goal = Goal.builder()

@@ -9,6 +9,6 @@ import com.d1.goalset.modules.user.domain.User;
 
 public interface PersonGoalSettingRepository extends JpaRepository<PersonGoalSetting, Long> {
 
-	Optional<PersonGoalSetting> findByUser(User goalSetter);
+	Optional<PersonGoalSetting> findByGoalSetter(User goalSetter);
 
 }

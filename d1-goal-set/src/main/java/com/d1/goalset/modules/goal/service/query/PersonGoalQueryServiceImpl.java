@@ -42,7 +42,7 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 
 	@Override
 	public GoalSettingResponse findGoalSettingBy(User goalSetter) {
-		PersonGoalSetting personGoalSetting = personGoalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting personGoalSetting = personGoalSettingRepository.findByGoalSetter(goalSetter)
 																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));;
 		return GoalSettingResponse.of(personGoalSetting);
 	}

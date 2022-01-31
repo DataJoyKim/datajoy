@@ -29,7 +29,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public Long write(User goalSetter, GoalWritingRequest params) {
-		PersonGoalSetting goalSetting = goalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		List<GoalPlan> goalPlans = GoalPlan.createGoalPlans(params.getGoalPlans()); 
@@ -46,7 +46,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void update(Long goalId, User goalSetter, GoalWritingRequest params) {
-		PersonGoalSetting goalSetting = goalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		Goal goal = goalRepository.findGoalBy(goalSetter.getId(), goalId)
@@ -58,7 +58,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void delete(Long goalId, User goalSetter) {
-		PersonGoalSetting goalSetting = goalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		Goal goal = goalRepository.findById(goalId).get();
@@ -69,7 +69,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void submit(User goalSetter) {
-		PersonGoalSetting goalSetting = goalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());
@@ -80,7 +80,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 	@Transactional
 	@Override
 	public void cancel(User goalSetter) {
-		PersonGoalSetting goalSetting = goalSettingRepository.findByUser(goalSetter)
+		PersonGoalSetting goalSetting = goalSettingRepository.findByGoalSetter(goalSetter)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());

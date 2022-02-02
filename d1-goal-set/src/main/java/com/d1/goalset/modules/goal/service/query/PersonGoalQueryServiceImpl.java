@@ -36,7 +36,7 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	@Override
 	public List<GoalResponse> findGoalBy(Long userId) {
 		List<Goal> goals = goalRepository.findGoalBy(userId);
-
+		
 		return GoalResponse.of(goals);
 	}
 

@@ -55,7 +55,12 @@ public abstract class GoalSetting {
 	private User approver;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "target_id")
+	@JoinColumns({ 
+		@JoinColumn(name = "target_id", referencedColumnName = "target_id"),
+		@JoinColumn(name = "season_cd", referencedColumnName = "season_cd"),
+		@JoinColumn(name = "company_cd", referencedColumnName = "company_cd"),
+		@JoinColumn(name = "goal_type", referencedColumnName = "goal_type")
+	})
 	private List<Goal> goals = new ArrayList<>();
 	
 	@Transient

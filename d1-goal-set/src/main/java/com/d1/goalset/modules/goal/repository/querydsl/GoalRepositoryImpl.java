@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
+import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.QGoal;
 import com.d1.goalset.modules.goal.domain.QGoalPlan;
@@ -23,7 +24,11 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 		
 		JPQLQuery<Goal> query = from(qGoal)
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
-				.where(qGoal.id.eq(goalId).and(qGoal.targetId.eq(targetId)));
+				.where(qGoal.id.eq(goalId)
+						.and(qGoal.targetId.eq(targetId))
+						.and(qGoal.goalWritingStateCd.ne(GoalWritingState.DELETE))
+						)
+				.distinct();
 		
 		return Optional.ofNullable(query.fetchOne());
 	}
@@ -35,7 +40,10 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 		
 		JPQLQuery<Goal> query = from(qGoal)
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
-				.where(qGoal.targetId.eq(targetId));
+				.where(qGoal.targetId.eq(targetId)
+						.and(qGoal.goalWritingStateCd.ne(GoalWritingState.DELETE))
+						)
+				.distinct();
 		
 		return query.fetch();
 	}

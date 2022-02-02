@@ -13,13 +13,17 @@ import com.d1.goalset.modules.goal.domain.GoalPlan;
 import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
 import com.sun.istack.NotNull;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 public class GoalDto {
 	
-	@Getter @AllArgsConstructor @Builder
+	@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED) 
+	@AllArgsConstructor @Builder
 	public static class GoalWritingRequest {
 		private Long id;
 		
@@ -54,7 +58,8 @@ public class GoalDto {
 		private List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();
 	}
 	
-	@Getter @Builder @AllArgsConstructor
+	@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+	@Builder @AllArgsConstructor
 	public static class GoalPlanWritingRequest {
 		private Long id;
 		
@@ -65,7 +70,7 @@ public class GoalDto {
 		private String plan;
 	}
 	
-	@Getter
+	@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class GoalResponse {
 		private Long id;
 		
@@ -121,7 +126,8 @@ public class GoalDto {
 		}
 	}
 
-	@Getter @Builder @AllArgsConstructor
+	@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+	@Builder @AllArgsConstructor
 	public static class GoalPlanResponse {
 
 		private Long id;
@@ -150,7 +156,8 @@ public class GoalDto {
 		}
 	}
 
-	@Getter @Builder @AllArgsConstructor
+	@Getter @Setter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+	@Builder @AllArgsConstructor
 	public static class GoalSettingResponse {
 		private GoalSettingState goalSettingStatCd;
 

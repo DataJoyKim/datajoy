@@ -1,0 +1,13 @@
+server:
+  port: 8000
+           
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+      - id: goal
+        uri: http://localhost:8080/
+        predicates:
+        - Path=/goal/**

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.user.domain.User;
+import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 import com.d1.goalset.modules.user.error.UserErrorCode;
 import com.d1.goalset.modules.user.repository.UserRepository;
 
@@ -21,6 +22,11 @@ public class UserQueryServiceImpl implements UserQueryService{
 	@Override 
 	public User findUserBy(Long userId) {
 		return goalSetterRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)); 
+	}
+
+	@Override
+	public UserResponse findUserResponseBy(Long userId) {
+		return UserResponse.of(findUserBy(userId));
 	}
  
 }

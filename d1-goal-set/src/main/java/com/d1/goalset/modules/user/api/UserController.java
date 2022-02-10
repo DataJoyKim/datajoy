@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 import com.d1.goalset.modules.user.service.UserQueryService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,12 @@ public class UserController {
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> getUser(@PathVariable Long userId) {
-		UserDto user = userQueryService.findUserBy(userId);
+		UserResponse user = userQueryService.findUserResponseBy(userId);
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
-	@GetMapping("/members")
+	@GetMapping("/{userId}/members")
 	public ResponseEntity<?> getMembers() {
 		return null;
 	}

@@ -1,5 +1,7 @@
 package com.d1.goalset.modules.user.api;
 
+import java.util.List;
+
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +30,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userId}/members")
-	public ResponseEntity<?> getMembers() {
+	public ResponseEntity<?> getMembers(@PathVariable Long userId) {
+		List<UserResponse> members = userQueryService.findMembers(userId);
+		
 		return null;
 	}
 }

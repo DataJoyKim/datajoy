@@ -1,6 +1,8 @@
 package com.d1.goalset.modules.user.service;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,16 +19,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserQueryServiceImpl implements UserQueryService{
 
-	private final UserRepository goalSetterRepository;
+	private final UserRepository userRepository;
 	
 	@Override 
-	public User findUserBy(Long userId) {
-		return goalSetterRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)); 
+	public User findUser(Long userId) {
+		return userRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)); 
 	}
 
 	@Override
-	public UserResponse findUserResponseBy(Long userId) {
-		return UserResponse.of(findUserBy(userId));
+	public UserResponse findUserResponse(Long userId) {
+		return UserResponse.of(findUser(userId));
 	}
- 
+
+	@Override
+	public List<UserResponse> findMembers(Long userId) {
+		return UserResponse.of(userRepository.find);
+	}
 }

@@ -24,7 +24,7 @@ public class UserController {
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<?> getUser(@PathVariable Long userId) {
-		UserResponse user = userQueryService.findUserResponseBy(userId);
+		UserResponse user = userQueryService.findUserResponse(userId);
 		
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
@@ -32,7 +32,7 @@ public class UserController {
 	@GetMapping("/{userId}/members")
 	public ResponseEntity<?> getMembers(@PathVariable Long userId) {
 		List<UserResponse> members = userQueryService.findMembers(userId);
-		
-		return null;
+
+		return new ResponseEntity<>(members, HttpStatus.OK);
 	}
 }

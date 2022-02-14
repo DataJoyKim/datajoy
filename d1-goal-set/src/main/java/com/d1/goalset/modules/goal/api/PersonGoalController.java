@@ -43,7 +43,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		List<GoalResponse> response = personGoalQueryService.findGoalBy(goalSetter.getId());
 		
@@ -60,7 +60,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		GoalResponse response = personGoalQueryService.findGoalBy(goalSetter.getId(), goalId);
 		
@@ -76,7 +76,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		GoalSettingResponse response = personGoalQueryService.findGoalSettingBy(goalSetter);
 		
@@ -93,7 +93,7 @@ public class PersonGoalController {
 			@RequestParam Long userId,
 			@Validated @RequestBody GoalWritingRequest body
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		Long goalId = personGoalService.write(goalSetter, body);
 
@@ -111,7 +111,7 @@ public class PersonGoalController {
 			@RequestParam Long userId,
 			@RequestBody GoalWritingRequest body
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		personGoalService.update(goalId, goalSetter, body);
 
@@ -128,7 +128,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		personGoalService.delete(goalId, goalSetter);
 
@@ -144,7 +144,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		personGoalService.cancel(goalSetter);
 
@@ -160,7 +160,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User goalSetter = userQueryService.findUserBy(userId);
+		User goalSetter = userQueryService.findUser(userId);
 		
 		personGoalService.submit(goalSetter);
 

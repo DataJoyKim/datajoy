@@ -162,7 +162,6 @@ public class PersonGoalController {
 			) {
 		User goalSetter = userQueryService.findUser(userId);
 		
-		// 제출
 		personGoalService.submit(goalSetter);
 
 		GoalResource resource = new GoalResource(null);

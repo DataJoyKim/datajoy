@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
+import com.d1.goalset.modules.goal.service.MemberService;
+import com.d1.goalset.modules.goal.service.query.MemberQueryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberController {
 
+	private final MemberService memberService;
+	private final MemberQueryService memberQueryService;
+	
 	@GetMapping("")
 	public ResponseEntity<?> getMembers(
 			@RequestParam String seasonCd,
@@ -53,6 +58,7 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
+		
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 	}
 }

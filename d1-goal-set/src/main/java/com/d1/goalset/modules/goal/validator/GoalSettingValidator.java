@@ -48,9 +48,7 @@ public class GoalSettingValidator {
 		
 	}
 
-	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, User goalSetter) {
-
-		
+	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, User goalSetter) {		
 		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_DELETE_BY_APPROVAL_STATE);
 		}

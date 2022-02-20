@@ -24,7 +24,7 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.service.PersonGoalService;
 import com.d1.goalset.modules.goal.service.query.PersonGoalQueryService;
 import com.d1.goalset.modules.user.domain.User;
-import com.d1.goalset.modules.user.service.UserQueryService;
+import com.d1.goalset.modules.user.service.query.UserQueryService;
 
 import lombok.RequiredArgsConstructor;
 

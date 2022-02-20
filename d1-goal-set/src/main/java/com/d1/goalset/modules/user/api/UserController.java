@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
-import com.d1.goalset.modules.user.service.UserQueryService;
+import com.d1.goalset.modules.user.service.query.UserQueryService;
 
 import lombok.RequiredArgsConstructor;
 

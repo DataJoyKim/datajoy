@@ -105,18 +105,18 @@ public class Goal {
 	/**
 	 * 목표 생성하기
 	 * @param goalType
-	 * @param goalSetter
+	 * @param setter
 	 * @param goalPlans
 	 * @param params
 	 * @return
 	 */
-	public static Goal createGoal(GoalType goalType, User goalSetter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
+	public static Goal createGoal(GoalType goalType, User setter, List<GoalPlan> goalPlans, GoalWritingRequest params) {
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
-						.seasonCd(goalSetter.getSeasonCd())
-						.companyCd(goalSetter.getCompanyCd())
-						.targetId(goalType.getTargetId(goalSetter))
+						.seasonCd(setter.getSeasonCd())
+						.companyCd(setter.getCompanyCd())
+						.targetId(goalType.getTargetId(setter))
 						.goalType(goalType.getGoalTypeCode())
 						.weight(params.getWeight())
 						.goalWritingStateCd(GoalWritingState.SAVE)
@@ -136,9 +136,9 @@ public class Goal {
 		return goal;
 	}
 
-	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User goalSetter,
+	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User setter,
 			GoalWritingRequest params) {
-		goalSettingValidator.validateUpdateGoal(this, goalSetting, goalSetter, params);
+		goalSettingValidator.validateUpdateGoal(this, goalSetting, setter, params);
 		
 		this.goalName = params.getGoalName();
 		this.weight = params.getWeight();
@@ -157,8 +157,8 @@ public class Goal {
 		saveGoalPlans(params.getGoalPlans(), createGoalPlanMap(this.goalPlans));
 	}
 
-	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User goalSetter) {
-		goalSettingValidator.validateDeleteGoal(this, goalSetting, goalSetter);
+	public void delete(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User setter) {
+		goalSettingValidator.validateDeleteGoal(this, goalSetting, setter);
 		
 		this.goalWritingStateCd = GoalWritingState.DELETE;
 	}

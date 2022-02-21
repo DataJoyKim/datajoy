@@ -7,12 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.domain.Goal;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
+import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
-import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
+import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.user.domain.User;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	 
 	private final GoalRepository goalRepository;
-	private final PersonGoalSettingRepository personGoalSettingRepository;
+	private final GoalSettingRepository goalSettingRepository;
 
 	@Override
 	public GoalResponse findGoalBy(Long userId, Long goalId) { 
@@ -41,10 +41,10 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	}
 
 	@Override
-	public GoalSettingResponse findGoalSettingBy(User goalSetter) {
-		PersonGoalSetting personGoalSetting = personGoalSettingRepository.findByGoalSetter(goalSetter)
+	public GoalSettingResponse findGoalSettingBy(User setter) {
+		GoalSetting goalSetting = goalSettingRepository.findBySetter(setter)
 																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));;
-		return GoalSettingResponse.of(personGoalSetting);
+		return GoalSettingResponse.of(goalSetting);
 	}
  
 }

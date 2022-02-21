@@ -10,7 +10,7 @@ import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalPlan;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
+import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.sun.istack.NotNull;
 
 import lombok.AccessLevel;
@@ -161,9 +161,9 @@ public class GoalDto {
 	public static class GoalSettingResponse {
 		private GoalSettingState goalSettingStatCd;
 
-		public static GoalSettingResponse of(PersonGoalSetting personGoalSetting) {
+		public static GoalSettingResponse of(GoalSetting goalSetting) {
 			GoalSettingResponse response = GoalSettingResponse.builder()
-														.goalSettingStatCd(personGoalSetting.getGoalSettingStatCd())
+														.goalSettingStatCd(goalSetting.getGoalSettingStatCd())
 														.build();
 			
 			return response;

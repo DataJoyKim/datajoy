@@ -12,5 +12,5 @@ public interface PersonGoalQueryService {
 
 	List<GoalResponse> findGoalBy(Long userId);
 
-	GoalSettingResponse findGoalSettingBy(User goalSetter);
+	GoalSettingResponse findGoalSettingBy(User setter);
 }

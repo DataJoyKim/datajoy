@@ -20,11 +20,11 @@ import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
-import com.d1.goalset.modules.goal.domain.PersonGoalSetting;
+import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalPlanWritingRequest;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
-import com.d1.goalset.modules.goal.repository.PersonGoalSettingRepository;
+import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.repository.UserRepository;
 
@@ -35,7 +35,7 @@ class PersonGoalServiceImplTest {
 	@Autowired PersonGoalService personGoalService;
 	@Autowired GoalRepository goalRepository;
 	@Autowired UserRepository userRepository;
-	@Autowired PersonGoalSettingRepository goalSettingRepository; 
+	@Autowired GoalSettingRepository goalSettingRepository; 
 	
 	private final String seasonCd = "202201";
 	private final String companyCd = "01";
@@ -44,22 +44,23 @@ class PersonGoalServiceImplTest {
 	@Test
 	void writeTest() {
 		//given
-		User goalSetter = getUser(this.seasonCd, this.companyCd);
+		User setter = getUser(this.seasonCd, this.companyCd);
 		
 		Optional<User> savedGoalSetter = userRepository.findById((long) 1);
 		
 		if(savedGoalSetter.isPresent() == false) {
-			userRepository.save(goalSetter);
+			userRepository.save(setter);
 		}
 		
-		PersonGoalSetting goalSetting = new PersonGoalSetting();
-		goalSetting.setGoalSettingStatCd(GoalSettingState.SETTING);
-		goalSetting.setGoalSetter(goalSetter);
-		goalSetting.setSeasonCd(this.seasonCd);
-		goalSetting.setCompanyCd(this.companyCd);
-		goalSetting.setGoalType(GoalTypeCode.PERSON_GOAL);
+		GoalSetting goalSetting = GoalSetting.builder()
+				.goalSettingStatCd(GoalSettingState.SETTING)
+				.setter(setter)
+				.seasonCd(seasonCd)
+				.companyCd(companyCd)
+				.goalType(GoalTypeCode.PERSON_GOAL)
+				.build();
 		
-		Optional<PersonGoalSetting> savedGoalSetting = goalSettingRepository.findById((long) 1);
+		Optional<GoalSetting> savedGoalSetting = goalSettingRepository.findById((long) 1);
 		
 		if(savedGoalSetting.isPresent() == false) {
 			goalSettingRepository.save(goalSetting);
@@ -85,7 +86,7 @@ class PersonGoalServiceImplTest {
 														.goalPlans(goalPlans )
 														.build();
 		// when
-		Long goalId = personGoalService.write(goalSetter, params);
+		Long goalId = personGoalService.write(setter, params);
 		
 		// then
 		assertNotNull(goalId);

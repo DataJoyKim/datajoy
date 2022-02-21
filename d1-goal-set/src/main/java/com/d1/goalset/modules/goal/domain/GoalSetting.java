@@ -25,14 +25,17 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.User;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Entity
 @Table(name = "goal_setting")
-@Getter @AllArgsConstructor @Builder
+@Getter 
+@NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor @Builder
 public class GoalSetting {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "goal_setting_id")

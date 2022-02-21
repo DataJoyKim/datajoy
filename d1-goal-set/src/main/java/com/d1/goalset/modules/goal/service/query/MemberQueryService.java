@@ -10,4 +10,6 @@ public interface MemberQueryService {
 
 	List<UserResponse> findMembers(String seasonCd, String companyCd, User approver, GoalTypeCode goalTypeCode);
 
+	List<UserResponse> findMembers(String seasonCd, String companyCd, User approver, GoalTypeCode goalTypeCode, User member);
+
 }

@@ -7,6 +7,7 @@ import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,26 +37,36 @@ public class MemberController {
 			@RequestParam String seasonCd,
 			@RequestParam String companyCd,
 			@RequestParam Long userId,
-			@RequestParam GoalTypeCode goalTypeCode
+			@RequestParam(required = false) GoalTypeCode goalTypeCode
 			) {
 		User approver = userService.findUser(userId);
 		
 		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, approver, goalTypeCode);
 				
 		GoalResource resource = new GoalResource(members);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(MemberController.class).withSelfRel());
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{memberId}")
 	public ResponseEntity<?> getMember(
+			@PathVariable Long memberId,
 			@RequestParam String seasonCd,
 			@RequestParam String companyCd,
 			@RequestParam Long userId,
 			@RequestParam GoalTypeCode goalTypeCode
 			) {
-		return new ResponseEntity<>(null, HttpStatus.OK);
+		User approver = userService.findUser(userId);
+		
+		User member = userService.findUser(memberId);
+		
+		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, approver, goalTypeCode, member);
+		
+		GoalResource resource = new GoalResource(members);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{memberId}/goals")

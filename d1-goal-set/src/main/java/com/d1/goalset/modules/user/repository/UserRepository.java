@@ -8,6 +8,6 @@ import com.d1.goalset.modules.user.domain.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	List<User> findBySeasonCdAndCompanyCdAndSetterIn(String seasonCd, String companyCd, List<Long> batchSetterIds);
+	List<User> findBySeasonCdAndCompanyCdAndIdIn(String seasonCd, String companyCd, List<Long> batchSetterIds);
 
 }

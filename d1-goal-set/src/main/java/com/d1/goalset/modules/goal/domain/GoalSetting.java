@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -68,12 +67,7 @@ public class GoalSetting {
 	
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumns({ 
-		@JoinColumn(name = "target_id", referencedColumnName = "target_id"),
-		@JoinColumn(name = "season_cd", referencedColumnName = "season_cd"),
-		@JoinColumn(name = "company_cd", referencedColumnName = "company_cd"),
-		@JoinColumn(name = "goal_type", referencedColumnName = "goal_type")
-	})
+	@JoinColumn(name = "goal_setting_id")
 	private List<Goal> goals = new ArrayList<>();
 	
 	@Transient
@@ -103,7 +97,7 @@ public class GoalSetting {
 		goalSettingValidator.validateCreateGoal(this, writer, params);
 
 		this.goalSettingStatCd = GoalSettingState.SETTING;
-		getGoals().add(goal);
+		this.goals.add(goal);
 	}
 
 	private void calculateSumWeight(List<Goal> goals) {

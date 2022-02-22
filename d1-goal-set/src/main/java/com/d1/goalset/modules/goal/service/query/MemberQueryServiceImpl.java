@@ -27,7 +27,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		
 		List<Long> batchSetterIds = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
 		
-		List<User> members = userRepository.findBySeasonCdAndCompanyCdAndSetterIn(seasonCd, companyCd, batchSetterIds);
+		List<User> members = userRepository.findBySeasonCdAndCompanyCdAndIdIn(seasonCd, companyCd, batchSetterIds);
 		
 		return UserResponse.of(members);
 	}
@@ -39,7 +39,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		
 		List<Long> batchSetterIds = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
 		
-		List<User> members =  userRepository.findBySeasonCdAndCompanyCdAndSetterIn(seasonCd, companyCd, batchSetterIds);
+		List<User> members =  userRepository.findBySeasonCdAndCompanyCdAndIdIn(seasonCd, companyCd, batchSetterIds);
 		
 		return UserResponse.of(members);
 	}

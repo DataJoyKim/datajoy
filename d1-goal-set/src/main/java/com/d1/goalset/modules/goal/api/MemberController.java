@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.api.resource.GoalResource;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
+import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.service.MemberService;
 import com.d1.goalset.modules.goal.service.query.MemberQueryService;
 import com.d1.goalset.modules.user.domain.User;
@@ -59,32 +60,65 @@ public class MemberController {
 			) {
 		User approver = userService.findUser(userId);
 		
-		User member = userService.findUser(memberId);
+		UserResponse member = memberQueryService.findMember(seasonCd, companyCd, approver, goalTypeCode, memberId);
 		
-		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, approver, goalTypeCode, member);
-		
-		GoalResource resource = new GoalResource(members);
+		GoalResource resource = new GoalResource(member);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{memberId}/goals")
-	public ResponseEntity<?> getMemberGoal(
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId
-			) {
-		return new ResponseEntity<>(null, HttpStatus.OK);
-	}
-	
-	@PutMapping("/{memberId}/approval")
-	public ResponseEntity<?> putMemberApproval(
+	public ResponseEntity<?> getMemberGoals(
+			@PathVariable Long memberId,
 			@RequestParam String seasonCd,
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
 		
-		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+		User approver = userService.findUser(userId);
+		
+		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, approver, memberId);
+		
+		GoalResource resource = new GoalResource(goals);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+
+	@GetMapping("/{memberId}/goals/{goalId}")
+	public ResponseEntity<?> getMemberGoal(
+			@PathVariable Long memberId,
+			@PathVariable Long goalId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		
+		User approver = userService.findUser(userId);
+		
+		GoalResponse goal = memberQueryService.findMembersGoal(seasonCd, companyCd, approver, memberId, goalId);
+		
+		GoalResource resource = new GoalResource(goal);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+	
+	@PutMapping("/{memberId}/approval")
+	public ResponseEntity<?> putMemberApproval(
+			@PathVariable Long memberId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		User approver = userService.findUser(userId);
+		
+		memberService.approve(seasonCd, companyCd, approver, memberId);
+
+		GoalResource resource = new GoalResource(null);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+
+		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
 	}
 }

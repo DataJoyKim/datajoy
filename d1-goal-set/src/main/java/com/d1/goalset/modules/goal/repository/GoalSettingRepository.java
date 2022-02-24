@@ -20,4 +20,6 @@ public interface GoalSettingRepository extends JpaRepository<GoalSetting, Long>,
 
 	List<GoalSetting> findBySeasonCdAndCompanyCdAndApproverAndSetter(String seasonCd, String companyCd, User approver, User member);
 
+	Optional<GoalSetting> findByApprover(User approver);
+
 }

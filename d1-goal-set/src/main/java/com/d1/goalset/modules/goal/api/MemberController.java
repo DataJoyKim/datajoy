@@ -20,7 +20,6 @@ import com.d1.goalset.modules.goal.service.MemberService;
 import com.d1.goalset.modules.goal.service.query.MemberQueryService;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
-import com.d1.goalset.modules.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +30,6 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final MemberQueryService memberQueryService;
-	private final UserService userService;
 	
 	@GetMapping("")
 	public ResponseEntity<?> getMembers(
@@ -40,10 +38,8 @@ public class MemberController {
 			@RequestParam Long userId,
 			@RequestParam(required = false) GoalTypeCode goalTypeCode
 			) {
-		User approver = userService.findUser(userId);
+		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, userId, goalTypeCode);
 		
-		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, approver, goalTypeCode);
-				
 		GoalResource resource = new GoalResource(members);
 		resource.add(WebMvcLinkBuilder.linkTo(MemberController.class).withSelfRel());
 		
@@ -58,9 +54,7 @@ public class MemberController {
 			@RequestParam Long userId,
 			@RequestParam GoalTypeCode goalTypeCode
 			) {
-		User approver = userService.findUser(userId);
-		
-		UserResponse member = memberQueryService.findMember(seasonCd, companyCd, approver, goalTypeCode, memberId);
+		UserResponse member = memberQueryService.findMember(seasonCd, companyCd, userId, goalTypeCode, memberId);
 		
 		GoalResource resource = new GoalResource(member);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -75,10 +69,7 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		
-		User approver = userService.findUser(userId);
-		
-		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, approver, memberId);
+		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, userId, memberId);
 		
 		GoalResource resource = new GoalResource(goals);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -94,10 +85,7 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		
-		User approver = userService.findUser(userId);
-		
-		GoalResponse goal = memberQueryService.findMembersGoal(seasonCd, companyCd, approver, memberId, goalId);
+		GoalResponse goal = memberQueryService.findMembersGoal(seasonCd, companyCd, userId, memberId, goalId);
 		
 		GoalResource resource = new GoalResource(goal);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -112,9 +100,7 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User approver = userService.findUser(userId);
-		
-		memberService.approve(seasonCd, companyCd, approver, memberId);
+		memberService.approve(seasonCd, companyCd, userId, memberId);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());

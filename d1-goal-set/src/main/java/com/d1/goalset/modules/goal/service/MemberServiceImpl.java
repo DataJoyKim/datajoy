@@ -13,7 +13,7 @@ import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.User;
-import com.d1.goalset.modules.user.repository.UserRepository;
+import com.d1.goalset.modules.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,13 +24,14 @@ public class MemberServiceImpl implements MemberService {
 	private final GoalSettingRepository goalSettingRepository;
 	private final GoalRepository goalRepository;
 	private final GoalSettingValidator goalSettingValidator;
-	private final UserRepository userRepository;
+	private final UserService userService;
 	
 	@Transactional
 	@Override
-	public void approve(String seasonCd, String companyCd, User approver, Long memberId) {
+	public void approve(String seasonCd, String companyCd, Long approverId, Long memberId) {
+		User approver = userService.findUser(approverId);
 		
-		User member = userRepository.findById(memberId).orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+		User member = userService.findUser(memberId);
 		
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
 		if(goalSettingOfMembers.size() <= 0) {

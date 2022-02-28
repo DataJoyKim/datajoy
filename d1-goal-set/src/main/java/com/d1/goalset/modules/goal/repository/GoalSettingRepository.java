@@ -12,14 +12,12 @@ import com.d1.goalset.modules.user.domain.User;
 
 public interface GoalSettingRepository extends JpaRepository<GoalSetting, Long>, GoalSettingRepositoryQuerydsl {
 
-	Optional<GoalSetting> findBySetter(User setter);
+	Optional<GoalSetting> findBySeasonCdAndCompanyCdAndSetter(String seasonCd, String companyCd, User setter);
 
-	Optional<GoalSetting> findBySetterAndGoalType(User setter, GoalTypeCode personGoal);
+	Optional<GoalSetting> findBySeasonCdAndCompanyCdAndSetterAndGoalType(String seasonCd, String companyCd, User setter, GoalTypeCode personGoal);
 
 	List<GoalSetting> findBySeasonCdAndCompanyCdAndApprover(String seasonCd, String companyCd, User approver);
 
 	List<GoalSetting> findBySeasonCdAndCompanyCdAndApproverAndSetter(String seasonCd, String companyCd, User approver, User member);
-
-	Optional<GoalSetting> findByApprover(User approver);
 
 }

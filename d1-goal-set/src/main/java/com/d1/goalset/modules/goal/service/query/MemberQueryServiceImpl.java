@@ -15,7 +15,8 @@ import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
-import com.d1.goalset.modules.user.repository.UserRepository;
+import com.d1.goalset.modules.user.service.UserService;
+import com.d1.goalset.modules.user.service.query.UserQueryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,24 +27,25 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	
 	private final GoalRepository goalRepository;
 	private final GoalSettingRepository goalSettingRepository;
-	private final UserRepository userRepository;
+	private final UserQueryService userQueryService;
+	private final UserService userService;
 	
 	@Override
-	public List<UserResponse> findMembers(String seasonCd, String companyCd, User approver, GoalTypeCode goalTypeCode) {
+	public List<UserResponse> findMembers(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode) {
+		User approver = userService.findUser(approverId);
 		
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApprover(seasonCd, companyCd, approver);
 		
 		List<Long> batchSetterIds = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
 		
-		List<User> members = userRepository.findBySeasonCdAndCompanyCdAndIdIn(seasonCd, companyCd, batchSetterIds);
-		
-		return UserResponse.of(members);
+		return userQueryService.findUsers(seasonCd, companyCd, batchSetterIds);
 	}
 
 	@Override
-	public UserResponse findMember(String seasonCd, String companyCd, User approver, GoalTypeCode goalTypeCode, Long memberId) {
+	public UserResponse findMember(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode, Long memberId) {
+		User approver = userService.findUser(approverId);
 		
-		User member = userRepository.findById(memberId).orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+		User member = userService.findUser(memberId);
 		
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
 		if(goalSettingOfMembers.size() <= 0) {
@@ -54,9 +56,10 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	}
 
 	@Override
-	public List<GoalResponse> findMembersGoals(String seasonCd, String companyCd, User approver, Long memberId) {
+	public List<GoalResponse> findMembersGoals(String seasonCd, String companyCd, Long approverId, Long memberId) {
+		User approver = userService.findUser(approverId);
 		
-		User member = userRepository.findById(memberId).orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+		User member = userService.findUser(memberId);
 		
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
 		if(goalSettingOfMembers.size() <= 0) {
@@ -71,9 +74,10 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	}
 
 	@Override
-	public GoalResponse findMembersGoal(String seasonCd, String companyCd, User approver, Long memberId, Long goalId) {
+	public GoalResponse findMembersGoal(String seasonCd, String companyCd, Long approverId, Long memberId, Long goalId) {
+		User approver = userService.findUser(approverId);
 		
-		User member = userRepository.findById(memberId).orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_MEMBER));
+		User member = userService.findUser(memberId);
 		
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
 		if(goalSettingOfMembers.size() <= 0) {

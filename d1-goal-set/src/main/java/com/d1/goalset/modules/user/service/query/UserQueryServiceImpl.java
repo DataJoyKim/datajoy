@@ -1,6 +1,8 @@
 package com.d1.goalset.modules.user.service.query;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,5 +23,10 @@ public class UserQueryServiceImpl implements UserQueryService{
 	@Override
 	public UserResponse findUserResponse(Long userId) {
 		return UserResponse.of(userRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)));
+	}
+
+	@Override
+	public List<UserResponse> findUsers(String seasonCd, String companyCd, List<Long> batchSetterIds) {
+		return UserResponse.of(userRepository.findBySeasonCdAndCompanyCdAndIdIn(seasonCd, companyCd, batchSetterIds));
 	}
 }

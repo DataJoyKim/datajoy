@@ -76,20 +76,29 @@ public class GoalSetting {
 	public void submit(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		calculateSumWeight(goals);
 		
-		goalSettingValidator.validateSubmit(this);
+		goalSettingValidator.validateSubmit(this, goals);
 		
 		this.goalSettingStatCd = GoalSettingState.SUBMIT;
 	}
 
 	public void approve(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
+		
+		goalSettingValidator.validateApproval(this);
+		
 		this.goalSettingStatCd = GoalSettingState.APPROVAL;
 	}
 
 	public void reject(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
+		
+		goalSettingValidator.validateRejection(this);
+		
 		this.goalSettingStatCd = GoalSettingState.REJECTION;
 	}
 
 	public void cancel(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
+		
+		goalSettingValidator.validateCancel(this);
+		
 		this.goalSettingStatCd = GoalSettingState.CANCEL;
 	}
 

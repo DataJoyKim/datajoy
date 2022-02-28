@@ -14,6 +14,7 @@ import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.user.domain.User;
+import com.d1.goalset.modules.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,26 +25,29 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	 
 	private final GoalRepository goalRepository;
 	private final GoalSettingRepository goalSettingRepository;
+	private final UserService userService;
 
 	@Override
-	public GoalResponse findGoalBy(Long userId, Long goalId) { 
-		Goal goal = goalRepository.findGoalBy(userId, goalId)
+	public GoalResponse findGoalBy(String seasonCd, String companyCd, Long setterId, Long goalId) { 
+		Goal goal = goalRepository.findGoalBy(setterId, goalId)
 								.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL));
 		
 		return GoalResponse.of(goal);
 	}
 
 	@Override
-	public List<GoalResponse> findGoalBy(Long userId) {
-		List<Goal> goals = goalRepository.findGoalBy(userId);
+	public List<GoalResponse> findGoalBy(String seasonCd, String companyCd, Long setterId) {
+		List<Goal> goals = goalRepository.findGoalBy(setterId);
 		
 		return GoalResponse.of(goals);
 	}
 
 	@Override
-	public GoalSettingResponse findGoalSettingBy(User setter) {
-		GoalSetting goalSetting = goalSettingRepository.findBySetter(setter)
-																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));;
+	public GoalSettingResponse findGoalSettingBy(String seasonCd, String companyCd, Long setterId) {
+		User setter = userService.findUser(setterId);
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetter(seasonCd, companyCd, setter)
+																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		return GoalSettingResponse.of(goalSetting);
 	}
  

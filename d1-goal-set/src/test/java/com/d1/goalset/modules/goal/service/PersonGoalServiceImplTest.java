@@ -86,7 +86,7 @@ class PersonGoalServiceImplTest {
 														.goalPlans(goalPlans )
 														.build();
 		// when
-		Long goalId = personGoalService.write(setter, params);
+		Long goalId = personGoalService.write(seasonCd, companyCd, setter.getId(), params);
 		
 		// then
 		assertNotNull(goalId);
@@ -140,7 +140,7 @@ class PersonGoalServiceImplTest {
 		User goalSetter = getUser(this.seasonCd, this.companyCd);
 		
 		// when
-		personGoalService.update((long) 3, goalSetter, params);
+		personGoalService.update(seasonCd, companyCd, (long) 1, (long) 3, params);
 		
 		// then
 	}
@@ -152,7 +152,7 @@ class PersonGoalServiceImplTest {
 		User goalSetter = getUser(this.seasonCd, this.companyCd);
 		
 		// when
-		personGoalService.delete((long) 3, goalSetter);
+		personGoalService.delete(seasonCd, companyCd, (long) 1, (long) 3);
 		
 		// then
 		Optional<Goal> goal = goalRepository.findById((long) 3);

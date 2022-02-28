@@ -23,8 +23,6 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.service.PersonGoalService;
 import com.d1.goalset.modules.goal.service.query.PersonGoalQueryService;
-import com.d1.goalset.modules.user.domain.User;
-import com.d1.goalset.modules.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PersonGoalController {
 
-	private final UserService userService;
 	private final PersonGoalService personGoalService;
 	private final PersonGoalQueryService personGoalQueryService;
 	
@@ -43,9 +40,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		List<GoalResponse> response = personGoalQueryService.findGoalBy(setter.getId());
+		List<GoalResponse> response = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId);
 		
 		GoalResource resource = new GoalResource(response);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -60,9 +55,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		GoalResponse response = personGoalQueryService.findGoalBy(setter.getId(), goalId);
+		GoalResponse response = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId, goalId);
 		
 		GoalResource resource = new GoalResource(response);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -76,9 +69,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		GoalSettingResponse response = personGoalQueryService.findGoalSettingBy(setter);
+		GoalSettingResponse response = personGoalQueryService.findGoalSettingBy(seasonCd, companyCd, userId);
 		
 		GoalResource resource = new GoalResource(response);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -93,9 +84,7 @@ public class PersonGoalController {
 			@RequestParam Long userId,
 			@Validated @RequestBody GoalWritingRequest body
 			) {
-		User setter = userService.findUser(userId);
-		
-		Long goalId = personGoalService.write(setter, body);
+		Long goalId = personGoalService.write(seasonCd, companyCd, userId, body);
 
 		GoalResource resource = new GoalResource(goalId);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -111,9 +100,7 @@ public class PersonGoalController {
 			@RequestParam Long userId,
 			@RequestBody GoalWritingRequest body
 			) {
-		User setter = userService.findUser(userId);
-		
-		personGoalService.update(goalId, setter, body);
+		personGoalService.update(seasonCd, companyCd, userId, goalId, body);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -128,9 +115,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		personGoalService.delete(goalId, setter);
+		personGoalService.delete(seasonCd, companyCd, userId, goalId);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -144,9 +129,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		personGoalService.cancel(setter);
+		personGoalService.cancel(seasonCd, companyCd, userId);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
@@ -160,9 +143,7 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		User setter = userService.findUser(userId);
-		
-		personGoalService.submit(setter);
+		personGoalService.submit(seasonCd, companyCd, userId);
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());

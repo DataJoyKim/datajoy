@@ -43,44 +43,11 @@ class GoalTest {
 		String updateContent = "update";
 		Integer updateWeight = 80;
 		
-		GoalWritingRequest params = GoalWritingRequest.builder()
-									.id(1L)
-									.goalName(updateContent)
-									.contents(updateContent)
-									.weight(updateWeight)
-									.evalWayCd(EvalWay.QUALITY_EVAL)
-									.qualityStdS(updateContent)
-									.qualityStdA(updateContent)
-									.qualityStdB(updateContent)
-									.qualityStdC(updateContent)
-									.qualityStdD(updateContent)
-									.build();
+		GoalWritingRequest params = createGoalWritingRequest(updateContent, updateWeight);
 		
-		GoalWritingRequest paramsOfMinWeightException = GoalWritingRequest.builder()
-									.id(1L)
-									.goalName(updateContent)
-									.contents(updateContent)
-									.weight(0)
-									.evalWayCd(EvalWay.QUALITY_EVAL)
-									.qualityStdS(updateContent)
-									.qualityStdA(updateContent)
-									.qualityStdB(updateContent)
-									.qualityStdC(updateContent)
-									.qualityStdD(updateContent)
-									.build();
+		GoalWritingRequest paramsOfMinWeightException = createGoalWritingRequest(updateContent, 0);
 		
-		GoalWritingRequest paramsOfMaxWeightException = GoalWritingRequest.builder()
-									.id(1L)
-									.goalName(updateContent)
-									.contents(updateContent)
-									.weight(101)
-									.evalWayCd(EvalWay.QUALITY_EVAL)
-									.qualityStdS(updateContent)
-									.qualityStdA(updateContent)
-									.qualityStdB(updateContent)
-									.qualityStdC(updateContent)
-									.qualityStdD(updateContent)
-									.build();
+		GoalWritingRequest paramsOfMaxWeightException = createGoalWritingRequest(updateContent, 101);
 
 		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
 		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
@@ -115,6 +82,21 @@ class GoalTest {
 		assertEquals(exceptionOfMinWeightException.getMessage(), PersonGoalErrorCode.NOT_RANGE_WEIGHT.getMessage());
 		assertEquals(exceptionOfMaxWeightException.getMessage(), PersonGoalErrorCode.NOT_RANGE_WEIGHT.getMessage());
 		assertEquals(exceptionOfDeletedGoal.getMessage(), PersonGoalErrorCode.CAN_NOT_UPDATE_BY_DELETE_STATE.getMessage());
+	}
+
+	private GoalWritingRequest createGoalWritingRequest(String updateContent, Integer updateWeight) {
+		return GoalWritingRequest.builder()
+									.id(1L)
+									.goalName(updateContent)
+									.contents(updateContent)
+									.weight(updateWeight)
+									.evalWayCd(EvalWay.QUALITY_EVAL)
+									.qualityStdS(updateContent)
+									.qualityStdA(updateContent)
+									.qualityStdB(updateContent)
+									.qualityStdC(updateContent)
+									.qualityStdD(updateContent)
+									.build();
 	}
 	
 	@DisplayName("목표 삭제 테스트")

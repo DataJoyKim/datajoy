@@ -20,19 +20,19 @@ import com.d1.goalset.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)
-@Service("PersonGoalQueryService")
+@Service("OrgGoalQueryService")
 @RequiredArgsConstructor
-public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
+public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 	 
 	private final GoalRepository goalRepository;
 	private final GoalSettingRepository goalSettingRepository;
 	private final UserService userService;
-
+	
 	@Override
 	public GoalResponse findGoalBy(String seasonCd, String companyCd, Long setterId, Long goalId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.PERSON_GOAL)
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
@@ -45,7 +45,7 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	public List<GoalResponse> findGoalBy(String seasonCd, String companyCd, Long setterId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.PERSON_GOAL)
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
@@ -57,9 +57,9 @@ public class PersonGoalQueryServiceImpl implements PersonGoalQueryService {
 	public GoalSettingResponse findGoalSettingBy(String seasonCd, String companyCd, Long setterId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.PERSON_GOAL)
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
 																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		return GoalSettingResponse.of(goalSetting);
 	}
- 
+
 }

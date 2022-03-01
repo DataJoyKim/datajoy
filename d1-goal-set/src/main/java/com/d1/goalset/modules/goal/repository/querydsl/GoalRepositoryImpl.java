@@ -18,7 +18,7 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 	}
 
 	@Override
-	public Optional<Goal> findGoalBy(Long targetId, Long goalId) {
+	public Optional<Goal> findGoalBy(String seasonCd, String companyCd, Long targetId, Long goalId) {
 		QGoal qGoal = QGoal.goal;
 		QGoalPlan qGoalPlan = QGoalPlan.goalPlan;
 		
@@ -26,6 +26,8 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
 				.where(qGoal.id.eq(goalId)
 						.and(qGoal.targetId.eq(targetId))
+						.and(qGoal.seasonCd.eq(seasonCd))
+						.and(qGoal.companyCd.eq(companyCd))
 						.and(qGoal.goalWritingStateCd.ne(GoalWritingState.DELETE))
 						)
 				.distinct();
@@ -34,13 +36,15 @@ public class GoalRepositoryImpl extends QuerydslRepositorySupport implements Goa
 	}
 
 	@Override
-	public List<Goal> findGoalBy(Long targetId) {
+	public List<Goal> findGoalBy(String seasonCd, String companyCd, Long targetId) {
 		QGoal qGoal = QGoal.goal;
 		QGoalPlan qGoalPlan = QGoalPlan.goalPlan;
 		
 		JPQLQuery<Goal> query = from(qGoal)
 				.leftJoin(qGoal.goalPlans, qGoalPlan)
 				.where(qGoal.targetId.eq(targetId)
+						.and(qGoal.seasonCd.eq(seasonCd))
+						.and(qGoal.companyCd.eq(companyCd))
 						.and(qGoal.goalWritingStateCd.ne(GoalWritingState.DELETE))
 						)
 				.distinct();

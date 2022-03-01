@@ -5,7 +5,7 @@ import java.util.List;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 
-public interface PersonGoalQueryService {
+public interface OrgGoalQueryService {
 	
 	/**
 	 * 목표 조회

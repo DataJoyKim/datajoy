@@ -25,7 +25,10 @@ public enum PersonGoalErrorCode implements BusinessErrorCode {
 	NULL_QUANT_STD(400, "R019","정량평가 기준이 입력되지않는 목표가 존재합니다."), 
 	NULL_EVAL_WAY_CD(400, "R020","평가방식이 선택되지않는 목표가 존재합니다."), 
 	NULL_GOAL_NAME(400, "R021","목표명이 입려되지않는 목표가 존재합니다."), 
-	NULL_CONTENTS(400, "R022","내용이 입려되지않는 목표가 존재합니다."),
+	NULL_CONTENTS(400, "R022","내용이 입려되지않는 목표가 존재합니다."), 
+	CAN_NOT_WRITE_BY_DIFFRENT_TARGET_AND_WRITER(404, "R023","개인목표수립의 경우 본인의 목표만 수립가능합니다."), 
+	CAN_NOT_UPDATE_BY_DIFFRENT_TARGET_AND_WRITER(404, "R024","개인목표수립의 경우 본인의 목표만 수정가능합니다."),
+	CAN_NOT_DELETE_BY_DIFFRENT_TARGET_AND_WRITER(404, "R025","개인목표수립의 경우 본인의 목표만 삭제가능합니다."),
 	;
 
 	private final String errorKind = "PersonGoal";

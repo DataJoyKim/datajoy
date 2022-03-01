@@ -68,7 +68,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		
 		GoalSetting goalSetting = goalSettingOfMembers.get(0);
 		
-		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());
+		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
 		
 		return GoalResponse.of(goals);
 	}
@@ -86,7 +86,8 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		
 		GoalSetting goalSetting = goalSettingOfMembers.get(0);
 		
-		Goal goal = goalRepository.findGoalBy(goalSetting.getTargetId(), goalId).orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
+		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
+									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
 		 
 		return GoalResponse.of(goal);
 	}

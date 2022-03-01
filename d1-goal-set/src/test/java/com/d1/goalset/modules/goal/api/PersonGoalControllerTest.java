@@ -1,5 +1,6 @@
 package com.d1.goalset.modules.goal.api;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -97,13 +98,12 @@ class PersonGoalControllerTest extends BaseTest {
 		this.mockMvc.perform(post("/api/v1/person-goals")
 				.param("seasonCd", "202201")
 				.param("companyCd", "01")
-				.param("userId", "1")
+				.param("userId", "2")
 				.content(mapper.registerModule(new JavaTimeModule()).writeValueAsString(body))
 				.contentType(MediaTypes.HAL_JSON_VALUE)
 				)
 				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(jsonPath("content").exists());
+				.andExpect(status().isCreated());
 	}
 
 	@DisplayName("개인목표 수정")
@@ -112,9 +112,10 @@ class PersonGoalControllerTest extends BaseTest {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		GoalPlanWritingRequest goalPlan_1 = GoalPlanWritingRequest.builder()
+															.id(5L)
 															.staYmd(LocalDate.now())
 															.endYmd(LocalDate.now())
-															.plan("계획합니다.1")
+															.plan("계획합니다.1수정")
 															.build();
 		
 		GoalPlanWritingRequest goalPlan_2 = GoalPlanWritingRequest.builder()
@@ -138,15 +139,27 @@ class PersonGoalControllerTest extends BaseTest {
 										.goalPlans(goalPlans)
 										.build();
 		
-		this.mockMvc.perform(put("/api/v1/person-goals/3")
+		this.mockMvc.perform(put("/api/v1/person-goals/7")
 				.param("seasonCd", "202201")
 				.param("companyCd", "01")
-				.param("userId", "1")
+				.param("userId", "2")
 				.content(mapper.registerModule(new JavaTimeModule()).writeValueAsString(body))
 				.contentType(MediaTypes.HAL_JSON_VALUE)
 				)
 				.andDo(print())
-				.andExpect(status().isCreated())
-				.andExpect(jsonPath("content").exists());
+				.andExpect(status().isNoContent());
+	}
+
+	@DisplayName("개인목표 삭제")
+	@Test
+	void personGoalDeleteApiTest() throws Exception {
+		this.mockMvc.perform(delete("/api/v1/person-goals/7")
+				.param("seasonCd", "202201")
+				.param("companyCd", "01")
+				.param("userId", "2")
+				.contentType(MediaTypes.HAL_JSON_VALUE)
+				)
+				.andDo(print())
+				.andExpect(status().isNoContent());
 	}
 }

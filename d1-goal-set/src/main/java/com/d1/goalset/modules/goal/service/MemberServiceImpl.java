@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		GoalSetting goalSetting = goalSettingOfMembers.get(0);
 		
-		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getTargetId());
+		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
 		
 		goalSetting.approve(goalSettingValidator, goals);
 	}

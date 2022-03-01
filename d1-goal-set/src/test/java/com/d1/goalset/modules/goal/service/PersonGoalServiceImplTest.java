@@ -46,7 +46,7 @@ class PersonGoalServiceImplTest {
 		//given
 		User setter = getUser(this.seasonCd, this.companyCd);
 		
-		Optional<User> savedGoalSetter = userRepository.findById((long) 1);
+		Optional<User> savedGoalSetter = userRepository.findById(1L);
 		
 		if(savedGoalSetter.isPresent() == false) {
 			userRepository.save(setter);
@@ -60,7 +60,7 @@ class PersonGoalServiceImplTest {
 				.goalType(GoalTypeCode.PERSON_GOAL)
 				.build();
 		
-		Optional<GoalSetting> savedGoalSetting = goalSettingRepository.findById((long) 1);
+		Optional<GoalSetting> savedGoalSetting = goalSettingRepository.findById(1L);
 		
 		if(savedGoalSetting.isPresent() == false) {
 			goalSettingRepository.save(goalSetting);
@@ -94,7 +94,7 @@ class PersonGoalServiceImplTest {
 
 	private User getUser(String seasonCd, String companyCd) {
 		return User.builder()
-										.id((long) 1)
+										.id(1L)
 										.seasonCd(seasonCd)
 										.companyCd(companyCd)
 										.isPrimaryAccount(true)
@@ -109,7 +109,7 @@ class PersonGoalServiceImplTest {
 	void updateTest() {
 		// given
 		GoalPlanWritingRequest updateGoalPlan = GoalPlanWritingRequest.builder()
-														.id((long) 1)
+														.id(1L)
 														.plan("테스트 수정")
 														.endYmd(LocalDate.now())
 														.staYmd(LocalDate.now())
@@ -136,11 +136,8 @@ class PersonGoalServiceImplTest {
 														.contents("테스트 수정")
 														.goalPlans(goalPlans)
 														.build();
-		
-		User goalSetter = getUser(this.seasonCd, this.companyCd);
-		
 		// when
-		personGoalService.update(seasonCd, companyCd, (long) 1, (long) 3, params);
+		personGoalService.update(seasonCd, companyCd, 1L, 3L, params);
 		
 		// then
 	}
@@ -148,14 +145,11 @@ class PersonGoalServiceImplTest {
 	@DisplayName("삭제 테스트")
 	@Test
 	void deleteTest() {
-		// given
-		User goalSetter = getUser(this.seasonCd, this.companyCd);
-		
 		// when
-		personGoalService.delete(seasonCd, companyCd, (long) 1, (long) 3);
+		personGoalService.delete(seasonCd, companyCd, 1L, 3L);
 		
 		// then
-		Optional<Goal> goal = goalRepository.findById((long) 3);
+		Optional<Goal> goal = goalRepository.findById(3L);
 		assertEquals(goal.get().getGoalWritingStateCd(), GoalWritingState.DELETE);
 	}
 	

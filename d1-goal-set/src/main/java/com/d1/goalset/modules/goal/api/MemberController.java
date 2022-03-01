@@ -23,7 +23,7 @@ import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/goal/api/v1/members", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/api/v1/members", produces = MediaTypes.HAL_JSON_VALUE)
 @RequiredArgsConstructor
 public class MemberController {
 

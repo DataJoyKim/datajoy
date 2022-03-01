@@ -13,7 +13,7 @@ class MemberControllerTest extends BaseTest {
 	@DisplayName("조직원 조회")
 	@Test
 	void getMembersApiTest() throws Exception {
-		this.mockMvc.perform(get("/goal/api/v1/members")
+		this.mockMvc.perform(get("/api/v1/members")
 				.param("seasonCd", "202201")
 				.param("companyCd", "01")
 				.param("userId", "1")

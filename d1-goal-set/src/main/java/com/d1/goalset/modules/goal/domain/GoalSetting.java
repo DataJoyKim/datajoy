@@ -20,7 +20,6 @@ import javax.persistence.Transient;
 
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
-import com.d1.goalset.modules.goal.dto.GoalDto.GoalWritingRequest;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.User;
 
@@ -107,8 +106,8 @@ public class GoalSetting {
 		this.goalSettingStateCd = GoalSettingState.CANCEL;
 	}
 
-	public void writeGoal(GoalSettingValidator goalSettingValidator, User writer, Goal goal, GoalWritingRequest params) {
-		goalSettingValidator.validateCreateGoal(this, writer, params);
+	public void writeGoal(GoalSettingValidator goalSettingValidator, User writer, Goal goal) {
+		goalSettingValidator.validateCreateGoal(this, writer, goal);
 
 		this.goalSettingStateCd = GoalSettingState.SETTING;
 		this.goals.add(goal);

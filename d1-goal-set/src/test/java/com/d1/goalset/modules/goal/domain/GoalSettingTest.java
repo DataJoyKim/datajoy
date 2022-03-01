@@ -14,6 +14,7 @@ import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
 import com.d1.goalset.modules.goal.code.GoalTypeCode;
+import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.validator.GoalSettingValidator;
 import com.d1.goalset.modules.user.domain.User;
@@ -272,7 +273,83 @@ class GoalSettingTest {
 	@DisplayName("목표 작성 테스트")
 	@Test
 	void writeGoalTest() {	
+		//Given
+		User approver = getApprover(2L);
 		
+		User setter = getSetter(1L);
+		
+		Long targetId = getTargetId();
+		
+		Goal goal = Goal.builder()
+				.id(1L)
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(30)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build();
+		
+		Goal goalWeightMaxException = Goal.builder()
+				.id(2L)
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(101)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build();
+		
+		Goal goalWeightMinException = Goal.builder()
+				.id(3L)
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(0)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build();
+		
+		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
+		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
+		GoalSetting goalSettingOfCancelState = getGoalSetting(approver, setter, targetId, GoalSettingState.CANCEL);
+		GoalSetting goalSettingOfRejectionState = getGoalSetting(approver, setter, targetId, GoalSettingState.REJECTION);
+		GoalSetting goalSettingOfSettingState = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		GoalSetting goalSettingOfWeightMaxException = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		GoalSetting goalSettingOfWeightMinException = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		
+		// when
+		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.writeGoal(goalSettingValidator, setter, goal);});
+		Throwable exceptionOfSubmitState = assertThrows(BusinessException.class, () -> {goalSettingOfSubmitState.writeGoal(goalSettingValidator, setter, goal);});
+		goalSettingOfCancelState.writeGoal(goalSettingValidator, setter, goal);
+		goalSettingOfRejectionState.writeGoal(goalSettingValidator, setter, goal);
+		goalSettingOfSettingState.writeGoal(goalSettingValidator, setter, goal);
+		Throwable exceptionOfWeightMaxException = assertThrows(BusinessException.class, () -> {goalSettingOfWeightMaxException.writeGoal(goalSettingValidator, setter, goalWeightMaxException);});
+		Throwable exceptionOfWeightMinException = assertThrows(BusinessException.class, () -> {goalSettingOfWeightMinException.writeGoal(goalSettingValidator, setter, goalWeightMinException);});
+		
+		// then
+		assertEquals(exceptionOfApprovalState.getMessage(), PersonGoalErrorCode.CAN_NOT_WRITE_BY_APPROVAL_STATE.getMessage());
+		assertEquals(exceptionOfSubmitState.getMessage(), PersonGoalErrorCode.CAN_NOT_WRITE_BY_SUBMIT_STATE.getMessage());
+		assertEquals(goalSettingOfCancelState.getGoalSettingStateCd(), GoalSettingState.SETTING);
+		assertEquals(goalSettingOfRejectionState.getGoalSettingStateCd(), GoalSettingState.SETTING);
+		assertEquals(goalSettingOfSettingState.getGoalSettingStateCd(), GoalSettingState.SETTING);
+		assertEquals(exceptionOfWeightMaxException.getMessage(), PersonGoalErrorCode.NOT_RANGE_WEIGHT.getMessage());
+		assertEquals(exceptionOfWeightMinException.getMessage(), PersonGoalErrorCode.NOT_RANGE_WEIGHT.getMessage());
+		assertEquals(goalSettingOfSettingState.getGoals().size(), 1);
+		assertEquals(goalSettingOfSettingState.getGoals().get(0).getId(), 1L);
+		assertEquals(goalSettingOfSettingState.getGoals().get(0).getGoalWritingStateCd(), GoalWritingState.SAVE);
 	}
 	
 	@DisplayName("배치용 수립자ID 생성 테스트")

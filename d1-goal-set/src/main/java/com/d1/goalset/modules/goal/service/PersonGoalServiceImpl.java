@@ -41,7 +41,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		
 		Goal goal = Goal.createGoal(new PersonGoal(), setter, goalPlans, params);
 		
-		goalSetting.writeGoal(goalSettingValidator, setter, goal, params);
+		goalSetting.writeGoal(goalSettingValidator, setter, goal);
 		
 		goalSettingRepository.save(goalSetting);
 		

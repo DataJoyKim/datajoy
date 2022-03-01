@@ -18,7 +18,6 @@ import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.service.MemberService;
 import com.d1.goalset.modules.goal.service.query.MemberQueryService;
-import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 
 import lombok.RequiredArgsConstructor;

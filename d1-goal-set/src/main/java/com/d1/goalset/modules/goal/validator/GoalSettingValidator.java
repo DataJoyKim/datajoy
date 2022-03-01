@@ -17,7 +17,7 @@ import com.d1.goalset.modules.user.domain.User;
 @Component
 public class GoalSettingValidator {
 
-	public void validateCreateGoal(GoalSetting goalSetting, User writer, GoalWritingRequest params) {
+	public void validateCreateGoal(GoalSetting goalSetting, User writer, Goal goal) {
 		if(writer == null) {
 			throw new BusinessException(PersonGoalErrorCode.NULL_WRITER);
 		}
@@ -30,7 +30,7 @@ public class GoalSettingValidator {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_WRITE_BY_SUBMIT_STATE);
 		}
 		
-		if(params.getWeight() <= 0 || params.getWeight() > 100) {
+		if(goal.getWeight() <= 0 || goal.getWeight() > 100) {
 			throw new BusinessException(PersonGoalErrorCode.NOT_RANGE_WEIGHT);
 		}
 	}

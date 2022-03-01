@@ -136,8 +136,7 @@ public class Goal {
 		return goal;
 	}
 
-	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User setter,
-			GoalWritingRequest params) {
+	public void update(GoalSettingValidator goalSettingValidator, GoalSetting goalSetting, User setter, GoalWritingRequest params) {
 		goalSettingValidator.validateUpdateGoal(this, goalSetting, setter, params);
 		
 		this.goalName = params.getGoalName();

@@ -1,13 +1,14 @@
 package com.d1.goalset.modules.goal.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.code.EvalWay;
@@ -22,18 +23,17 @@ class GoalSettingTest {
 	private String companyCd = "01";
 	private String seasonCd = "202201";
 	
-	@Autowired
-	GoalSettingValidator goalSettingValidator;
+	GoalSettingValidator goalSettingValidator = new GoalSettingValidator();
 
+	@DisplayName("제출 상태 변경 테스트")
 	@Test
-	void submitStateValidatorTest() {	
-		User approver = getApprover();
+	void submitTest() {	
+		//Given
+		User approver = getApprover(2L);
 		
-		User setter = getSetter();
+		User setter = getSetter(1L);
 		
 		Long targetId = getTargetId();
-		
-		GoalSetting goalSetting = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
 		
 		List<Goal> goals = new ArrayList<>();
 		
@@ -41,101 +41,295 @@ class GoalSettingTest {
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
 				.contents("내용1")
+				.goalName("목표명1")
 				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
 				.build());
 
 		goals.add(Goal.builder()
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
+				.goalName("목표명2")
 				.contents("내용2")
 				.targetId(getTargetId())
 				.weight(70)
 				.evalWayCd(EvalWay.QUALITY_EVAL)
+				.qualityStdS("기준1")
+				.qualityStdA("기준2")
+				.qualityStdB("기준3")
+				.qualityStdC("기준4")
+				.qualityStdD("기준5")
 				.build());
 		
-		Throwable exception = assertThrows(BusinessException.class, () -> {goalSetting.submit(goalSettingValidator, goals);});
+		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
+		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
+		GoalSetting goalSettingOfCancelState = getGoalSetting(approver, setter, targetId, GoalSettingState.CANCEL);
+		GoalSetting goalSettingOfRejectionState = getGoalSetting(approver, setter, targetId, GoalSettingState.REJECTION);
+		GoalSetting goalSettingOfSettingState = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
 		
-		assertEquals(exception.getMessage(), PersonGoalErrorCode.CAN_NOT_SUBMIT_BY_APPROVAL_STATE);
+		// when
+		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.submit(goalSettingValidator, goals);});
+		Throwable exceptionOfSubmitState = assertThrows(BusinessException.class, () -> {goalSettingOfSubmitState.submit(goalSettingValidator, goals);});
+		goalSettingOfCancelState.submit(goalSettingValidator, goals);
+		goalSettingOfRejectionState.submit(goalSettingValidator, goals);
+		goalSettingOfSettingState.submit(goalSettingValidator, goals);
+		
+		// then
+		assertEquals(exceptionOfApprovalState.getMessage(), PersonGoalErrorCode.CAN_NOT_SUBMIT_BY_APPROVAL_STATE.getMessage());
+		assertEquals(exceptionOfSubmitState.getMessage(), PersonGoalErrorCode.CAN_NOT_SUBMIT_BY_SUBMIT_STATE.getMessage());
+		assertEquals(goalSettingOfCancelState.getGoalSettingStateCd(), GoalSettingState.SUBMIT);
+		assertEquals(goalSettingOfRejectionState.getGoalSettingStateCd(), GoalSettingState.SUBMIT);
+		assertEquals(goalSettingOfSettingState.getGoalSettingStateCd(), GoalSettingState.SUBMIT);
 	}
 
+	@DisplayName("승인 상태 변경 테스트")
+	@Test
+	void approvalTest() {	
+		//Given
+		User approver = getApprover(2L);
+		
+		User setter = getSetter(1L);
+		
+		Long targetId = getTargetId();
+		
+		List<Goal> goals = new ArrayList<>();
+		
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(30)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build());
+
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.goalName("목표명2")
+				.contents("내용2")
+				.targetId(getTargetId())
+				.weight(70)
+				.evalWayCd(EvalWay.QUALITY_EVAL)
+				.qualityStdS("기준1")
+				.qualityStdA("기준2")
+				.qualityStdB("기준3")
+				.qualityStdC("기준4")
+				.qualityStdD("기준5")
+				.build());
+		
+		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
+		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
+		GoalSetting goalSettingOfCancelState = getGoalSetting(approver, setter, targetId, GoalSettingState.CANCEL);
+		GoalSetting goalSettingOfRejectionState = getGoalSetting(approver, setter, targetId, GoalSettingState.REJECTION);
+		GoalSetting goalSettingOfSettingState = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		
+		// when
+		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.approve(goalSettingValidator, goals);});
+		goalSettingOfSubmitState.approve(goalSettingValidator, goals);
+		Throwable exceptionOfCanceltState = assertThrows(BusinessException.class, () -> {goalSettingOfCancelState.approve(goalSettingValidator, goals);});
+		Throwable exceptionOfRejectiontState = assertThrows(BusinessException.class, () -> {goalSettingOfRejectionState.approve(goalSettingValidator, goals);});
+		Throwable exceptionOfSettingState = assertThrows(BusinessException.class, () -> {goalSettingOfSettingState.approve(goalSettingValidator, goals);});
+		
+		// then
+		assertEquals(exceptionOfApprovalState.getMessage(), PersonGoalErrorCode.CAN_NOT_APPROVE_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(goalSettingOfSubmitState.getGoalSettingStateCd(), GoalSettingState.APPROVAL);
+		assertEquals(exceptionOfCanceltState.getMessage(), PersonGoalErrorCode.CAN_NOT_APPROVE_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfRejectiontState.getMessage(), PersonGoalErrorCode.CAN_NOT_APPROVE_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfSettingState.getMessage(), PersonGoalErrorCode.CAN_NOT_APPROVE_BY_NOT_SUBMIT_STATE.getMessage());
+	}
+
+	@DisplayName("반려 상태 변경 테스트")
+	@Test
+	void rejectTest() {	
+		//Given
+		User approver = getApprover(2L);
+		
+		User setter = getSetter(1L);
+		
+		Long targetId = getTargetId();
+		
+		List<Goal> goals = new ArrayList<>();
+		
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(30)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build());
+
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.goalName("목표명2")
+				.contents("내용2")
+				.targetId(getTargetId())
+				.weight(70)
+				.evalWayCd(EvalWay.QUALITY_EVAL)
+				.qualityStdS("기준1")
+				.qualityStdA("기준2")
+				.qualityStdB("기준3")
+				.qualityStdC("기준4")
+				.qualityStdD("기준5")
+				.build());
+		
+		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
+		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
+		GoalSetting goalSettingOfCancelState = getGoalSetting(approver, setter, targetId, GoalSettingState.CANCEL);
+		GoalSetting goalSettingOfRejectionState = getGoalSetting(approver, setter, targetId, GoalSettingState.REJECTION);
+		GoalSetting goalSettingOfSettingState = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		
+		// when
+		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.reject(goalSettingValidator, goals);});
+		goalSettingOfSubmitState.reject(goalSettingValidator, goals);
+		Throwable exceptionOfCanceltState = assertThrows(BusinessException.class, () -> {goalSettingOfCancelState.reject(goalSettingValidator, goals);});
+		Throwable exceptionOfRejectiontState = assertThrows(BusinessException.class, () -> {goalSettingOfRejectionState.reject(goalSettingValidator, goals);});
+		Throwable exceptionOfSettingState = assertThrows(BusinessException.class, () -> {goalSettingOfSettingState.reject(goalSettingValidator, goals);});
+		
+		// then
+		assertEquals(exceptionOfApprovalState.getMessage(), PersonGoalErrorCode.CAN_NOT_REJECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(goalSettingOfSubmitState.getGoalSettingStateCd(), GoalSettingState.REJECTION);
+		assertEquals(exceptionOfCanceltState.getMessage(), PersonGoalErrorCode.CAN_NOT_REJECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfRejectiontState.getMessage(), PersonGoalErrorCode.CAN_NOT_REJECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfSettingState.getMessage(), PersonGoalErrorCode.CAN_NOT_REJECT_BY_NOT_SUBMIT_STATE.getMessage());
+	}
+
+	@DisplayName("회수 상태 변경 테스트")
+	@Test
+	void cancelTest() {	
+		//Given
+		User approver = getApprover(2L);
+		
+		User setter = getSetter(1L);
+		
+		Long targetId = getTargetId();
+		
+		List<Goal> goals = new ArrayList<>();
+		
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.contents("내용1")
+				.goalName("목표명1")
+				.targetId(getTargetId())
+				.weight(30)
+				.evalWayCd(EvalWay.QUANT_EVAL)
+				.quantStdMax("기준1")
+				.quantStdGoal("기준2")
+				.quantStdMin("기준3")
+				.build());
+
+		goals.add(Goal.builder()
+				.companyCd(companyCd)
+				.seasonCd(seasonCd)
+				.goalName("목표명2")
+				.contents("내용2")
+				.targetId(getTargetId())
+				.weight(70)
+				.evalWayCd(EvalWay.QUALITY_EVAL)
+				.qualityStdS("기준1")
+				.qualityStdA("기준2")
+				.qualityStdB("기준3")
+				.qualityStdC("기준4")
+				.qualityStdD("기준5")
+				.build());
+		
+		GoalSetting goalSettingOfApprovalState = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
+		GoalSetting goalSettingOfSubmitState = getGoalSetting(approver, setter, targetId, GoalSettingState.SUBMIT);
+		GoalSetting goalSettingOfCancelState = getGoalSetting(approver, setter, targetId, GoalSettingState.CANCEL);
+		GoalSetting goalSettingOfRejectionState = getGoalSetting(approver, setter, targetId, GoalSettingState.REJECTION);
+		GoalSetting goalSettingOfSettingState = getGoalSetting(approver, setter, targetId, GoalSettingState.SETTING);
+		
+		// when
+		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.cancel(goalSettingValidator, goals);});
+		goalSettingOfSubmitState.cancel(goalSettingValidator, goals);
+		Throwable exceptionOfCanceltState = assertThrows(BusinessException.class, () -> {goalSettingOfCancelState.cancel(goalSettingValidator, goals);});
+		Throwable exceptionOfRejectiontState = assertThrows(BusinessException.class, () -> {goalSettingOfRejectionState.cancel(goalSettingValidator, goals);});
+		Throwable exceptionOfSettingState = assertThrows(BusinessException.class, () -> {goalSettingOfSettingState.cancel(goalSettingValidator, goals);});
+		
+		// then
+		assertEquals(exceptionOfApprovalState.getMessage(), PersonGoalErrorCode.CAN_NOT_COLLECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(goalSettingOfSubmitState.getGoalSettingStateCd(), GoalSettingState.CANCEL);
+		assertEquals(exceptionOfCanceltState.getMessage(), PersonGoalErrorCode.CAN_NOT_COLLECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfRejectiontState.getMessage(), PersonGoalErrorCode.CAN_NOT_COLLECT_BY_NOT_SUBMIT_STATE.getMessage());
+		assertEquals(exceptionOfSettingState.getMessage(), PersonGoalErrorCode.CAN_NOT_COLLECT_BY_NOT_SUBMIT_STATE.getMessage());
+	}
+
+	@DisplayName("목표 작성 테스트")
+	@Test
+	void writeGoalTest() {	
+		
+	}
+	
+	@DisplayName("배치용 수립자ID 생성 테스트")
+	@Test
+	void createBatchSetterIdsTest() {	
+		// Given
+		List<GoalSetting> goalSettingOfMembers = new ArrayList<>();
+		goalSettingOfMembers.add(getGoalSetting(getApprover(2L), getSetter(10L), getTargetId(), GoalSettingState.APPROVAL));
+		goalSettingOfMembers.add(getGoalSetting(getApprover(3L), getSetter(11L), getTargetId(), GoalSettingState.APPROVAL));
+		goalSettingOfMembers.add(getGoalSetting(getApprover(4L), getSetter(12L), getTargetId(), GoalSettingState.APPROVAL));
+		goalSettingOfMembers.add(getGoalSetting(getApprover(5L), getSetter(13L), getTargetId(), GoalSettingState.APPROVAL));
+		goalSettingOfMembers.add(getGoalSetting(getApprover(6L), getSetter(14L), getTargetId(), GoalSettingState.APPROVAL));
+		
+		// when
+		List<Long> ids = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
+	
+		// then
+		assertThat(ids).contains(10L, 11L, 12L, 13L, 14L);
+	}
+	
 	private GoalSetting getGoalSetting(User approver, User setter, Long targetId, GoalSettingState goalSettingState) {
-		GoalSetting goalSetting = GoalSetting.builder()
+		return GoalSetting.builder()
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
 				.approver(approver)
-				.goalSettingStatCd(goalSettingState)
+				.goalSettingStateCd(goalSettingState)
 				.goalType(GoalTypeCode.PERSON_GOAL)
 				.setter(setter)
 				.targetId(targetId)
 				.build();
-		return goalSetting;
 	}
 
 	private long getTargetId() {
 		return 1L;
 	}
 
-	private User getSetter() {
-		User setter = User.builder()
+	private User getSetter(Long id) {
+		return User.builder()
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
-				.id(2L)
+				.id(id)
 				.empNm("김낙영")
 				.empNo("NM11704006")
 				.isPrimaryAccount(true)
 				.isUse(true)
 				.build();
-		return setter;
 	}
 
-	private User getApprover() {
-		User approver = User.builder()
+	private User getApprover(Long id) {
+		return User.builder()
 					.companyCd(companyCd)
 					.seasonCd(seasonCd)
-					.id(getTargetId())
+					.id(id)
 					.empNm("김정배")
 					.empNo("NM11704006")
 					.isPrimaryAccount(true)
 					.isUse(true)
 					.build();
-		return approver;
-	}
-
-	@Test
-	void test() {
-		
-		GoalSettingValidator goalSettingValidator = new GoalSettingValidator();
-		
-		User approver = getApprover();
-		
-		User setter = getSetter();
-		
-		Long targetId = getTargetId();
-		
-		GoalSetting goalSetting = getGoalSetting(approver, setter, targetId, GoalSettingState.APPROVAL);
-		
-		List<Goal> goals = new ArrayList<>();
-		
-		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
-				.contents("내용1")
-				.targetId(getTargetId())
-				.weight(30)
-				.evalWayCd(EvalWay.QUANT_EVAL)
-				.build());
-
-		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
-				.contents("내용2")
-				.targetId(getTargetId())
-				.weight(70)
-				.evalWayCd(EvalWay.QUALITY_EVAL)
-				.build());
-		
-		goalSetting.submit(goalSettingValidator, goals);
 	}
 }

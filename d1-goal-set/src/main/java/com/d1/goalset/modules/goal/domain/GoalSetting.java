@@ -30,7 +30,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * aggregate root
+ * @author 김낙영
+ *
+ */
 @Entity
 @Table(name = "goal_setting")
 @Getter 
@@ -52,7 +56,7 @@ public class GoalSetting {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_setting_state_cd")
-	private GoalSettingState goalSettingStatCd;
+	private GoalSettingState goalSettingStateCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "approver_id")
@@ -71,41 +75,42 @@ public class GoalSetting {
 	private List<Goal> goals = new ArrayList<>();
 	
 	@Transient
-	private Integer sumWeight;
+	@Builder.Default
+	private Integer sumWeight = 0;
 
 	public void submit(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		calculateSumWeight(goals);
 		
 		goalSettingValidator.validateSubmit(this, goals);
 		
-		this.goalSettingStatCd = GoalSettingState.SUBMIT;
+		this.goalSettingStateCd = GoalSettingState.SUBMIT;
 	}
 
 	public void approve(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		
 		goalSettingValidator.validateApproval(this);
 		
-		this.goalSettingStatCd = GoalSettingState.APPROVAL;
+		this.goalSettingStateCd = GoalSettingState.APPROVAL;
 	}
 
 	public void reject(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		
 		goalSettingValidator.validateRejection(this);
 		
-		this.goalSettingStatCd = GoalSettingState.REJECTION;
+		this.goalSettingStateCd = GoalSettingState.REJECTION;
 	}
 
 	public void cancel(GoalSettingValidator goalSettingValidator, List<Goal> goals) {
 		
 		goalSettingValidator.validateCancel(this);
 		
-		this.goalSettingStatCd = GoalSettingState.CANCEL;
+		this.goalSettingStateCd = GoalSettingState.CANCEL;
 	}
 
 	public void writeGoal(GoalSettingValidator goalSettingValidator, User writer, Goal goal, GoalWritingRequest params) {
 		goalSettingValidator.validateCreateGoal(this, writer, params);
 
-		this.goalSettingStatCd = GoalSettingState.SETTING;
+		this.goalSettingStateCd = GoalSettingState.SETTING;
 		this.goals.add(goal);
 	}
 
@@ -120,7 +125,7 @@ public class GoalSetting {
 		
 		for(GoalSetting goal : goalSettingOfMembers) {
 			if(goal.getSetter() != null) {
-				ids.add(goal.getId());
+				ids.add(goal.getSetter().getId());
 			}
 		}
 		

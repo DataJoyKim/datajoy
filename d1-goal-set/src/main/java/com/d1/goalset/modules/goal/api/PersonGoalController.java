@@ -98,7 +98,7 @@ public class PersonGoalController {
 			@RequestParam String seasonCd,
 			@RequestParam String companyCd,
 			@RequestParam Long userId,
-			@RequestBody GoalWritingRequest body
+			@Validated @RequestBody GoalWritingRequest body
 			) {
 		personGoalService.update(seasonCd, companyCd, userId, goalId, body);
 

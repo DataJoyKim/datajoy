@@ -163,7 +163,7 @@ public class GoalDto {
 
 		public static GoalSettingResponse of(GoalSetting goalSetting) {
 			GoalSettingResponse response = GoalSettingResponse.builder()
-														.goalSettingStatCd(goalSetting.getGoalSettingStatCd())
+														.goalSettingStatCd(goalSetting.getGoalSettingStateCd())
 														.build();
 			
 			return response;

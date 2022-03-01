@@ -22,11 +22,11 @@ public class GoalSettingValidator {
 			throw new BusinessException(PersonGoalErrorCode.NULL_WRITER);
 		}
 		
-		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_WRITE_BY_APPROVAL_STATE);
 		}
 		
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_WRITE_BY_SUBMIT_STATE);
 		}
 		
@@ -36,11 +36,11 @@ public class GoalSettingValidator {
 	}
 
 	public void validateUpdateGoal(Goal goal, GoalSetting goalSetting, User setter, GoalWritingRequest params) {
-		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_UPDATE_BY_APPROVAL_STATE);
 		}
 		
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_UPDATE_BY_SUBMIT_STATE);
 		}
 
@@ -54,11 +54,11 @@ public class GoalSettingValidator {
 	}
 
 	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, User setter) {		
-		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_DELETE_BY_APPROVAL_STATE);
 		}
 		
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_DELETE_BY_SUBMIT_STATE);
 		}
 		
@@ -68,11 +68,11 @@ public class GoalSettingValidator {
 	}
 
 	public void validateSubmit(GoalSetting goalSetting, List<Goal> goals) {
-		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.APPROVAL.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_SUBMIT_BY_APPROVAL_STATE);
 		}
 		
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd())) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_SUBMIT_BY_SUBMIT_STATE);	
 		}
 		
@@ -113,19 +113,19 @@ public class GoalSettingValidator {
 	}
 
 	public void validateApproval(GoalSetting goalSetting) {
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd()) == false) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd()) == false) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_APPROVE_BY_NOT_SUBMIT_STATE);	
 		}
 	}
 
 	public void validateRejection(GoalSetting goalSetting) {
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd()) == false) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd()) == false) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_REJECT_BY_NOT_SUBMIT_STATE);	
 		}
 	}
 
 	public void validateCancel(GoalSetting goalSetting) {
-		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStatCd()) == false) {
+		if(GoalSettingState.SUBMIT.equals(goalSetting.getGoalSettingStateCd()) == false) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_COLLECT_BY_NOT_SUBMIT_STATE);	
 		}
 	}

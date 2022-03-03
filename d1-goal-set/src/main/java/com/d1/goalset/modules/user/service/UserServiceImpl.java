@@ -19,4 +19,10 @@ public class UserServiceImpl implements UserService {
 	public User findUser(Long userId) {
 		return userRepository.findById(userId).orElseThrow(() -> new BusinessException(UserErrorCode.NULL_GOAL_SETTER)); 
 	}
+
+	@Override
+	public User findApprover(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

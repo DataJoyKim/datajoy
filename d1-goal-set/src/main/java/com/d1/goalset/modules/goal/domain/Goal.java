@@ -44,15 +44,6 @@ public class Goal {
 	
 	@Column(name = "goal_name")
 	private String goalName;
-
-	@Column(name = "season_cd")
-	private String seasonCd;
-	
-	@Column(name = "company_cd")
-	private String companyCd;
-
-	@Column(name = "target_id")
-	private Long targetId;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_type")
@@ -114,9 +105,6 @@ public class Goal {
 		
 		Goal goal = Goal.builder()
 						.goalName(params.getGoalName())
-						.seasonCd(setter.getSeasonCd())
-						.companyCd(setter.getCompanyCd())
-						.targetId(goalType.getTargetId(setter))
 						.goalType(goalType.getGoalTypeCode())
 						.weight(params.getWeight())
 						.goalWritingStateCd(GoalWritingState.SAVE)

@@ -1,6 +1,7 @@
 package com.d1.goalset.modules.goal.service.query;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
+import com.d1.goalset.modules.user.domain.Org;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.service.UserService;
 
@@ -32,7 +34,10 @@ public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 	public GoalResponse findGoalBy(String seasonCd, String companyCd, Long setterId, Long goalId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
+		Org org = Optional.of(setter.getOrg())
+						.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_OWN_ORG));
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
@@ -45,7 +50,10 @@ public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 	public List<GoalResponse> findGoalBy(String seasonCd, String companyCd, Long setterId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
+		Org org = Optional.of(setter.getOrg())
+						.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_OWN_ORG));
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
 		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
@@ -57,8 +65,11 @@ public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 	public GoalSettingResponse findGoalSettingBy(String seasonCd, String companyCd, Long setterId) {
 		User setter = userService.findUser(setterId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndSetterAndGoalType(seasonCd, companyCd, setter, GoalTypeCode.ORG_GOAL)
-																.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
+		Org org = Optional.of(setter.getOrg())
+						.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_OWN_ORG));
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
+														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		return GoalSettingResponse.of(goalSetting);
 	}
 

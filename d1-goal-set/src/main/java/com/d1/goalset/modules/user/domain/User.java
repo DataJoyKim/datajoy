@@ -38,6 +38,9 @@ public class User {
 	
 	@Column(name = "primary_account_flag")
 	private Boolean isPrimaryAccount;
+
+	@Column(name = "leader_flag")
+	private Boolean isLeader;
 	
 	@Column(name = "duty_cd")
 	private String dutyCd;

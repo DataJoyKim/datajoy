@@ -17,36 +17,44 @@ public class OrgGoalController {
 
 	@GetMapping("/")
 	public EntityResponse<?> getOrgGoals() {
+		//접속자가 조직장인지 체크
+		
 		return null;
 	}
 	
 	@GetMapping("/{goalCd}")
 	public EntityResponse<?> getOrgGoalsBy() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 	
 	@PostMapping("/")
 	public EntityResponse<?> postOrgGoals() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 	
 	@PutMapping("/{goalCd}")
 	public EntityResponse<?> putOrgGoalsBy() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 	
 	@DeleteMapping("/{goalCd}")
 	public EntityResponse<?> deleteOrgGoalsBy() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 	
 	@PutMapping("/cancel")
 	public EntityResponse<?> cancelOrgGoals() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 	
 	@PutMapping("/submit")
 	public EntityResponse<?> submitOrgGoals() {
+		//접속자가 조직장인지 체크
 		return null;
 	}
 }

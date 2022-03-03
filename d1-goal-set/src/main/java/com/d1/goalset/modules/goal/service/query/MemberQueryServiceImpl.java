@@ -34,25 +34,14 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	public List<UserResponse> findMembers(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode) {
 		User approver = userService.findUser(approverId);
 		
-		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApprover(seasonCd, companyCd, approver);
-		
-		List<Long> batchSetterIds = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
-		
-		return userQueryService.findUsers(seasonCd, companyCd, batchSetterIds);
+		return userQueryService.findMembers(seasonCd, companyCd, approver);
 	}
 
 	@Override
 	public UserResponse findMember(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode, Long memberId) {
 		User approver = userService.findUser(approverId);
-		
-		User member = userService.findUser(memberId);
-		
-		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
-		if(goalSettingOfMembers.size() <= 0) {
-			throw new BusinessException(MemberErrorCode.FAULT_APPROVER);
-		}
-		
-		return UserResponse.of(member);
+
+		return userQueryService.findMember(seasonCd, companyCd, approver, memberId);
 	}
 
 	@Override

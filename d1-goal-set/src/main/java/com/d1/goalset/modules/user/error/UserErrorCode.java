@@ -4,6 +4,7 @@ import com.d1.goalset.common.exception.BusinessErrorCode;
 
 public enum UserErrorCode implements BusinessErrorCode { 
 	NULL_GOAL_SETTER(404, "R001","목표수립자가 존재하지 않습니다."), 
+	NOT_FOUND_OWN_ORG(404, "R002","사용자의 조직이 존재하지 않습니다."),
 	;
 
 	private final String errorKind = "User";

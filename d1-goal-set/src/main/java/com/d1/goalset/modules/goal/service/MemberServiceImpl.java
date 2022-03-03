@@ -33,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		User member = userService.findUser(memberId);
 		
+		// 내 조직의 조직원
 		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
 		if(goalSettingOfMembers.size() <= 0) {
 			throw new BusinessException(MemberErrorCode.FAULT_APPROVER);

@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -56,14 +55,6 @@ public class GoalSetting {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "goal_setting_state_cd")
 	private GoalSettingState goalSettingStateCd;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "approver_id")
-	private User approver;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "setter_id")
-	private User setter;
 
 	@Column(name = "target_id")
 	private Long targetId;
@@ -117,17 +108,5 @@ public class GoalSetting {
 		for(Goal goal : goals) {
 			this.sumWeight += goal.getWeight();
 		}
-	}
-
-	public static List<Long> createBatchSetterIds(List<GoalSetting> goalSettingOfMembers) {
-		List<Long> ids = new ArrayList<>();
-		
-		for(GoalSetting goal : goalSettingOfMembers) {
-			if(goal.getSetter() != null) {
-				ids.add(goal.getSetter().getId());
-			}
-		}
-		
-		return ids;
 	}
 }

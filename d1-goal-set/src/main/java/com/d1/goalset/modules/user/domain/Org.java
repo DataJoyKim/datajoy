@@ -22,4 +22,7 @@ public class Org {
 	
 	@Column(name = "org_nm")
 	private String orgNm;
+	
+	@Column(name = "parent_org_id")
+	private Long parentOrgId;
 }

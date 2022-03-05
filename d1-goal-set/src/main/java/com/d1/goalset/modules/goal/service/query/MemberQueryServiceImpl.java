@@ -16,7 +16,6 @@ import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 import com.d1.goalset.modules.user.service.UserService;
-import com.d1.goalset.modules.user.service.query.UserQueryService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,21 +26,20 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	
 	private final GoalRepository goalRepository;
 	private final GoalSettingRepository goalSettingRepository;
-	private final UserQueryService userQueryService;
 	private final UserService userService;
 	
 	@Override
 	public List<UserResponse> findMembers(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode) {
 		User approver = userService.findUser(approverId);
 		
-		return userQueryService.findMembers(seasonCd, companyCd, approver);
+		return UserResponse.of(userService.findMembers(seasonCd, companyCd, approver));
 	}
 
 	@Override
 	public UserResponse findMember(String seasonCd, String companyCd, Long approverId, GoalTypeCode goalTypeCode, Long memberId) {
 		User approver = userService.findUser(approverId);
 
-		return userQueryService.findMember(seasonCd, companyCd, approver, memberId);
+		return UserResponse.of(userService.findMember(seasonCd, companyCd, approver, memberId));
 	}
 
 	@Override

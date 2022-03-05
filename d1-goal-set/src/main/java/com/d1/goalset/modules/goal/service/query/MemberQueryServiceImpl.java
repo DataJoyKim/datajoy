@@ -46,14 +46,12 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	public List<GoalResponse> findMembersGoals(String seasonCd, String companyCd, Long approverId, Long memberId) {
 		User approver = userService.findUser(approverId);
 		
-		User member = userService.findUser(memberId);
+		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
-		if(goalSettingOfMembers.size() <= 0) {
-			throw new BusinessException(MemberErrorCode.FAULT_APPROVER);
-		}
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
-		GoalSetting goalSetting = goalSettingOfMembers.get(0);
+		//TODO 조직목표 데이터 add All 필요
 		
 		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
 		
@@ -63,15 +61,11 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	@Override
 	public GoalResponse findMembersGoal(String seasonCd, String companyCd, Long approverId, Long memberId, Long goalId) {
 		User approver = userService.findUser(approverId);
+
+		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		User member = userService.findUser(memberId);
-		
-		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
-		if(goalSettingOfMembers.size() <= 0) {
-			throw new BusinessException(MemberErrorCode.FAULT_APPROVER);
-		}
-		
-		GoalSetting goalSetting = goalSettingOfMembers.get(0);
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
 		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
 									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));

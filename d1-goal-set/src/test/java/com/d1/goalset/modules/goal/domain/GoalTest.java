@@ -143,11 +143,8 @@ class GoalTest {
 		return Goal.builder()
 				.id(1L)
 				.goalWritingStateCd(state)
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(weight)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -160,10 +157,8 @@ class GoalTest {
 		return GoalSetting.builder()
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
-				.approver(approver)
 				.goalSettingStateCd(goalSettingState)
 				.goalType(GoalTypeCode.PERSON_GOAL)
-				.setter(setter)
 				.targetId(targetId)
 				.build();
 	}

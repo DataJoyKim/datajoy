@@ -8,6 +8,7 @@ import com.d1.goalset.modules.user.domain.Org;
 
 public interface OrgRepository extends JpaRepository<Org, Long> {
 
-	List<Org> findBySeasonCdAndCompanyCdAndParentOrgId(String seasonCd, String companyCd, Long id);
+	List<Org> findByParentOrgId(Long id);
+
 
 }

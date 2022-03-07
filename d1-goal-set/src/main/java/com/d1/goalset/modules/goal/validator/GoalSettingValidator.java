@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.d1.goalset.common.exception.BusinessException;
 import com.d1.goalset.modules.goal.code.EvalWay;
 import com.d1.goalset.modules.goal.code.GoalSettingState;
-import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.code.GoalWritingState;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
@@ -34,12 +33,6 @@ public class GoalSettingValidator {
 		if(goal.getWeight() <= 0 || goal.getWeight() > 100) {
 			throw new BusinessException(PersonGoalErrorCode.NOT_RANGE_WEIGHT);
 		}
-		
-		if(GoalTypeCode.PERSON_GOAL.equals(goalSetting.getGoalType())) {
-			if(goal.getTargetId().equals(writer.getId()) == false) {
-				throw new BusinessException(PersonGoalErrorCode.CAN_NOT_WRITE_BY_DIFFRENT_TARGET_AND_WRITER);
-			}
-		}
 	}
 
 	public void validateUpdateGoal(Goal goal, GoalSetting goalSetting, User setter, GoalWritingRequest params) {
@@ -58,12 +51,6 @@ public class GoalSettingValidator {
 		if(params.getWeight() <= 0 || params.getWeight() > 100) {
 			throw new BusinessException(PersonGoalErrorCode.NOT_RANGE_WEIGHT);
 		}
-		
-		if(GoalTypeCode.PERSON_GOAL.equals(goalSetting.getGoalType())) {
-			if(goal.getTargetId().equals(setter.getId()) == false) {
-				throw new BusinessException(PersonGoalErrorCode.CAN_NOT_UPDATE_BY_DIFFRENT_TARGET_AND_WRITER);
-			}
-		}
 	}
 
 	public void validateDeleteGoal(Goal goal, GoalSetting goalSetting, User setter) {		
@@ -77,12 +64,6 @@ public class GoalSettingValidator {
 		
 		if(GoalWritingState.DELETE.equals(goal.getGoalWritingStateCd())) {
 			throw new BusinessException(PersonGoalErrorCode.CAN_NOT_DELETE_BY_DELETE_STATE);
-		}
-		
-		if(GoalTypeCode.PERSON_GOAL.equals(goalSetting.getGoalType())) {
-			if(goal.getTargetId().equals(setter.getId()) == false) {
-				throw new BusinessException(PersonGoalErrorCode.CAN_NOT_DELETE_BY_DIFFRENT_TARGET_AND_WRITER);
-			}
 		}
 	}
 

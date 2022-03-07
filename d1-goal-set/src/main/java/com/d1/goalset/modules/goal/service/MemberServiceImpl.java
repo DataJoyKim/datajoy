@@ -31,17 +31,12 @@ public class MemberServiceImpl implements MemberService {
 	public void approve(String seasonCd, String companyCd, Long approverId, Long memberId) {
 		User approver = userService.findUser(approverId);
 		
-		User member = userService.findUser(memberId);
+		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		// 내 조직의 조직원
-		List<GoalSetting> goalSettingOfMembers = goalSettingRepository.findBySeasonCdAndCompanyCdAndApproverAndSetter(seasonCd, companyCd, approver, member);
-		if(goalSettingOfMembers.size() <= 0) {
-			throw new BusinessException(MemberErrorCode.FAULT_APPROVER);
-		}
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
-		GoalSetting goalSetting = goalSettingOfMembers.get(0);
-		
-		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
 		
 		goalSetting.approve(goalSettingValidator, goals);
 	}

@@ -42,6 +42,9 @@ public class Goal {
 	@Column(name = "goal_id")
 	private Long id;
 	
+	@Column(name = "goal_setting_id")
+	private Long goalSettingId;
+	
 	@Column(name = "goal_name")
 	private String goalName;
 	

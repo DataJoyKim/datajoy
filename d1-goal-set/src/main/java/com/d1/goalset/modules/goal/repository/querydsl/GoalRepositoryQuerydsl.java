@@ -7,7 +7,7 @@ import com.d1.goalset.modules.goal.domain.Goal;
 
 public interface GoalRepositoryQuerydsl {
 
-	Optional<Goal> findGoalBy(String seasonCd, String companyCd, Long targetId, Long goalId);
+	Optional<Goal> findGoalBy(Long goalSettingId, Long goalId);
 
-	List<Goal> findGoalBy(String seasonCd, String companyCd, Long targetId);
+	List<Goal> findGoalBy(Long goalSettingId);
 }

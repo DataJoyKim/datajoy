@@ -40,7 +40,7 @@ public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
+		Goal goal = goalRepository.findGoalBy(goalSetting.getId(), goalId)
 								.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL));
 		
 		return GoalResponse.of(goal);
@@ -56,7 +56,7 @@ public class OrgGoalQueryServiceImpl implements OrgGoalQueryService {
 		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
 		
 		return GoalResponse.of(goals);
 	}

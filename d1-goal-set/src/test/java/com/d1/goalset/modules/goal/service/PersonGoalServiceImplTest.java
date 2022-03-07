@@ -54,7 +54,6 @@ class PersonGoalServiceImplTest {
 		
 		GoalSetting goalSetting = GoalSetting.builder()
 				.goalSettingStateCd(GoalSettingState.SETTING)
-				.setter(setter)
 				.seasonCd(seasonCd)
 				.companyCd(companyCd)
 				.goalType(GoalTypeCode.PERSON_GOAL)

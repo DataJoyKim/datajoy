@@ -39,11 +39,8 @@ class GoalSettingTest {
 		List<Goal> goals = new ArrayList<>();
 		
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -52,11 +49,8 @@ class GoalSettingTest {
 				.build());
 
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.goalName("목표명2")
 				.contents("내용2")
-				.targetId(getTargetId())
 				.weight(70)
 				.evalWayCd(EvalWay.QUALITY_EVAL)
 				.qualityStdS("기준1")
@@ -100,11 +94,8 @@ class GoalSettingTest {
 		List<Goal> goals = new ArrayList<>();
 		
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -113,11 +104,8 @@ class GoalSettingTest {
 				.build());
 
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.goalName("목표명2")
 				.contents("내용2")
-				.targetId(getTargetId())
 				.weight(70)
 				.evalWayCd(EvalWay.QUALITY_EVAL)
 				.qualityStdS("기준1")
@@ -161,11 +149,8 @@ class GoalSettingTest {
 		List<Goal> goals = new ArrayList<>();
 		
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -174,11 +159,8 @@ class GoalSettingTest {
 				.build());
 
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.goalName("목표명2")
 				.contents("내용2")
-				.targetId(getTargetId())
 				.weight(70)
 				.evalWayCd(EvalWay.QUALITY_EVAL)
 				.qualityStdS("기준1")
@@ -222,11 +204,8 @@ class GoalSettingTest {
 		List<Goal> goals = new ArrayList<>();
 		
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -235,11 +214,8 @@ class GoalSettingTest {
 				.build());
 
 		goals.add(Goal.builder()
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.goalName("목표명2")
 				.contents("내용2")
-				.targetId(getTargetId())
 				.weight(70)
 				.evalWayCd(EvalWay.QUALITY_EVAL)
 				.qualityStdS("기준1")
@@ -282,11 +258,8 @@ class GoalSettingTest {
 		
 		Goal goal = Goal.builder()
 				.id(1L)
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(30)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -296,11 +269,8 @@ class GoalSettingTest {
 		
 		Goal goalWeightMaxException = Goal.builder()
 				.id(2L)
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(101)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -310,11 +280,8 @@ class GoalSettingTest {
 		
 		Goal goalWeightMinException = Goal.builder()
 				.id(3L)
-				.companyCd(companyCd)
-				.seasonCd(seasonCd)
 				.contents("내용1")
 				.goalName("목표명1")
-				.targetId(getTargetId())
 				.weight(0)
 				.evalWayCd(EvalWay.QUANT_EVAL)
 				.quantStdMax("기준1")
@@ -352,32 +319,12 @@ class GoalSettingTest {
 		assertEquals(goalSettingOfSettingState.getGoals().get(0).getGoalWritingStateCd(), GoalWritingState.SAVE);
 	}
 	
-	@DisplayName("배치용 수립자ID 생성 테스트")
-	@Test
-	void createBatchSetterIdsTest() {	
-		// Given
-		List<GoalSetting> goalSettingOfMembers = new ArrayList<>();
-		goalSettingOfMembers.add(getGoalSetting(getApprover(2L), getSetter(10L), getTargetId(), GoalSettingState.APPROVAL));
-		goalSettingOfMembers.add(getGoalSetting(getApprover(3L), getSetter(11L), getTargetId(), GoalSettingState.APPROVAL));
-		goalSettingOfMembers.add(getGoalSetting(getApprover(4L), getSetter(12L), getTargetId(), GoalSettingState.APPROVAL));
-		goalSettingOfMembers.add(getGoalSetting(getApprover(5L), getSetter(13L), getTargetId(), GoalSettingState.APPROVAL));
-		goalSettingOfMembers.add(getGoalSetting(getApprover(6L), getSetter(14L), getTargetId(), GoalSettingState.APPROVAL));
-		
-		// when
-		List<Long> ids = GoalSetting.createBatchSetterIds(goalSettingOfMembers);
-	
-		// then
-		assertThat(ids).contains(10L, 11L, 12L, 13L, 14L);
-	}
-	
 	private GoalSetting getGoalSetting(User approver, User setter, Long targetId, GoalSettingState goalSettingState) {
 		return GoalSetting.builder()
 				.companyCd(companyCd)
 				.seasonCd(seasonCd)
-				.approver(approver)
 				.goalSettingStateCd(goalSettingState)
 				.goalType(GoalTypeCode.PERSON_GOAL)
-				.setter(setter)
 				.targetId(targetId)
 				.build();
 	}

@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
 							.orElseThrow(() -> new BusinessException(UserErrorCode.NOT_FOUND_OWN_ORG));
 
 		List<User> members = new ArrayList<>(); 
-		
-		List<Org> lowerOrgs = orgRepository.findBySeasonCdAndCompanyCdAndParentOrgId(seasonCd, companyCd, org.getId());
+
+		List<Org> lowerOrgs = orgRepository.findByParentOrgId(org.getId());
 		if(hasLowerOrg(lowerOrgs)) {
 			List<User> lowerOrgLeaders = userRepository.findBySeasonCdAndCompanyCdAndOrgInAndIsLeader(seasonCd, companyCd, lowerOrgs, true);
 			
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 
 		List<User> members = new ArrayList<>(); 
 
-		List<Org> lowerOrgs = orgRepository.findBySeasonCdAndCompanyCdAndParentOrgId(seasonCd, companyCd, org.getId());
+		List<Org> lowerOrgs = orgRepository.findByParentOrgId(org.getId());
 		if(hasLowerOrg(lowerOrgs)) {
 			
 			List<User> lowerOrgLeaders = userRepository.findBySeasonCdAndCompanyCdAndOrgInAndIsLeaderAndId(seasonCd, companyCd, lowerOrgs, true, memberId);

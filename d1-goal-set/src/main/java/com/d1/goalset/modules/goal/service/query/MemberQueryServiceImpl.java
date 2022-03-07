@@ -37,7 +37,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		
 		//TODO 조직목표 데이터 add All 필요
 		
-		List<Goal> goals = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId());
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
 		
 		return GoalResponse.of(goals);
 	}
@@ -51,7 +51,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
 														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
-		Goal goal = goalRepository.findGoalBy(seasonCd, companyCd, goalSetting.getTargetId(), goalId)
+		Goal goal = goalRepository.findGoalBy(goalSetting.getId(), goalId)
 									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
 		 
 		return GoalResponse.of(goal);

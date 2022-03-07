@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.api.resource.GoalResource;
-import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
 import com.d1.goalset.modules.goal.service.MemberService;
 import com.d1.goalset.modules.goal.service.query.MemberQueryService;
-import com.d1.goalset.modules.user.dto.UserDto.UserResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,37 +27,6 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final MemberQueryService memberQueryService;
-	
-	@GetMapping("")
-	public ResponseEntity<?> getMembers(
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId,
-			@RequestParam(required = false) GoalTypeCode goalTypeCode
-			) {
-		List<UserResponse> members = memberQueryService.findMembers(seasonCd, companyCd, userId, goalTypeCode);
-		
-		GoalResource resource = new GoalResource(members);
-		resource.add(WebMvcLinkBuilder.linkTo(MemberController.class).withSelfRel());
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
-	}
-	
-	@GetMapping("/{memberId}")
-	public ResponseEntity<?> getMember(
-			@PathVariable Long memberId,
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId,
-			@RequestParam GoalTypeCode goalTypeCode
-			) {
-		UserResponse member = memberQueryService.findMember(seasonCd, companyCd, userId, goalTypeCode, memberId);
-		
-		GoalResource resource = new GoalResource(member);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
-	}
 	
 	@GetMapping("/person-goals/status")
 	public ResponseEntity<?> getMemberPersonGoalStatus(

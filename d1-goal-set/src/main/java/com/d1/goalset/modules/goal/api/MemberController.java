@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.goalset.modules.goal.api.resource.GoalResource;
 import com.d1.goalset.modules.goal.dto.GoalDto.GoalResponse;
+import com.d1.goalset.modules.goal.dto.MemberDto.MemberStatusResponse;
 import com.d1.goalset.modules.goal.service.MemberService;
 import com.d1.goalset.modules.goal.service.query.MemberQueryService;
 
@@ -35,9 +36,9 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, userId, memberId);
+		List<MemberStatusResponse> response = memberQueryService.findMembersPersonGoalsStatus(seasonCd, companyCd, userId);
 		
-		GoalResource resource = new GoalResource(goals);
+		GoalResource resource = new GoalResource(response);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
@@ -50,9 +51,9 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, userId, memberId);
+		List<MemberStatusResponse> response = memberQueryService.findMembersOrgGoalsStatus(seasonCd, companyCd, userId);
 		
-		GoalResource resource = new GoalResource(goals);
+		GoalResource resource = new GoalResource(response);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);

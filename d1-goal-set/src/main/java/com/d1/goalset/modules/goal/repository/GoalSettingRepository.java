@@ -1,5 +1,6 @@
 package com.d1.goalset.modules.goal.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,8 @@ public interface GoalSettingRepository extends JpaRepository<GoalSetting, Long>,
 
 	Optional<GoalSetting> findBySeasonCdAndCompanyCdAndTargetId(String seasonCd, String companyCd, Long targetId);
 
-	Optional<GoalSetting> findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(String seasonCd, String companyCd, Long targetId, GoalTypeCode personGoal);
+	Optional<GoalSetting> findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(String seasonCd, String companyCd, Long targetId, GoalTypeCode goalType);
+
+	List<GoalSetting> findBySeasonCdAndCompanyCdAndTargetIdInAndGoalType(String seasonCd, String companyCd, List<Long> createBatchIds, GoalTypeCode personGoal);
 
 }

@@ -1,7 +1,9 @@
 package com.d1.goalset.modules.goal.domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -108,5 +110,13 @@ public class GoalSetting {
 		for(Goal goal : goals) {
 			this.sumWeight += goal.getWeight();
 		}
+	}
+
+	public static Map<Long, GoalSetting> createGoalSettingMap(List<GoalSetting> goalSettings) {
+		Map<Long, GoalSetting> map = new HashMap<>();
+		for(GoalSetting goalSetting : goalSettings) {
+			map.put(goalSetting.getId(), goalSetting);
+		}
+		return map;
 	}
 }

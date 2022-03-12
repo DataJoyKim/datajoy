@@ -81,8 +81,6 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, userId, memberId);
-		
 		GoalResource resource = new GoalResource(goals);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
@@ -113,8 +111,6 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		GoalResponse goal = memberQueryService.findMembersGoal(seasonCd, companyCd, userId, memberId, goalId);
-		
 		GoalResource resource = new GoalResource(goal);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		

@@ -82,7 +82,7 @@ public class OrgGoalServiceImpl implements OrgGoalService {
 		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, org.getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		Goal goal = goalRepository.findByTargetIdAndId(goalSetting.getTargetId(), goalId).get();
+		Goal goal = goalRepository.findByGoalSettingIdAndId(goalSetting.getId(), goalId).get();
 		
 		goal.delete(goalSettingValidator, goalSetting, setter);
 	}

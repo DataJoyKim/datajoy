@@ -21,45 +21,16 @@ import com.d1.goalset.modules.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @Transactional(readOnly = true)
-@Service("MemberQueryService")
+@Service("MemberOrgGoalQueryService")
 @RequiredArgsConstructor
-public class MemberQueryServiceImpl implements MemberQueryService {
+public class MemberOrgGoalQueryServiceImpl implements MemberOrgGoalQueryService {
 	
 	private final GoalRepository goalRepository;
 	private final GoalSettingRepository goalSettingRepository;
 	private final UserService userService;
  
 	@Override
-	public List<GoalResponse> findMembersPersonGoals(String seasonCd, String companyCd, Long userId, Long memberId) {
-		User approver = userService.findUser(userId);
-		
-		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
-		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getId(), GoalTypeCode.PERSON_GOAL)
-														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
-		
-		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
-		
-		return GoalResponse.of(goals);
-	}
-
-	@Override
-	public GoalResponse findMembersPersonGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
-		User approver = userService.findUser(userId);
-
-		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
-		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getId(), GoalTypeCode.PERSON_GOAL)
-														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
-		
-		Goal goal = goalRepository.findGoalBy(goalSetting.getId(), goalId)
-									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
-		 
-		return GoalResponse.of(goal);
-	}
-
-	@Override
-	public List<GoalResponse> findMembersOrgGoals(String seasonCd, String companyCd, Long userId, Long memberId) {
+	public List<GoalResponse> findMembersGoals(String seasonCd, String companyCd, Long userId, Long memberId) {
 		User approver = userService.findUser(userId);
 		
 		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
@@ -73,7 +44,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	}
 
 	@Override
-	public GoalResponse findMembersOrgGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
+	public GoalResponse findMembersGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
 		User approver = userService.findUser(userId);
 
 		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
@@ -88,18 +59,7 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	}
 
 	@Override
-	public List<MemberStatusResponse> findMembersPersonGoalsStatus(String seasonCd, String companyCd, Long userId) {
-		User approver = userService.findUser(userId);
-		
-		List<User> members = userService.findMembers(seasonCd, companyCd, approver);
-		
-		List<GoalSetting> goalSettings = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdInAndGoalType(seasonCd, companyCd, User.createBatchIds(members), GoalTypeCode.PERSON_GOAL);
-		 
-		return MemberStatusResponse.of(members, goalSettings);
-	}
-
-	@Override
-	public List<MemberStatusResponse> findMembersOrgGoalsStatus(String seasonCd, String companyCd, Long userId) {
+	public List<MemberStatusResponse> findMembersGoalsStatus(String seasonCd, String companyCd, Long userId) {
 		User approver = userService.findUser(userId);
 		
 		List<User> members = userService.findMembers(seasonCd, companyCd, approver);

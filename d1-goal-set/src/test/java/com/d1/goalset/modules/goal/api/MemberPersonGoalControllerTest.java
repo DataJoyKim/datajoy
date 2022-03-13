@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class MemberControllerTest extends BaseTest {
+class MemberPersonGoalControllerTest extends BaseTest {
 
 	@DisplayName("조직원 조회")
 	@Test

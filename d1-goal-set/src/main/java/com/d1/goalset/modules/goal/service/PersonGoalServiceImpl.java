@@ -70,7 +70,7 @@ public class PersonGoalServiceImpl implements PersonGoalService {
 		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, setter.getId(), GoalTypeCode.PERSON_GOAL)
 														.orElseThrow(() -> new BusinessException(PersonGoalErrorCode.NOT_FOUND_GOAL_SETTING));
 		
-		Goal goal = goalRepository.findByTargetIdAndId(goalSetting.getTargetId(), goalId).get();
+		Goal goal = goalRepository.findByGoalSettingIdAndId(goalSetting.getId(), goalId).get();
 		
 		goal.delete(goalSettingValidator, goalSetting, setter);
 	}

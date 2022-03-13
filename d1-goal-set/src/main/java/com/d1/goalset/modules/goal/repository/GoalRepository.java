@@ -9,6 +9,6 @@ import com.d1.goalset.modules.goal.repository.querydsl.GoalRepositoryQuerydsl;
 
 public interface GoalRepository extends JpaRepository<Goal, Long>, GoalRepositoryQuerydsl {
 
-	Optional<Goal> findByTargetIdAndId(Long targetId, Long goalId);
+	Optional<Goal> findByGoalSettingIdAndId(Long id, Long goalId);
 	
 }

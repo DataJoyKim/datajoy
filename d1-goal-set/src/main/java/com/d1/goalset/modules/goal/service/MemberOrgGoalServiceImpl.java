@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.d1.goalset.common.exception.BusinessException;
+import com.d1.goalset.modules.goal.code.GoalTypeCode;
 import com.d1.goalset.modules.goal.domain.Goal;
 import com.d1.goalset.modules.goal.domain.GoalSetting;
 import com.d1.goalset.modules.goal.error.MemberErrorCode;
@@ -17,23 +18,23 @@ import com.d1.goalset.modules.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
-@Service("MemberService")
+@Service("MemberOrgGoalService")
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService {
+public class MemberOrgGoalServiceImpl implements MemberOrgGoalService {
 	
 	private final GoalSettingRepository goalSettingRepository;
 	private final GoalRepository goalRepository;
 	private final GoalSettingValidator goalSettingValidator;
 	private final UserService userService;
-	
+
 	@Transactional
 	@Override
-	public void approve(String seasonCd, String companyCd, Long approverId, Long memberId) {
-		User approver = userService.findUser(approverId);
+	public void approve(String seasonCd, String companyCd, Long userId, Long memberId) {
+		User approver = userService.findUser(userId);
 		
 		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getOrg().getId(), GoalTypeCode.ORG_GOAL)
 														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
 		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());

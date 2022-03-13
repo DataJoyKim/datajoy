@@ -44,21 +44,6 @@ public class MemberController {
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
-	@GetMapping("/org-goals/status")
-	public ResponseEntity<?> getMemberOrgGoalStatus(
-			@PathVariable Long memberId,
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId
-			) {
-		List<MemberStatusResponse> response = memberQueryService.findMembersOrgGoalsStatus(seasonCd, companyCd, userId);
-		
-		GoalResource resource = new GoalResource(response);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
-	}
-	
 	@GetMapping("/{memberId}/person-goals")
 	public ResponseEntity<?> getMemberPersonGoals(
 			@PathVariable Long memberId,
@@ -66,21 +51,8 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		List<GoalResponse> goals = memberQueryService.findMembersGoals(seasonCd, companyCd, userId, memberId);
+		List<GoalResponse> goals = memberQueryService.findMembersPersonGoals(seasonCd, companyCd, userId, memberId);
 		
-		GoalResource resource = new GoalResource(goals);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
-	}
-	
-	@GetMapping("/{memberId}/org-goals")
-	public ResponseEntity<?> getMemberOrgGoals(
-			@PathVariable Long memberId,
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId
-			) {
 		GoalResource resource = new GoalResource(goals);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
@@ -95,22 +67,8 @@ public class MemberController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		GoalResponse goal = memberQueryService.findMembersGoal(seasonCd, companyCd, userId, memberId, goalId);
+		GoalResponse goal = memberQueryService.findMembersPersonGoal(seasonCd, companyCd, userId, memberId, goalId);
 		
-		GoalResource resource = new GoalResource(goal);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
-	}
-
-	@GetMapping("/{memberId}/org-goals/{goalId}")
-	public ResponseEntity<?> getMemberOrgGoal(
-			@PathVariable Long memberId,
-			@PathVariable Long goalId,
-			@RequestParam String seasonCd,
-			@RequestParam String companyCd,
-			@RequestParam Long userId
-			) {
 		GoalResource resource = new GoalResource(goal);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 		
@@ -130,6 +88,52 @@ public class MemberController {
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
 
 		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
+	}
+	
+	@GetMapping("/org-goals/status")
+	public ResponseEntity<?> getMemberOrgGoalStatus(
+			@PathVariable Long memberId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		List<MemberStatusResponse> response = memberQueryService.findMembersOrgGoalsStatus(seasonCd, companyCd, userId);
+		
+		GoalResource resource = new GoalResource(response);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{memberId}/org-goals")
+	public ResponseEntity<?> getMemberOrgGoals(
+			@PathVariable Long memberId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		List<GoalResponse> goals = memberQueryService.findMembersOrgGoals(seasonCd, companyCd, userId, memberId);
+		
+		GoalResource resource = new GoalResource(goals);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
+	}
+
+	@GetMapping("/{memberId}/org-goals/{goalId}")
+	public ResponseEntity<?> getMemberOrgGoal(
+			@PathVariable Long memberId,
+			@PathVariable Long goalId,
+			@RequestParam String seasonCd,
+			@RequestParam String companyCd,
+			@RequestParam Long userId
+			) {
+		GoalResponse goal = memberQueryService.findMembersOrgGoal(seasonCd, companyCd, userId, memberId, goalId);
+		
+		GoalResource resource = new GoalResource(goal);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		
+		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{memberId}/org-goals/approval")

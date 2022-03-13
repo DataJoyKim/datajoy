@@ -30,34 +30,44 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	private final UserService userService;
  
 	@Override
-	public List<GoalResponse> findMembersGoals(String seasonCd, String companyCd, Long approverId, Long memberId) {
-		User approver = userService.findUser(approverId);
+	public List<GoalResponse> findMembersPersonGoals(String seasonCd, String companyCd, Long userId, Long memberId) {
+		User approver = userService.findUser(userId);
 		
 		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getId(), GoalTypeCode.PERSON_GOAL)
 														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
-		
-		//TODO 조직목표 데이터 add All 필요
 		
 		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
 		
 		return GoalResponse.of(goals);
 	}
- 
+
 	@Override
-	public GoalResponse findMembersGoal(String seasonCd, String companyCd, Long approverId, Long memberId, Long goalId) {
-		User approver = userService.findUser(approverId);
+	public GoalResponse findMembersPersonGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
+		User approver = userService.findUser(userId);
 
 		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
 		
-		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetId(seasonCd, companyCd, member.getId())
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getId(), GoalTypeCode.PERSON_GOAL)
 														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
 		
 		Goal goal = goalRepository.findGoalBy(goalSetting.getId(), goalId)
 									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
 		 
 		return GoalResponse.of(goal);
+	}
+
+	@Override
+	public List<GoalResponse> findMembersOrgGoals(String seasonCd, String companyCd, Long approverId, Long memberId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public GoalResponse findMembersOrgGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

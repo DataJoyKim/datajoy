@@ -59,15 +59,32 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 	}
 
 	@Override
-	public List<GoalResponse> findMembersOrgGoals(String seasonCd, String companyCd, Long approverId, Long memberId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<GoalResponse> findMembersOrgGoals(String seasonCd, String companyCd, Long userId, Long memberId) {
+		User approver = userService.findUser(userId);
+		
+		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getOrg().getId(), GoalTypeCode.ORG_GOAL)
+														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
+		
+		List<Goal> goals = goalRepository.findGoalBy(goalSetting.getId());
+		
+		return GoalResponse.of(goals);
 	}
 
 	@Override
 	public GoalResponse findMembersOrgGoal(String seasonCd, String companyCd, Long userId, Long memberId, Long goalId) {
-		// TODO Auto-generated method stub
-		return null;
+		User approver = userService.findUser(userId);
+
+		User member = userService.findMember(seasonCd, companyCd, approver, memberId);
+		
+		GoalSetting goalSetting = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdAndGoalType(seasonCd, companyCd, member.getOrg().getId(), GoalTypeCode.ORG_GOAL)
+														.orElseThrow(() -> new BusinessException(MemberErrorCode.FAULT_APPROVER));
+		
+		Goal goal = goalRepository.findGoalBy(goalSetting.getId(), goalId)
+									.orElseThrow(() -> new BusinessException(MemberErrorCode.NOT_FOUND_GOAL_OF_MEMBER));
+		 
+		return GoalResponse.of(goal);
 	}
 
 	@Override

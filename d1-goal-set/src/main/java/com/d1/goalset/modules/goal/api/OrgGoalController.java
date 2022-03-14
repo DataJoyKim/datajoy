@@ -15,32 +15,41 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrgGoalController {
 
-	@GetMapping("/")
+	
+	
+	@GetMapping("")
 	public EntityResponse<?> getOrgGoals() {
 		//접속자가 조직장인지 체크
+		
 		
 		return null;
 	}
 	
-	@GetMapping("/{goalCd}")
+	@GetMapping("/{goalId}")
 	public EntityResponse<?> getOrgGoalsBy() {
 		//접속자가 조직장인지 체크
 		return null;
 	}
+
+	@GetMapping("/status")
+	public EntityResponse<?> getOrgGoalStatus() {
+		//접속자가 조직장인지 체크
+		return null;
+	}
 	
-	@PostMapping("/")
+	@PostMapping("")
 	public EntityResponse<?> postOrgGoals() {
 		//접속자가 조직장인지 체크
 		return null;
 	}
 	
-	@PutMapping("/{goalCd}")
+	@PutMapping("/{goalId}")
 	public EntityResponse<?> putOrgGoalsBy() {
 		//접속자가 조직장인지 체크
 		return null;
 	}
 	
-	@DeleteMapping("/{goalCd}")
+	@DeleteMapping("/{goalId}")
 	public EntityResponse<?> deleteOrgGoalsBy() {
 		//접속자가 조직장인지 체크
 		return null;

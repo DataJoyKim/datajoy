@@ -14,7 +14,7 @@ import com.d1.goalset.modules.user.service.query.UserQueryService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/api/v1/users", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/api/v1/users/**", produces = MediaTypes.HAL_JSON_VALUE)
 @RequiredArgsConstructor
 public class UserController {
 

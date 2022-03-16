@@ -14,7 +14,6 @@ import com.d1.goalset.modules.goal.dto.MemberDto.MemberStatusResponse;
 import com.d1.goalset.modules.goal.error.MemberErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
-import com.d1.goalset.modules.user.domain.Org;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.service.UserService;
 
@@ -64,7 +63,7 @@ public class MemberOrgGoalQueryServiceImpl implements MemberOrgGoalQueryService 
 		
 		List<User> members = userService.findMembers(seasonCd, companyCd, approver);
 		
-		List<GoalSetting> goalSettings = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdInAndGoalType(seasonCd, companyCd, Org.createBatchIds(members), GoalTypeCode.ORG_GOAL);
+		List<GoalSetting> goalSettings = goalSettingRepository.findBySeasonCdAndCompanyCdAndTargetIdInAndGoalType(seasonCd, companyCd, User.createBatchOrgIds(members), GoalTypeCode.ORG_GOAL);
 		 
 		return MemberStatusResponse.of(members, goalSettings);
 	}

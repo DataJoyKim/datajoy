@@ -1,7 +1,6 @@
 package com.d1.goalset.modules.goal.service.query;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import com.d1.goalset.modules.goal.dto.GoalDto.GoalSettingResponse;
 import com.d1.goalset.modules.goal.error.PersonGoalErrorCode;
 import com.d1.goalset.modules.goal.repository.GoalRepository;
 import com.d1.goalset.modules.goal.repository.GoalSettingRepository;
-import com.d1.goalset.modules.user.domain.Org;
 import com.d1.goalset.modules.user.domain.User;
 import com.d1.goalset.modules.user.service.UserService;
 

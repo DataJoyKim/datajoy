@@ -69,4 +69,12 @@ public class User {
 		
 		return ids;
 	}
+
+	public static List<Long> createBatchOrgIds(List<User> users) {
+		List<Long> ids = new ArrayList<>();
+		for(User user : users) {
+			ids.add(user.getOrg().getId());
+		}
+		return ids;
+	}
 }

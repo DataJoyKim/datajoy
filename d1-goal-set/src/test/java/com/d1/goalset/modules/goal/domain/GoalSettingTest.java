@@ -68,7 +68,7 @@ class GoalSettingTest {
 		// when
 		Throwable exceptionOfApprovalState = assertThrows(BusinessException.class, () -> {goalSettingOfApprovalState.submit(goalSettingValidator, goals);});
 		Throwable exceptionOfSubmitState = assertThrows(BusinessException.class, () -> {goalSettingOfSubmitState.submit(goalSettingValidator, goals);});
-		goalSettingOfCancelState.submit(goalSettingValidator, goals);
+		goalSettingOfCancelState.submit(goalSettingValidator, goals); 
 		goalSettingOfRejectionState.submit(goalSettingValidator, goals);
 		goalSettingOfSettingState.submit(goalSettingValidator, goals);
 		

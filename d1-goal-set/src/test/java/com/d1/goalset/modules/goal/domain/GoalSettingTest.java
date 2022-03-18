@@ -79,7 +79,7 @@ class GoalSettingTest {
 		assertEquals(goalSettingOfRejectionState.getGoalSettingStateCd(), GoalSettingState.SUBMIT);
 		assertEquals(goalSettingOfSettingState.getGoalSettingStateCd(), GoalSettingState.SUBMIT);
 	}
-
+	
 	@DisplayName("승인 상태 변경 테스트")
 	@Test
 	void approvalTest() {	

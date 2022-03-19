@@ -26,7 +26,7 @@ import com.d1.goalset.modules.goal.service.query.OrgGoalQueryService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/org-goals/**")
+@RequestMapping("/api/v1/org-goals")
 @RequiredArgsConstructor
 public class OrgGoalController {
 

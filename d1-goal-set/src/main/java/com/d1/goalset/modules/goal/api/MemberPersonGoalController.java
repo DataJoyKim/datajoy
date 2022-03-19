@@ -22,7 +22,7 @@ import com.d1.goalset.modules.goal.service.query.MemberPersonGoalQueryService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/api/v1/members/**", produces = MediaTypes.HAL_JSON_VALUE)
+@RequestMapping(value = "/api/v1/members", produces = MediaTypes.HAL_JSON_VALUE)
 @RequiredArgsConstructor
 public class MemberPersonGoalController {
 

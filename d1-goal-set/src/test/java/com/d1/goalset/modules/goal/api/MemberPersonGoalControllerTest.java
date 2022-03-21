@@ -43,13 +43,13 @@ class MemberPersonGoalControllerTest extends BaseTest {
 		GoalPlanWritingRequest goalPlan_1 = GoalPlanWritingRequest.builder()
 															.staYmd(LocalDate.now())
 															.endYmd(LocalDate.now())
-															.plan("계획합니다.1")
+															.plan("계획1")
 															.build();
 		
 		GoalPlanWritingRequest goalPlan_2 = GoalPlanWritingRequest.builder()
 															.staYmd(LocalDate.now())
 															.endYmd(LocalDate.now())
-															.plan("계획합니다.2")
+															.plan("계획2")
 															.build();
 		
 		List<GoalPlanWritingRequest> goalPlans = new ArrayList<>();

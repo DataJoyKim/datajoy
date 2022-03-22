@@ -59,7 +59,7 @@ class MemberPersonGoalControllerTest extends BaseTest {
 		GoalWritingRequest body = GoalWritingRequest.builder()
 										.goalName("목표1")
 										.contents("목표 테스트 내용")
-										.evalWayCd(EvalWay.QUALITY_EVAL)
+										.evalWayCd(EvalWay.QUALITY_EVAL) 
 										.quantStdMax("최대")
 										.quantStdGoal("목표")
 										.quantStdMin("최소")

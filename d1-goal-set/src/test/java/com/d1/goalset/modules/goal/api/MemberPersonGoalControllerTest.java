@@ -43,7 +43,7 @@ class MemberPersonGoalControllerTest extends BaseTest {
 		GoalPlanWritingRequest goalPlan_1 = GoalPlanWritingRequest.builder()
 															.staYmd(LocalDate.now())
 															.endYmd(LocalDate.now())
-															.plan("계획1")
+															.plan("계획1") 
 															.build();
 		
 		GoalPlanWritingRequest goalPlan_2 = GoalPlanWritingRequest.builder()

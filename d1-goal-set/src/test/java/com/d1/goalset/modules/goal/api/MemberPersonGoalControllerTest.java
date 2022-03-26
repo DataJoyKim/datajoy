@@ -34,7 +34,7 @@ class MemberPersonGoalControllerTest extends BaseTest {
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("content").exists());
 	}
-	
+
 	@DisplayName("개인목표 승인 생성")
 	@Test
 	void personGoalApprovalApiTest() throws Exception {

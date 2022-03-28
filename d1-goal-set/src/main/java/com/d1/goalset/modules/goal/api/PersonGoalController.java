@@ -40,10 +40,13 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		List<GoalResponse> response = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId);
+		List<GoalResponse> goals = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId);
 		
-		GoalResource resource = new GoalResource(response);
+		GoalResource resource = new GoalResource(goals);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("submit"));
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("cancel"));
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("status"));
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}

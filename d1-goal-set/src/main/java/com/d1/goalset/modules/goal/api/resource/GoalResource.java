@@ -2,8 +2,11 @@ package com.d1.goalset.modules.goal.api.resource;
 
 import org.springframework.hateoas.RepresentationModel;
 
-public class GoalResource extends RepresentationModel<GoalResource> {
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
+public class GoalResource extends RepresentationModel<GoalResource> {
+	
+	@JsonUnwrapped
 	private Object content;
 	
 	public GoalResource(Object content) {

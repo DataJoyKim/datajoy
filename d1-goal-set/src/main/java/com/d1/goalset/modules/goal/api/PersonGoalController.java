@@ -3,6 +3,7 @@ package com.d1.goalset.modules.goal.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -50,13 +51,14 @@ public class PersonGoalController {
 			goalsResource.add(goalResource);
 		}
 		
-		GoalResource resource = new GoalResource(goals);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("submit").withRel("submit"));
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("cancel").withRel("cancel"));
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("status").withRel("status"));
+		GoalResource response = new GoalResource(goalsResource);
+		response.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		response.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("submit").withRel("submit"));
+		response.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("cancel").withRel("cancel"));
+		response.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("status").withRel("status"));
+		response.add(Link.of("/swagger-ui/index.html#/person-goal-controller/getPersonGoalsUsingGET").withRel("profile"));
 		
-		return new ResponseEntity<>(resource, HttpStatus.OK);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{goalId}")
@@ -66,10 +68,10 @@ public class PersonGoalController {
 			@RequestParam String companyCd,
 			@RequestParam Long userId
 			) {
-		GoalResponse response = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId, goalId);
+		GoalResponse goal = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId, goalId);
 		
-		GoalResource resource = new GoalResource(response);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		GoalResource resource = new GoalResource(goal);
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash(goalId).withSelfRel());
 		
 		return new ResponseEntity<>(new GoalResource(resource), HttpStatus.OK);
 	}
@@ -114,7 +116,7 @@ public class PersonGoalController {
 		personGoalService.update(seasonCd, companyCd, userId, goalId, body);
 
 		GoalResource resource = new GoalResource(null);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash(goalId).withSelfRel());
 
 		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
 	}
@@ -129,7 +131,7 @@ public class PersonGoalController {
 		personGoalService.delete(seasonCd, companyCd, userId, goalId);
 
 		GoalResource resource = new GoalResource(null);
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash(goalId).withSelfRel());
 
 		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
 	}
@@ -144,6 +146,7 @@ public class PersonGoalController {
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("status").withRel("status"));
 
 		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
 	}
@@ -158,6 +161,7 @@ public class PersonGoalController {
 
 		GoalResource resource = new GoalResource(null);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("status").withRel("status"));
 
 		return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
 	}

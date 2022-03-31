@@ -1,5 +1,6 @@
 package com.d1.goalset.modules.goal.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.hateoas.MediaTypes;
@@ -42,11 +43,18 @@ public class PersonGoalController {
 			) {
 		List<GoalResponse> goals = personGoalQueryService.findGoalBy(seasonCd, companyCd, userId);
 		
+		List<GoalResource> goalsResource = new ArrayList<>();
+		for(GoalResponse goal : goals) {
+			GoalResource goalResource = new GoalResource(goal);
+			goalResource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash(goal.getId()).withSelfRel());
+			goalsResource.add(goalResource);
+		}
+		
 		GoalResource resource = new GoalResource(goals);
 		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel());
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("submit"));
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("cancel"));
-		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).withSelfRel().withRel("status"));
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("submit").withRel("submit"));
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("cancel").withRel("cancel"));
+		resource.add(WebMvcLinkBuilder.linkTo(PersonGoalController.class).slash("status").withRel("status"));
 		
 		return new ResponseEntity<>(resource, HttpStatus.OK);
 	}

@@ -12,4 +12,7 @@ spring:
         predicates:
         - Path=/goal/**
         filters:
-        - name: LoggerFilter
+        - AuthenticationFilter
+        - RewritePath=/goal/(?<segment>.*), /$\{segment}
+        - AddRequestParameter=empId, {empId}
+        - RequestLoggingFilter

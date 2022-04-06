@@ -8,41 +8,46 @@ import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Mono;
+import com.d1.apigateway.error.SecurityErrorCode;
+import com.d1.apigateway.security.JwtTokenProvider;
+import com.d1.common.exception.BusinessException;
 
-@Slf4j
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 	
-	public AuthenticationFilter() {
+	private final JwtTokenProvider jwtTokenProvider;
+	
+	public AuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
 		super(Config.class);
+		this.jwtTokenProvider = jwtTokenProvider;
 	}
 	
 	@Override
 	public GatewayFilter apply(Config config) {
 		GatewayFilter filter = new OrderedGatewayFilter((exchange, chain) -> {
 			ServerHttpRequest request = exchange.getRequest();
-			
-			log.info("******************************* remote ip : " + request.getRemoteAddress());
 
-			/*
-			URI uri = exchange.getRequest().getURI();
-			String url = UriComponentsBuilder.fromUri(uri).queryParam("empId", "1155991").build().toString();
-			AddRequestParameterGatewayFilterFactory
-			exchange.transformUrl(url);
-			*/
+	        String token = jwtTokenProvider.resolveToken(request);
+	        
+	        if (token == null) {
+	        	throw new BusinessException(SecurityErrorCode.NOT_FOUND_AUTHENTICATION);
+	        }
+	        
+	        if (jwtTokenProvider.validateToken(token) == false) {
+	        	throw new BusinessException(SecurityErrorCode.FAULT_AUTHENTICATION);
+	        }
+	        
+	        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+			
 			Map<String, String> uriVariables = new HashMap<>();
-			uriVariables.put("empId", "1155991");
+			uriVariables.put("empId", authentication.getName());
+			
 			ServerWebExchangeUtils.putUriTemplateVariables(exchange, uriVariables);
 			
-			return chain.filter(exchange).then(Mono.fromRunnable(() -> {
-				
-				//TODO
-			}));
-			
+			return chain.filter(exchange);
 		}, 1);
 		
 		return filter;

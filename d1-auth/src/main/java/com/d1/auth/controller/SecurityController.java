@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.d1.auth.dto.SecurityDto.LoginRequest;
+import com.d1.auth.error.AuthErrorCode;
 import com.d1.auth.jwt.Account;
 import com.d1.auth.jwt.JwtTokenGenerator;
+import com.d1.common.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,21 +28,16 @@ public class SecurityController {
 	@PostMapping(value = "/auth/v1/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest params, HttpServletResponse response) {
 		
-		// 인증
 		Account account = jwtTokenGenerator.authentication(params.getUsername(), params.getPassword());
 		if(account == null) {
-			//AUTHENTICATION_FAILED
-			return ResponseEntity.badRequest().build();
+			throw new BusinessException(AuthErrorCode.FAULT_ID_AND_PWD);
 		}
 		
-		// Token 생성
 		String token = jwtTokenGenerator.createToken(account);
 		if(token == null) {
-			// CREATE_TOKEN_FAILED
-			return ResponseEntity.noContent().build();
+			throw new BusinessException(AuthErrorCode.FAILED_AUTH_TOKEN);
 		}
 		
-		// Token header 세팅
 		jwtTokenGenerator.setTokenIn(response, token);
         
 		return ResponseEntity.ok().body(token);

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -38,11 +37,9 @@ public class JwtTokenGenerator {
 	 * @return token
 	 */
 	public String createToken(Account account) {
-	    Claims claims = Jwts.claims().setSubject(account.getEmail());
-	    claims.put("role", account.getRole());
 	    Date now = new Date();
 	    return Jwts.builder()
-		            .setClaims(claims) // 정보 저장
+		            .setClaims(AccountClaim.createClaims(account)) // 정보 저장
 		            .setIssuedAt(now) // 토큰 발행 시간 정보
 		            .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
 		            .signWith(SignatureAlgorithm.HS256, secretKey) // 사용할 암호화 알고리즘과 secret key 셋팅

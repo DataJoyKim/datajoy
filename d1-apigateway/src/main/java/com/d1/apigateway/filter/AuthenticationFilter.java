@@ -8,10 +8,10 @@ import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import com.d1.apigateway.error.SecurityErrorCode;
+import com.d1.apigateway.security.Account;
 import com.d1.apigateway.security.JwtTokenProvider;
 import com.d1.common.exception.BusinessException;
 
@@ -40,10 +40,10 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
 	        	throw new BusinessException(SecurityErrorCode.FAULT_AUTHENTICATION);
 	        }
 	        
-	        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+	        Account account = jwtTokenProvider.getAccount(token);
 			
 			Map<String, String> uriVariables = new HashMap<>();
-			uriVariables.put("empId", authentication.getName());
+			uriVariables.put("empId", account.getId());
 			
 			ServerWebExchangeUtils.putUriTemplateVariables(exchange, uriVariables);
 			

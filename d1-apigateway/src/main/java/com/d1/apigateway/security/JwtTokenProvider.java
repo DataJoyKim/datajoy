@@ -38,26 +38,14 @@ public class JwtTokenProvider {
 	}
 	
 	/**
-	 * 인증정보 가져오기
+	 * 계정정보 가져오기
 	 * @param token
-	 * @return 인증정보
+	 * @return 계정정보
 	 */
-	public Authentication getAuthentication(String token) {
+	public Account getAccount(String token) {
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-		String username = getSubject(token);
-		
-		UserDetails userDetails = User.builder().username(username).build();
 	    
-	    return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-	}
-	
-	/**
-	 * 토큰에서 subject 값 조회
-	 * @param token - 토큰
-	 * @return subject
-	 */
-	public String getSubject(String token) {
-	    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+	    return Account.createAccount(claims.getBody());
 	}
 	
 	/**
